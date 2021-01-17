@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using simpsons.src.Models;
+using simpsons.src.Static;
 using System;
 
 namespace simpsons.src.Core
@@ -10,7 +10,7 @@ namespace simpsons.src.Core
     {
         public Player(Texture2D texture, float x, float y) : base(texture,x,y,5,5)
         {
-
+            
         }
         public void Update()
         {

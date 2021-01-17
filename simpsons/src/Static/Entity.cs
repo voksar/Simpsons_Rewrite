@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using Newtonsoft.Json;
 
-namespace simpsons.src.Models
+namespace simpsons.src.Static
 {
     [JsonObject(MemberSerialization.OptIn)]
     class Entity

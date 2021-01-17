@@ -2,27 +2,35 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using simpsons.src.Core;
+using simpsons.src.Core.Handlers;
 
 namespace simpsons
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        private GraphicsDeviceManager graphics;
         private SpriteBatch _spriteBatch;
 
         public Game1()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
+            
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            graphics.SynchronizeWithVerticalRetrace = false;
+            
+            
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            graphics.PreferredBackBufferHeight = 1000;
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.ApplyChanges();
             //Intialize
-            Engine.State = Engine.States.Run;
+            Engine.State = Engine.States.Menu;
             Engine.Initialize();
 
 
@@ -33,25 +41,26 @@ namespace simpsons
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            Engine.LoadContent(Content);
+            Engine.LoadContent(Content, GraphicsDevice, Window);
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+                Engine.State = Engine.States.Quit;
+            InputHandler.Update(gameTime);
             switch(Engine.State)
             {
                 case Engine.States.Run:
-                    Engine.RunUpdate();
+                    Engine.State = Engine.RunUpdate(Window, gameTime);
                     break;
                 case Engine.States.Quit:
+                    Engine.ExitGameSave();
                     Exit();
                     break;
                 case Engine.States.Menu:
-                    Engine.MenuUpdate();
+                    Engine.State = Engine.MenuUpdate(gameTime, Window);
                     break;
             }
             // TODO: Add your update logic here
@@ -70,7 +79,7 @@ namespace simpsons
                     Engine.RunDraw(_spriteBatch);
                     break;
                 case Engine.States.Menu:
-                    Engine.MenuDraw(_spriteBatch);
+                    Engine.MenuDraw(_spriteBatch, Window);
                     break;
             }
             _spriteBatch.End();

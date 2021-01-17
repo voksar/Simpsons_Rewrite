@@ -23,3 +23,13 @@ D:\C#\Simpsons_Rewrite\simpsons\obj\Debug\netcoreapp3.1\simpsons.dll
 D:\C#\Simpsons_Rewrite\simpsons\obj\Debug\netcoreapp3.1\simpsons.pdb
 D:\C#\Simpsons_Rewrite\simpsons\obj\Debug\netcoreapp3.1\simpsons.genruntimeconfig.cache
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Player\homer.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Enemies\bart.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Menu\changeSelectSound.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Menu\Exit.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Menu\Play.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Collection.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Exit.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Highscore.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Options.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Play.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Store.xnb

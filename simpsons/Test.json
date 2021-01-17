@@ -1,0 +1,11 @@
+{
+  "player": {
+    "X": 300.0,
+    "Y": 300.0,
+    "SpeedX": 5.0,
+    "SpeedY": 5.0,
+    "IsAlive": true,
+    "TextureName": "Player/homer"
+  },
+  "enemies": []
+}
