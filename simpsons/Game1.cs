@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using simpsons.src.Core;
 
 namespace simpsons
 {
@@ -20,13 +21,19 @@ namespace simpsons
         {
             // TODO: Add your initialization logic here
 
+            //Intialize
+            Engine.State = Engine.States.Run;
+            Engine.Initialize();
+
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
+            Engine.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
 
@@ -35,6 +42,18 @@ namespace simpsons
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            switch(Engine.State)
+            {
+                case Engine.States.Run:
+                    Engine.RunUpdate();
+                    break;
+                case Engine.States.Quit:
+                    Exit();
+                    break;
+                case Engine.States.Menu:
+                    Engine.MenuUpdate();
+                    break;
+            }
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -44,8 +63,17 @@ namespace simpsons
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-
+            _spriteBatch.Begin();
+            switch(Engine.State)
+            {
+                case Engine.States.Run:
+                    Engine.RunDraw(_spriteBatch);
+                    break;
+                case Engine.States.Menu:
+                    Engine.MenuDraw(_spriteBatch);
+                    break;
+            }
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
