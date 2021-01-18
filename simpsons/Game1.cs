@@ -17,10 +17,6 @@ namespace simpsons
             
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            graphics.SynchronizeWithVerticalRetrace = false;
-            
-            
         }
 
         protected override void Initialize()
@@ -28,6 +24,7 @@ namespace simpsons
             // TODO: Add your initialization logic here
             graphics.PreferredBackBufferHeight = 1000;
             graphics.PreferredBackBufferWidth = 1000;
+            graphics.SynchronizeWithVerticalRetrace = false;
             graphics.ApplyChanges();
             //Intialize
             Engine.State = Engine.States.Menu;

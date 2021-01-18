@@ -19,29 +19,27 @@ namespace simpsons.src.Core
         public static States State;
 
         static Player player;
-        static Texture2D playerTexture;
-        static Texture2D enemyBart;
+        
 
         static Menu menu;
 
         static Random random;
         static List<Enemy> enemies;
 
-        static int MaxEnemyCount = 50;
+        //static int MaxEnemyCount = 50;
         static float value = 300;
 
         public static void Initialize()
         {
             random = new Random();
             enemies = new List<Enemy>();
+            TextureHandler.Initialize();
             InputHandler.Initialize();
-            
         }
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {
-            playerTexture = content.Load<Texture2D>("Player/homer");
-            enemyBart = content.Load<Texture2D>("Enemies/bart");
-            player = new Player(playerTexture, 300, 300);
+            TextureHandler.LoadContent(content);
+            player = new Player("Player/homer", 300, 300);
             gd = gdm;
 
 
@@ -61,13 +59,14 @@ namespace simpsons.src.Core
             int newBart = random.Next(1, (int)value);
             if (newBart == 1)
             {
-                int rndX = random.Next(1, window.ClientBounds.Width - enemyBart.Width);
+
+                int rndX = random.Next(1, window.ClientBounds.Width - TextureHandler.Sprites["Enemy/bart"].Width);
                 int rndspeedX = random.Next(-5, 5);
                 int rndspeedY = random.Next(1, 5);
                 int rndY = -30;
                 if (rndspeedX != 0)
                 {
-                    enemies.Add(new Bart(enemyBart, rndX, rndY, rndspeedX, rndspeedY, 1));
+                    enemies.Add(new Bart("Enemy/bart", rndX, rndY, rndspeedX, rndspeedY, 1));
                 }
             }
 

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Newtonsoft.Json;
+using simpsons.src.Core.Handlers;
 
 namespace simpsons.src.Static
 {
@@ -11,9 +12,10 @@ namespace simpsons.src.Static
     {
         protected Vector2 vector;
         protected Vector2 speed;
-        public Entity(Texture2D texture, float x, float y, float speedX, float speedY)
+        [JsonConstructor]
+        public Entity(string referTexture, float x, float y, float speedX, float speedY)
         {
-            Texture = texture;
+            Texture = TextureHandler.Sprites[referTexture];
             speed.X = speedX;
             speed.Y = speedY;
             vector.X = x;

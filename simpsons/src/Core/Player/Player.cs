@@ -8,9 +8,11 @@ namespace simpsons.src.Core
 {
     class Player : Entity
     {
-        public Player(Texture2D texture, float x, float y) : base(texture,x,y,5,5)
+        public int Score {get;set;}
+        public int Cash {get;set;}
+        public Player(string referTexture, float x, float y) : base(referTexture,x,y,5,5)
         {
-            
+                        
         }
         public void Update()
         {

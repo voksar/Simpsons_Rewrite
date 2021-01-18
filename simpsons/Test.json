@@ -7,5 +7,15 @@
     "IsAlive": true,
     "TextureName": "Player/homer"
   },
-  "enemies": []
+  "enemies": [
+    {
+      "$type": "simpsons.src.Core.Bart, simpsons",
+      "X": 507.0,
+      "Y": 144.0,
+      "SpeedX": -4.0,
+      "SpeedY": 2.0,
+      "IsAlive": true,
+      "TextureName": "Enemies/bart"
+    }
+  ]
 }

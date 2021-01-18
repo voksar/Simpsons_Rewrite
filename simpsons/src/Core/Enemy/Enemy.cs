@@ -9,8 +9,8 @@ namespace simpsons.src.Core
     abstract class Enemy : Entity
     {
         public int Health {get;set;}
-        public Enemy(Texture2D texture, float x, float y, float speedX, float speedY, int health):
-        base(texture,x,y,speedX,speedY)
+        public Enemy(string referTexture, float x, float y, float speedX, float speedY, int health):
+        base(referTexture,x,y,speedX,speedY)
         {
             Health = health;
         }
@@ -20,8 +20,8 @@ namespace simpsons.src.Core
 
     class Bart : Enemy
     {
-        public Bart(Texture2D texture, float x, float y, float speedX, float speedY, int health):
-        base(texture,x,y,speedX,speedY,health)
+        public Bart(string referTexture, float x, float y, float speedX, float speedY, int health):
+        base(referTexture,x,y,speedX,speedY,health)
         {
             
         }
