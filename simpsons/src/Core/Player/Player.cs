@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using simpsons.src.Static;
 using System;
 
-namespace simpsons.src.Core
+namespace simpsons
 {
     class Player : Entity
     {

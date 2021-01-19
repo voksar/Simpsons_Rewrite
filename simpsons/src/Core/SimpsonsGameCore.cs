@@ -2,14 +2,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
-using simpsons.src.Static;
-using simpsons.src.Core.Handlers;
-using simpsons.src.Core;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
 
-namespace simpsons.src.Core
+namespace simpsons
 {
     static class Engine
     {

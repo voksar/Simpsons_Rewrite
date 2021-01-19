@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using simpsons.src.Static;
 using System;
 using Newtonsoft.Json;
 
-namespace simpsons.src.Core
+namespace simpsons
 {
     abstract class Enemy : Entity
     {

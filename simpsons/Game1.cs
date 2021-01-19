@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using simpsons.src.Core;
-using simpsons.src.Core.Handlers;
 
 namespace simpsons
 {
@@ -15,7 +13,7 @@ namespace simpsons
         {
             graphics = new GraphicsDeviceManager(this);
             
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "Assets";
             IsMouseVisible = true;
         }
 

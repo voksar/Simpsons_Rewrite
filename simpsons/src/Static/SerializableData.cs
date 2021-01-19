@@ -2,9 +2,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using simpsons.src.Core;
 
-namespace simpsons.src.Static
+namespace simpsons
 {
     static class SerializeGame
     {

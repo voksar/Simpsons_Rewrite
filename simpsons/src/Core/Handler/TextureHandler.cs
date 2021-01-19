@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace simpsons.src.Core.Handlers
+namespace simpsons
 {
     public static class TextureHandler
     {

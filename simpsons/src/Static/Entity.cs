@@ -3,9 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Newtonsoft.Json;
-using simpsons.src.Core.Handlers;
 
-namespace simpsons.src.Static
+namespace simpsons
 {
     [JsonObject(MemberSerialization.OptIn)]
     class Entity
