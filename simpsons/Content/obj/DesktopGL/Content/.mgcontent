@@ -4,26 +4,26 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Enemies/bart.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno14.spritefont</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno20.spritefont</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno24.spritefont</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Menu/changeSelectSound.wav</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Menu/Exit.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Menu/Play.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.psd</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.psd</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.psd</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.psd</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.psd</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.png</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.psd</File>
-    <File>d:/C#/Simpsons_Rewrite/simpsons/Content/Player/homer.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Enemies/bart.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno14.spritefont</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno20.spritefont</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno24.spritefont</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Menu/changeSelectSound.wav</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Menu/Exit.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Menu/Play.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.psd</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.psd</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.psd</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.psd</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.psd</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.png</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.psd</File>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Player/homer.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

@@ -112,7 +112,6 @@ namespace simpsons.Core
 
                 p.X = mState.X;
                 p.Y = mState.Y;
-                Console.WriteLine($"{p.X} - {p.Y} - {allowKeyboard}");
 
                 if (InputHandler.Press(Keys.Down))
                 {

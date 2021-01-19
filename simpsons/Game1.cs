@@ -55,6 +55,9 @@ namespace simpsons
                 case Simpsons.States.GameStart:
                     Simpsons.State = Simpsons.StartGame();
                     break;
+                case Simpsons.States.Saves:
+                    Simpsons.State = Simpsons.DisplayGamesUpdate();
+                    break;
                 case Simpsons.States.Quit:
                     Simpsons.SerializeGame();
                     Exit();
@@ -75,6 +78,9 @@ namespace simpsons
             _spriteBatch.Begin();
             switch(Simpsons.State)
             {
+                case Simpsons.States.Saves:
+                    Simpsons.DisplayGamesDraw(_spriteBatch);
+                    break;
                 case Simpsons.States.Run:
                     Simpsons.RunDraw(_spriteBatch);
                     break;
