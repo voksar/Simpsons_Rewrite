@@ -26,7 +26,7 @@ namespace simpsons.Core.Handlers
             enemyBart = content.Load<Texture2D>("Enemies/bart");
 
             Sprites.Add("Player/homer", playerTexture);
-            Sprites.Add("Enemy/bart", enemyBart);
+            Sprites.Add("Enemies/bart", enemyBart);
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using simpsons.Core.Handlers;
+using simpsons.Core.Helpers;
 
 namespace simpsons.Core
 {
@@ -48,8 +49,8 @@ namespace simpsons.Core
         }
         public void LoadContent(GraphicsDevice gd, GameWindow window, ContentManager content)
         {
-            re = Simpsons.RectangleCreator(rectWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
-            soundEffect = content.Load<SoundEffect>("menu/changeSelectSound");
+            re = Helper.RectangleCreator(rectWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
+            soundEffect = content.Load<SoundEffect>("Menu/changeSelectSound");
             this.gd = gd;
             
         }

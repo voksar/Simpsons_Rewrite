@@ -10,11 +10,12 @@ using simpsons.Core.Handlers;
 namespace simpsons.Core
 {
     static class Simpsons
-    {
+    {   
+        //Public variables
         public static GraphicsDevice gd;
-
+        public static GameHandler gameHandler;
         //Statemanagement
-        public enum States {Run, Menu, Quit}
+        public enum States {Run, Menu, Quit, GameStart}
         public static States State;
 
         static Player player;
@@ -26,7 +27,7 @@ namespace simpsons.Core
         static List<Enemy> enemies;
 
         //static int MaxEnemyCount = 50;
-        static float value = 300;
+        //static float value = 300;
 
         public static void Initialize()
         {
@@ -44,10 +45,14 @@ namespace simpsons.Core
 
             menu = new Menu((int)States.Menu);
             menu.LoadContent(gd, window, content);
-            menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.Run, window,
+            menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
                 content.Load<Texture2D>("MenuIcons/Play"));
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
+            
+
+            enemies.Add(new Bart("Enemies/bart", 100, 100, 5, 5, 1));
+            enemies.Add(new Bart("Enemies/bart", 200, 100, 5, 5, 1));
         }
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
@@ -55,20 +60,6 @@ namespace simpsons.Core
             {
                 e.Update(gameTime, window, player);
             }
-            int newBart = random.Next(1, (int)value);
-            if (newBart == 1)
-            {
-
-                int rndX = random.Next(1, window.ClientBounds.Width - TextureHandler.Sprites["Enemy/bart"].Width);
-                int rndspeedX = random.Next(-5, 5);
-                int rndspeedY = random.Next(1, 5);
-                int rndY = -30;
-                if (rndspeedX != 0)
-                {
-                    enemies.Add(new Bart("Enemy/bart", rndX, rndY, rndspeedX, rndspeedY, 1));
-                }
-            }
-
             return States.Run;
         }
         public static void RunDraw(SpriteBatch spriteBatch)
@@ -86,13 +77,20 @@ namespace simpsons.Core
         {
             menu.Draw(spriteBatch, window);
         }
-        public static void ExitGameSave()
+
+        public static States StartGame()
         {
-            SerializeGame.SerializeCurrentGame(player, enemies);
+            gameHandler = new GameHandler();
+            gameHandler.GenerateGameID();
+            return States.Run;
+        }
+        public static void SerializeGame()
+        {
+            gameHandler.SerializeGame(player, enemies, 0);
+            gameHandler.Dispose();
         }
 
-
-        public static States CreateGame()
+        /*public static States CreateGame()
         {
             #nullable enable
             string? json = System.IO.File.Exists("Test.json") ? System.IO.File.ReadAllText("Test.json") : null;
@@ -114,25 +112,8 @@ namespace simpsons.Core
             return States.Run;
             }
             return States.Menu;
-        }
+        }*/
 
-        public static Texture2D RectangleCreator(int dim1, int dim2, GraphicsDevice gd, Color c)
-        {
-            Texture2D rect = new Texture2D(gd, dim1, dim2);
-
-            Color[] data = new Color[dim1 * dim2];
-            for (int i = 0; i < data.Length; ++i) data[i] = c;
-            rect.SetData(data);
-            return rect;
-        }
-        public static Texture2D RectangleCreator(int dim1, int dim2, GraphicsDevice gd, Color c, float opacity)
-        {
-            Texture2D rect = new Texture2D(gd, dim1, dim2);
-
-            Color[] data = new Color[dim1 * dim2];
-            for (int i = 0; i < data.Length; ++i) data[i] = c * opacity;
-            rect.SetData(data);
-            return rect;
-        }
+        
     }
 }

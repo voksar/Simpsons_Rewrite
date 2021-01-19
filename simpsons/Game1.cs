@@ -15,7 +15,7 @@ namespace simpsons
         {
             graphics = new GraphicsDeviceManager(this);
             
-            Content.RootDirectory = "Assets";
+            Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
@@ -27,8 +27,8 @@ namespace simpsons
             graphics.SynchronizeWithVerticalRetrace = false;
             graphics.ApplyChanges();
             //Intialize
-            Engine.State = Engine.States.Menu;
-            Engine.Initialize();
+            Simpsons.State = Simpsons.States.Menu;
+            Simpsons.Initialize();
 
 
             base.Initialize();
@@ -38,30 +38,29 @@ namespace simpsons
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            Engine.LoadContent(Content, GraphicsDevice, Window);
+            Simpsons.LoadContent(Content, GraphicsDevice, Window);
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Engine.State = Engine.States.Quit;
+                Simpsons.State = Simpsons.States.Quit;
             InputHandler.Update(gameTime);
-            if(Keyboard.GetState().IsKeyDown(Keys.Tab))
+            switch(Simpsons.State)
             {
-                Engine.State = Engine.CreateGame();
-            }
-            switch(Engine.State)
-            {
-                case Engine.States.Run:
-                    Engine.State = Engine.RunUpdate(Window, gameTime);
+                case Simpsons.States.Run:
+                    Simpsons.State = Simpsons.RunUpdate(Window, gameTime);
                     break;
-                case Engine.States.Quit:
-                    Engine.ExitGameSave();
+                case Simpsons.States.GameStart:
+                    Simpsons.State = Simpsons.StartGame();
+                    break;
+                case Simpsons.States.Quit:
+                    Simpsons.SerializeGame();
                     Exit();
                     break;
-                case Engine.States.Menu:
-                    Engine.State = Engine.MenuUpdate(gameTime, Window);
+                case Simpsons.States.Menu:
+                    Simpsons.State = Simpsons.MenuUpdate(gameTime, Window);
                     break;
             }
             // TODO: Add your update logic here
@@ -74,13 +73,13 @@ namespace simpsons
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            switch(Engine.State)
+            switch(Simpsons.State)
             {
-                case Engine.States.Run:
-                    Engine.RunDraw(_spriteBatch);
+                case Simpsons.States.Run:
+                    Simpsons.RunDraw(_spriteBatch);
                     break;
-                case Engine.States.Menu:
-                    Engine.MenuDraw(_spriteBatch, Window);
+                case Simpsons.States.Menu:
+                    Simpsons.MenuDraw(_spriteBatch, Window);
                     break;
             }
             _spriteBatch.End();

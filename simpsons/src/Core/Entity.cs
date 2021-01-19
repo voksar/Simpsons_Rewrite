@@ -12,6 +12,20 @@ namespace simpsons.Core
     {
         protected Vector2 vector;
         protected Vector2 speed;
+        public Texture2D Texture {get;set;}
+        //Serializable data below
+        [JsonProperty]
+        public float X {get {return vector.X;} set {vector.X = value;}}
+        [JsonProperty]
+        public float Y {get {return vector.Y;} set {vector.Y = value;}}
+        [JsonProperty]
+        public float SpeedX {get {return speed.X;} set {speed.X = value;}}
+        [JsonProperty]
+        public float SpeedY {get {return speed.Y;} set {speed.Y = value;}}
+        [JsonProperty]
+        public bool IsAlive {get;set;}
+        [JsonProperty]
+        public string TextureName{get;set;}
         [JsonConstructor]
         public Entity(string TextureName, float X, float Y, float SpeedX, float SpeedY)
         {
@@ -27,19 +41,7 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, vector, Color.White);
         }
-        public Texture2D Texture {get;set;}
-        [JsonProperty]
-        public float X {get {return vector.X;} set {vector.X = value;}}
-        [JsonProperty]
-        public float Y {get {return vector.Y;} set {vector.Y = value;}}
-        [JsonProperty]
-        public float SpeedX {get {return speed.X;} set {speed.X = value;}}
-        [JsonProperty]
-        public float SpeedY {get {return speed.Y;} set {speed.Y = value;}}
-        [JsonProperty]
-        public bool IsAlive {get;set;}
-        [JsonProperty]
-        public string TextureName{get;set;}
+        
 
         public bool CheckCollision(Entity other)
         {
