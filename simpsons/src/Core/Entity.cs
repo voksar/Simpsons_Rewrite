@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Newtonsoft.Json;
+using simpsons.Core.Handlers;
 
-namespace simpsons
+namespace simpsons.Core
 {
     [JsonObject(MemberSerialization.OptIn)]
     class Entity

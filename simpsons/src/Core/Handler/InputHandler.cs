@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
-namespace simpsons
+namespace simpsons.Core.Handlers
 {
     static class InputHandler
     {

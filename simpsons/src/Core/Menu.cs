@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using simpsons.Core.Handlers;
 
-namespace simpsons
+namespace simpsons.Core
 {
     class Menu
     {
@@ -47,7 +48,7 @@ namespace simpsons
         }
         public void LoadContent(GraphicsDevice gd, GameWindow window, ContentManager content)
         {
-            re = Engine.RectangleCreator(rectWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
+            re = Simpsons.RectangleCreator(rectWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
             soundEffect = content.Load<SoundEffect>("menu/changeSelectSound");
             this.gd = gd;
             

@@ -5,10 +5,11 @@ using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System;
 using Newtonsoft.Json;
+using simpsons.Core.Handlers;
 
-namespace simpsons
+namespace simpsons.Core
 {
-    static class Engine
+    static class Simpsons
     {
         public static GraphicsDevice gd;
 
