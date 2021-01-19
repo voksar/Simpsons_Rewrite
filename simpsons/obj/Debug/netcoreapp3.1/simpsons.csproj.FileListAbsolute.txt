@@ -33,3 +33,7 @@ D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Highsc
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Options.xnb
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Play.xnb
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\MenuIcons\Store.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno.otf
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno14.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno20.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno24.xnb

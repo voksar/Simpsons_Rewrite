@@ -35,10 +35,12 @@ namespace simpsons.Core
             enemies = new List<Enemy>();
             TextureHandler.Initialize();
             InputHandler.Initialize();
+            FontHandler.Initialize();
         }
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {
             TextureHandler.LoadContent(content);
+            //FontHandler.LoadContent(content);
             player = new Player("Player/homer", 300, 300, 5, 5);
             gd = gdm;
 
