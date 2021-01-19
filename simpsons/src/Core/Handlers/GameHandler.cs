@@ -34,10 +34,30 @@ namespace simpsons.Core.Handlers
             Player = player;
             Enemies = enemies;
             Score = score;
+            List<GameHandler> gameList;
+            if(!File.Exists("Test.json"))
+            {
+                gameList = new List<GameHandler>();
+                gameList.Add(this);
+                string serializedJson = JsonConvert.SerializeObject(gameList, Formatting.Indented,
+                new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Auto});
+                File.WriteAllText(@"Test.json", serializedJson);
+            }
+            else
+            {
+                
+                string json = File.ReadAllText("Test.json");
+                gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
+                new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+                
+                gameList.Add(this);
 
-            string serializedJson = JsonConvert.SerializeObject(this, Formatting.Indented,
-            new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Auto});
-            File.WriteAllText(@"Test.json", serializedJson);
+                string jsonOutput = JsonConvert.SerializeObject(gameList, Formatting.Indented,
+                new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+                File.WriteAllText("Test.json", jsonOutput);
+            }
+            
+            
         }
         
         public void Dispose()
