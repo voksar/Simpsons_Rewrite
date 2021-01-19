@@ -7,6 +7,7 @@ using simpsons.src.Core.Handlers;
 using simpsons.src.Core;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 
 namespace simpsons.src.Core
 {
@@ -39,7 +40,7 @@ namespace simpsons.src.Core
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {
             TextureHandler.LoadContent(content);
-            player = new Player("Player/homer", 300, 300);
+            player = new Player("Player/homer", 300, 300, 5, 5);
             gd = gdm;
 
 
@@ -90,6 +91,30 @@ namespace simpsons.src.Core
         public static void ExitGameSave()
         {
             SerializeGame.SerializeCurrentGame(player, enemies);
+        }
+
+
+        public static States CreateGame()
+        {
+            string? json = System.IO.File.Exists("Test.json") ? System.IO.File.ReadAllText("Test.json") : null;
+            
+            
+            if(json != null)
+            {
+                GameInformationHandler gameInformationHandler = new GameInformationHandler();
+
+            gameInformationHandler = JsonConvert.DeserializeObject<GameInformationHandler>(
+                json, new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto,
+                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor}
+            );
+            
+            foreach(Enemy e in gameInformationHandler.enemies)
+                enemies.Add(e);
+            player = gameInformationHandler.player;
+            
+            return States.Run;
+            }
+            return States.Menu;
         }
 
         public static Texture2D RectangleCreator(int dim1, int dim2, GraphicsDevice gd, Color c)

@@ -13,15 +13,15 @@ namespace simpsons.src.Static
         protected Vector2 vector;
         protected Vector2 speed;
         [JsonConstructor]
-        public Entity(string referTexture, float x, float y, float speedX, float speedY)
+        public Entity(string TextureName, float X, float Y, float SpeedX, float SpeedY)
         {
-            Texture = TextureHandler.Sprites[referTexture];
-            speed.X = speedX;
-            speed.Y = speedY;
-            vector.X = x;
-            vector.Y = y;
+            Texture = TextureHandler.Sprites[TextureName];
+            this.speed.X = SpeedX;
+            this.speed.Y = SpeedY;
+            vector.X = X;
+            vector.Y = Y;
             IsAlive = true;
-            TextureName = Texture.ToString();
+            this.TextureName = TextureName;
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {

@@ -47,6 +47,10 @@ namespace simpsons
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Engine.State = Engine.States.Quit;
             InputHandler.Update(gameTime);
+            if(Keyboard.GetState().IsKeyDown(Keys.Tab))
+            {
+                Engine.State = Engine.CreateGame();
+            }
             switch(Engine.State)
             {
                 case Engine.States.Run:

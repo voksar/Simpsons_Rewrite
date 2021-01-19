@@ -3,16 +3,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using simpsons.src.Static;
 using System;
+using Newtonsoft.Json;
 
 namespace simpsons.src.Core
 {
     abstract class Enemy : Entity
     {
+        [JsonProperty]
         public int Health {get;set;}
-        public Enemy(string referTexture, float x, float y, float speedX, float speedY, int health):
-        base(referTexture,x,y,speedX,speedY)
+        public Enemy(string TextureName, float X, float Y, float SpeedX, float SpeedY, int Health)
+         : base(TextureName, X, Y, SpeedX, SpeedY)
         {
-            Health = health;
+            this.Health = Health;
         }
 
         public abstract void Update(GameTime gameTime, GameWindow window, Player player);
@@ -20,8 +22,8 @@ namespace simpsons.src.Core
 
     class Bart : Enemy
     {
-        public Bart(string referTexture, float x, float y, float speedX, float speedY, int health):
-        base(referTexture,x,y,speedX,speedY,health)
+        public Bart(string TextureName, float X, float Y, float SpeedX, float SpeedY, int Health)
+         : base(TextureName, X, Y, SpeedX, SpeedY, Health)
         {
             
         }

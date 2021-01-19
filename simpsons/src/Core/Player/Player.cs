@@ -10,7 +10,8 @@ namespace simpsons.src.Core
     {
         public int Score {get;set;}
         public int Cash {get;set;}
-        public Player(string referTexture, float x, float y) : base(referTexture,x,y,5,5)
+        public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY)
+         : base(TextureName, X, Y, SpeedX, SpeedY)
         {
                         
         }

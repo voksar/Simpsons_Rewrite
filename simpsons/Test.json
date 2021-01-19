@@ -10,12 +10,13 @@
   "enemies": [
     {
       "$type": "simpsons.src.Core.Bart, simpsons",
-      "X": 507.0,
-      "Y": 144.0,
-      "SpeedX": -4.0,
+      "Health": 1,
+      "X": 66.0,
+      "Y": 58.0,
+      "SpeedX": 2.0,
       "SpeedY": 2.0,
       "IsAlive": true,
-      "TextureName": "Enemies/bart"
+      "TextureName": "Enemy/bart"
     }
   ]
 }
