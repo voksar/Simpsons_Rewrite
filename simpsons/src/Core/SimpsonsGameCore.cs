@@ -96,8 +96,9 @@ namespace simpsons.src.Core
 
         public static States CreateGame()
         {
+            #nullable enable
             string? json = System.IO.File.Exists("Test.json") ? System.IO.File.ReadAllText("Test.json") : null;
-            
+            #nullable disable
             
             if(json != null)
             {
