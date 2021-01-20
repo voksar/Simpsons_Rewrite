@@ -22,6 +22,7 @@ namespace simpsons.Core
         
         static DisplayGames displayGames;
         static Player player;
+        static PlayerInformationHandler playerInformationHandler;
 
         static GameHandler gameHandler;
         static List<GameHandler> gameHandlers;
@@ -42,6 +43,7 @@ namespace simpsons.Core
             InputHandler.Initialize();
             FontHandler.Initialize();
             displayGames = new DisplayGames();
+            playerInformationHandler = PlayerInformationHandler.Initialize();
         }
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {

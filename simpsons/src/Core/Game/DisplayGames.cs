@@ -37,7 +37,6 @@ namespace simpsons.Core
         {
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
-                Console.WriteLine($"{i == selected}");
                 if(i == selected)
                 {
                     spriteBatch.DrawString(FontHandler.Fonts["Reno20"], 
