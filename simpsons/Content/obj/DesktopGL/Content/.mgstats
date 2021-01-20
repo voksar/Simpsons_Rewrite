@@ -1,13 +1,13 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Collection.xnb","TextureProcessor","Texture2DContent",2980,10085,0,1032623
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Collection.xnb","TextureProcessor","Texture2DContent",47909,10085,0,0017339
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Exit.xnb","TextureProcessor","Texture2DContent",2847,10085,0,0014828
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Exit.xnb","TextureProcessor","Texture2DContent",26150,10085,0,0013857
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Highscore.xnb","TextureProcessor","Texture2DContent",4610,10085,0,0013028
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Highscore.xnb","TextureProcessor","Texture2DContent",34181,10085,0,0015188
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Options.xnb","TextureProcessor","Texture2DContent",3603,10085,0,0013143
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Options.xnb","TextureProcessor","Texture2DContent",35154,10085,0,0015281
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Play.xnb","TextureProcessor","Texture2DContent",3290,10085,0,0014441
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Play.xnb","TextureProcessor","Texture2DContent",32460,10085,0,0016998
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Store.xnb","TextureProcessor","Texture2DContent",3110,10085,0,0013885
-"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Store.xnb","TextureProcessor","Texture2DContent",31945,10085,0,0028617
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Collection.xnb","TextureProcessor","Texture2DContent",2980,10085,0,1043788
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Collection.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Collection.xnb","TextureProcessor","Texture2DContent",47909,10085,0,0017457
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Exit.xnb","TextureProcessor","Texture2DContent",2847,10085,0,0016017
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Exit.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Exit.xnb","TextureProcessor","Texture2DContent",26150,10085,0,0014129
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Highscore.xnb","TextureProcessor","Texture2DContent",4610,10085,0,0013453
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Highscore.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Highscore.xnb","TextureProcessor","Texture2DContent",34181,10085,0,0014256
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Options.xnb","TextureProcessor","Texture2DContent",3603,10085,0,001412
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Options.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Options.xnb","TextureProcessor","Texture2DContent",35154,10085,0,001705
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Play.xnb","TextureProcessor","Texture2DContent",3290,10085,0,001453
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Play.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Play.xnb","TextureProcessor","Texture2DContent",32460,10085,0,0013984
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.png","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Store.xnb","TextureProcessor","Texture2DContent",3110,10085,0,0013759
+"D:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.psd","D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Store.xnb","TextureProcessor","Texture2DContent",31945,10085,0,0027888

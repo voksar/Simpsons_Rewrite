@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace simpsons.Core.Handlers
 {
+    [JsonObject(ItemRequired = Required.Always)]
     class GameHandler : IDisposable
     {
         private static string SerializeFilePath = "Test.json";
@@ -15,6 +16,13 @@ namespace simpsons.Core.Handlers
         public Player Player {get;set;}
         public List<Enemy> Enemies {get;set;}
 
+
+        public void SetProperties(Player player, List<Enemy> enemies, int score)
+        {
+            Player = player;
+            Enemies = enemies;
+            Score = score;
+        }
         public void GenerateGameID()
         {
             string chars = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
@@ -29,52 +37,17 @@ namespace simpsons.Core.Handlers
             GameID = "G-" + finalString;
         }
         
-        public void SerializeGame(Player player, List<Enemy> enemies, int score)
+        public static void SerializeGame(List<GameHandler> gameHandlers)
         {
-            Player = player;
-            Enemies = enemies;
-            Score = score;
-            List<GameHandler> gameList;
             //Check if file exists, if not then create and serialize object
             if(!File.Exists(SerializeFilePath))
-            {
-                gameList = new List<GameHandler>();
-                gameList.Add(this);
-                string serializedJson = JsonConvert.SerializeObject(gameList, Formatting.Indented,
-                new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Auto});
-                File.WriteAllText(SerializeFilePath, serializedJson);
-            }
-            else
-            {
-                bool isFound = false;
-                string json = File.ReadAllText(SerializeFilePath);
-                
-                //Try to create a instance of gamelist, then serialize the data
-                gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
-                    new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
-                if(gameList == null)
-                    gameList = new List<GameHandler>();
-                int index = 0;
-                foreach((GameHandler gh, Int32 i) in gameList.Where(gh => gh.GameID == this.GameID).Select((gh, i) => (gh, i)))
-                {
-                    isFound = true;
-                    index = i;
-                }
-                if(isFound)
-                {
-                    gameList[index] = this;
-                }
-                else
-                {
-                    gameList.Add(this);
-                }
-                
-                string jsonOutput = JsonConvert.SerializeObject(gameList, Formatting.Indented,
-                new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
-                File.WriteAllText(SerializeFilePath, jsonOutput);
-            }
-            
-            
+                File.WriteAllText(SerializeFilePath, "");
+
+            string output = JsonConvert.SerializeObject(gameHandlers, 
+            Formatting.Indented, new JsonSerializerSettings(){
+                TypeNameHandling = TypeNameHandling.Auto
+            });
+            File.WriteAllText(SerializeFilePath, output);
         }
         //Denna funktion behöver inte ett objekt för att köras utan är kopplad till typen direkt.
         public static List<GameHandler> DeserializeOnStartup()
@@ -95,6 +68,27 @@ namespace simpsons.Core.Handlers
             
 
             return gameList;
+        }
+
+        public static List<GameHandler> AddDataToTable(GameHandler gameHandler, List<GameHandler> gameHandlers)
+        {
+            bool isFound = false;
+            int index = 0;
+            foreach((GameHandler gh, int i) in gameHandlers.Where(gameH => gameH.GameID == gameHandler.GameID)
+            .Select((value, i) => (value, i)))
+            {
+                isFound = true;
+                index = i;
+            }
+            if(isFound)
+            {
+                gameHandlers[index] = gameHandler;
+            }
+            else
+            {
+                gameHandlers.Add(gameHandler);
+            }
+            return gameHandlers;
         }
 
         public void Dispose()

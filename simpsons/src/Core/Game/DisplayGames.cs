@@ -27,10 +27,16 @@ namespace simpsons.Core
         }
         public int Update()
         {
+            if(InputHandler.Press(Keys.Down))
+                if(selected < displayGamesItems.Count - 1)
+                    selected++;
+            if(InputHandler.Press(Keys.Up))
+                if(selected > 0)
+                    selected--;
             if(InputHandler.Press(Keys.Enter))
-            {
                 return (int)Simpsons.StartGame(displayGamesItems[selected].Game);
-            }
+
+            
             return (int)Simpsons.States.Saves;
         }
         public void Draw(SpriteBatch spriteBatch)

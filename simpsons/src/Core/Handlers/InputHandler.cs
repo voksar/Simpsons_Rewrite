@@ -5,23 +5,27 @@ namespace simpsons.Core.Handlers
 {
     static class InputHandler
     {
-        public static KeyboardState prevState, currentState;
+        static KeyboardState previousState, currentState;
 
         public static void Initialize()
         {
-            prevState = currentState;
+            previousState = currentState;
             currentState = Keyboard.GetState();
         }
 
         public static void Update(GameTime gameTime)
         {
-            prevState = currentState;
+            previousState = currentState;
             currentState = Keyboard.GetState();
         }
-        
+        public static bool GoBackPressed()
+        {
+            return Press(Keys.Back)
+                || Press(Keys.Escape);
+        }
         public static bool Press(Keys key)
         {
-            return currentState.IsKeyDown(key) && !prevState.IsKeyDown(key);
+            return currentState.IsKeyDown(key) && !previousState.IsKeyDown(key);
         }
     }
 }

@@ -44,8 +44,8 @@ namespace simpsons
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Simpsons.State = Simpsons.States.Quit;
+            /*if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Simpsons.State = Simpsons.States.Quit;*/
             InputHandler.Update(gameTime);
             switch(Simpsons.State)
             {
