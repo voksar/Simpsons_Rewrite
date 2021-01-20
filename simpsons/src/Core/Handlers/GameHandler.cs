@@ -70,24 +70,31 @@ namespace simpsons.Core.Handlers
             return gameList;
         }
 
-        public static List<GameHandler> AddDataToTable(GameHandler gameHandler, List<GameHandler> gameHandlers)
+        public static List<GameHandler> AddDataToTable(GameHandler gameHandler, List<GameHandler> gameHandlers, DisplayGames displayGames)
         {
-            bool isFound = false;
-            int index = 0;
-            foreach((GameHandler gh, int i) in gameHandlers.Where(gameH => gameH.GameID == gameHandler.GameID)
-            .Select((value, i) => (value, i)))
+            
+            int index = gameHandlers.FindIndex(item => item.GameID == gameHandler.GameID);
+            Console.WriteLine(index);
+            if(index == -1)
             {
-                isFound = true;
-                index = i;
+                displayGames.AddGameItem(gameHandler);
+                gameHandlers.Add(gameHandler);
             }
+            else
+            {
+                gameHandlers[index] = gameHandler;
+                displayGames.displayGamesItems[index].Game = gameHandler;
+            }
+            /*
             if(isFound)
             {
                 gameHandlers[index] = gameHandler;
             }
             else
             {
+                displayGames.AddGameItem(gameHandler);
                 gameHandlers.Add(gameHandler);
-            }
+            }*/
             return gameHandlers;
         }
 

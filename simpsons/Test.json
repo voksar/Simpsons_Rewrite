@@ -1,6 +1,6 @@
 [
   {
-    "GameID": "G-JFY5BAB1BVZN",
+    "GameID": "G-VOXG01UN47BO",
     "Score": 5,
     "Player": {
       "X": 300.0,
@@ -14,28 +14,8 @@
       {
         "$type": "simpsons.Core.Bart, simpsons",
         "Health": 1,
-        "X": 304.0,
-        "Y": 234.0,
-        "SpeedX": 2.0,
-        "SpeedY": 2.0,
-        "IsAlive": true,
-        "TextureName": "Enemies/bart"
-      },
-      {
-        "$type": "simpsons.Core.Bart, simpsons",
-        "Health": 1,
-        "X": 470.0,
-        "Y": 400.0,
-        "SpeedX": 2.0,
-        "SpeedY": 2.0,
-        "IsAlive": true,
-        "TextureName": "Enemies/bart"
-      },
-      {
-        "$type": "simpsons.Core.Bart, simpsons",
-        "Health": 1,
-        "X": 610.0,
-        "Y": 540.0,
+        "X": 252.0,
+        "Y": 252.0,
         "SpeedX": 2.0,
         "SpeedY": 2.0,
         "IsAlive": true,

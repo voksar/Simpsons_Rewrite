@@ -8,9 +8,11 @@ namespace simpsons.Core
 {
     class DisplayGames
     {
+        public List<DisplayGamesItem> displayGamesItems{get;set;}
+
         int selected = 0;
         int currentY = 10;
-        List<DisplayGamesItem> displayGamesItems;
+        
         public DisplayGames()
         {
             displayGamesItems = new List<DisplayGamesItem>();

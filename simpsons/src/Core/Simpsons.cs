@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using Newtonsoft.Json;
 using simpsons.Core.Handlers;
 
@@ -52,12 +53,20 @@ namespace simpsons.Core
         }
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {
+            //Oklart vafan jag gör med denna, ska fixa
+            gd = gdm;
+
+            //Load textures and assets
             TextureHandler.LoadContent(content);
             FontHandler.LoadContent(content);
 
+            //Default setup
+            InitialSetup();
+
+            //Deserialize all earlier games
             gameHandlers = GameHandler.DeserializeOnStartup();
-            player = new Player("Player/homer", 300, 300, 5, 5);
-            gd = gdm;
+            
+            //Menu load stuff
             menu = new Menu((int)States.Menu);
             menu.LoadContent(gd, window, content);
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
@@ -66,10 +75,8 @@ namespace simpsons.Core
                 content.Load<Texture2D>("MenuIcons/Play"));
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
-            
-            enemies.Add(new Bart("Enemies/bart", 100, 30, 2,2,1));
-            
 
+            //Add previous games to the save manager
             foreach(GameHandler gh in gameHandlers)
             {
                 displayGames.AddGameItem(gh);
@@ -110,11 +117,9 @@ namespace simpsons.Core
         {
             menu.Draw(spriteBatch, window);
         }
-        #nullable enable
-        public static States StartGame(GameHandler? gh)
-        #nullable disable
+        public static States StartGame(GameHandler gameHandle)
         {
-            if(gh == null)
+            if(gameHandle == null)
             {
                 gameHandler = new GameHandler();
                 gameHandler.GenerateGameID();
@@ -122,9 +127,10 @@ namespace simpsons.Core
             }
             else
             {
-                gameHandler = gh;
-                foreach(Enemy e in gameHandler.Enemies)
-                    enemies.Add(e);
+                gameHandler = gameHandle;
+                //foreach(Enemy e in gameHandler.Enemies.ToList())
+                 //   enemies.Add(e);
+                 enemies = gameHandler.Enemies;
                 player = gameHandler.Player;
                 gameHandler.Score = 0;
             }
@@ -135,10 +141,8 @@ namespace simpsons.Core
             if(gameHandler != null)
             {
                 gameHandler.SetProperties(player, enemies, 5);
-                displayGames.AddGameItem(gameHandler);
-                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers);
+                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
             }
-            //gameHandler.SerializeGame(player, enemies, 0);
             gameHandler = null;
         }
         public static void ExitGame()
@@ -154,6 +158,11 @@ namespace simpsons.Core
         public static void DisplayGamesDraw(SpriteBatch spriteBatch)
         {
             displayGames.Draw(spriteBatch);
+        }
+        static void InitialSetup()
+        {
+            player = new Player("Player/homer", 500,500, 5,5);
+            enemies.Clear();
         }
     }
 }
