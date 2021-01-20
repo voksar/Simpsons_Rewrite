@@ -11,8 +11,6 @@ namespace simpsons.Core
 {
     static class Simpsons
     {   
-        public static string SERIALIZEFILE = "Test.json";
-
         //Statemanagement
         public enum States {Run, Menu, Quit, GameStart, Saves}
 

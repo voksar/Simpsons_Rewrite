@@ -9,6 +9,7 @@ namespace simpsons.Core.Handlers
 {
     class GameHandler : IDisposable
     {
+        private static string SerializeFilePath = "Test.json";
         public string GameID {get;set;}
         public int Score {get;set;}
         public Player Player {get;set;}
@@ -35,18 +36,18 @@ namespace simpsons.Core.Handlers
             Score = score;
             List<GameHandler> gameList;
             //Check if file exists, if not then create and serialize object
-            if(!File.Exists(Simpsons.SERIALIZEFILE))
+            if(!File.Exists(SerializeFilePath))
             {
                 gameList = new List<GameHandler>();
                 gameList.Add(this);
                 string serializedJson = JsonConvert.SerializeObject(gameList, Formatting.Indented,
                 new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Auto});
-                File.WriteAllText(Simpsons.SERIALIZEFILE, serializedJson);
+                File.WriteAllText(SerializeFilePath, serializedJson);
             }
             else
             {
                 bool isFound = false;
-                string json = File.ReadAllText(Simpsons.SERIALIZEFILE);
+                string json = File.ReadAllText(SerializeFilePath);
                 
                 //Try to create a instance of gamelist, then serialize the data
                 gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
@@ -70,13 +71,11 @@ namespace simpsons.Core.Handlers
                 
                 string jsonOutput = JsonConvert.SerializeObject(gameList, Formatting.Indented,
                 new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
-                File.WriteAllText(Simpsons.SERIALIZEFILE, jsonOutput);
+                File.WriteAllText(SerializeFilePath, jsonOutput);
             }
             
             
         }
-        
-
         //Denna funktion behöver inte ett objekt för att köras utan är kopplad till typen direkt.
         public static List<GameHandler> DeserializeOnStartup()
         {
