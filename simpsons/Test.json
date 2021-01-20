@@ -1,6 +1,6 @@
 [
   {
-    "GameID": "G-QRBSPQAI72WJ",
+    "GameID": "G-3208FVMXM8P3",
     "Score": 0,
     "Player": {
       "X": 300.0,
@@ -10,61 +10,6 @@
       "IsAlive": true,
       "TextureName": "Player/homer"
     },
-    "Enemies": [
-      {
-        "$type": "simpsons.Core.Bart, simpsons",
-        "Health": 1,
-        "X": 174.0,
-        "Y": 104.0,
-        "SpeedX": 2.0,
-        "SpeedY": 2.0,
-        "IsAlive": true,
-        "TextureName": "Enemies/bart"
-      },
-      {
-        "$type": "simpsons.Core.Bart, simpsons",
-        "Health": 1,
-        "X": 870.0,
-        "Y": 870.0,
-        "SpeedX": 5.0,
-        "SpeedY": 5.0,
-        "IsAlive": true,
-        "TextureName": "Enemies/bart"
-      },
-      {
-        "$type": "simpsons.Core.Bart, simpsons",
-        "Health": 1,
-        "X": 940.0,
-        "Y": 870.0,
-        "SpeedX": -5.0,
-        "SpeedY": 5.0,
-        "IsAlive": true,
-        "TextureName": "Enemies/bart"
-      }
-    ]
-  },
-  {
-    "GameID": "G-UKMH7WFHIDH1",
-    "Score": 0,
-    "Player": {
-      "X": 300.0,
-      "Y": 300.0,
-      "SpeedX": 5.0,
-      "SpeedY": 5.0,
-      "IsAlive": true,
-      "TextureName": "Player/homer"
-    },
-    "Enemies": [
-      {
-        "$type": "simpsons.Core.Bart, simpsons",
-        "Health": 1,
-        "X": 524.0,
-        "Y": 454.0,
-        "SpeedX": 2.0,
-        "SpeedY": 2.0,
-        "IsAlive": true,
-        "TextureName": "Enemies/bart"
-      }
-    ]
+    "Enemies": []
   }
 ]

@@ -11,6 +11,8 @@ namespace simpsons.Core
 {
     static class Simpsons
     {   
+        public static string SERIALIZEFILE = "Test.json";
+
         //Statemanagement
         public enum States {Run, Menu, Quit, GameStart, Saves}
 
@@ -58,7 +60,7 @@ namespace simpsons.Core
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
             
-            enemies.Add(new Bart("Enemies/bart", 100, 30, 2,2,1));
+            //enemies.Add(new Bart("Enemies/bart", 100, 30, 2,2,1));
             gameHandlers = GameHandler.DeserializeOnStartup();
 
             foreach(GameHandler gh in gameHandlers)

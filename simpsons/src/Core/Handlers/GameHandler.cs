@@ -34,20 +34,25 @@ namespace simpsons.Core.Handlers
             Enemies = enemies;
             Score = score;
             List<GameHandler> gameList;
-            if(!File.Exists("Test.json"))
+            //Check if file exists, if not then create and serialize object
+            if(!File.Exists(Simpsons.SERIALIZEFILE))
             {
                 gameList = new List<GameHandler>();
                 gameList.Add(this);
                 string serializedJson = JsonConvert.SerializeObject(gameList, Formatting.Indented,
                 new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Auto});
-                File.WriteAllText(@"Test.json", serializedJson);
+                File.WriteAllText(Simpsons.SERIALIZEFILE, serializedJson);
             }
             else
             {
                 bool isFound = false;
-                string json = File.ReadAllText("Test.json");
+                string json = File.ReadAllText(Simpsons.SERIALIZEFILE);
+                
+                //Try to create a instance of gamelist, then serialize the data
                 gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
-                new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+                    new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+                if(gameList == null)
+                    gameList = new List<GameHandler>();
                 int index = 0;
                 foreach((GameHandler gh, Int32 i) in gameList.Where(gh => gh.GameID == this.GameID).Select((gh, i) => (gh, i)))
                 {
@@ -65,7 +70,7 @@ namespace simpsons.Core.Handlers
                 
                 string jsonOutput = JsonConvert.SerializeObject(gameList, Formatting.Indented,
                 new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
-                File.WriteAllText("Test.json", jsonOutput);
+                File.WriteAllText(Simpsons.SERIALIZEFILE, jsonOutput);
             }
             
             
@@ -76,10 +81,19 @@ namespace simpsons.Core.Handlers
         public static List<GameHandler> DeserializeOnStartup()
         {
             List<GameHandler> gameList;
-
+            if(!File.Exists("Test.json"))
+            {
+                File.WriteAllText("Test.json","");
+            }
             string json = File.ReadAllText("Test.json");
+              
             gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
             new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+
+            if(gameList == null)
+                gameList = new List<GameHandler>();
+            
+            
 
             return gameList;
         }
