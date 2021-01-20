@@ -11,5 +11,18 @@
       "TextureName": "Player/homer"
     },
     "Enemies": []
+  },
+  {
+    "GameID": "G-CE9EX51DDB65",
+    "Score": 0,
+    "Player": {
+      "X": 300.0,
+      "Y": 300.0,
+      "SpeedX": 5.0,
+      "SpeedY": 5.0,
+      "IsAlive": true,
+      "TextureName": "Player/homer"
+    },
+    "Enemies": []
   }
 ]

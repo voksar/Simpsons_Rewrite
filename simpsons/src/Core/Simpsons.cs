@@ -18,11 +18,11 @@ namespace simpsons.Core
         //Public variables
         public static GraphicsDevice gd{get;set;}
         public static States State{get;set;}
-        
+        public static PlayerInformationHandler playerInformationHandler;
         
         static DisplayGames displayGames;
         static Player player;
-        static PlayerInformationHandler playerInformationHandler;
+        
 
         static GameHandler gameHandler;
         static List<GameHandler> gameHandlers;
