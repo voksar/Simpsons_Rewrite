@@ -15,19 +15,23 @@ namespace simpsons.Core
         {
             displayGamesItems = new List<DisplayGamesItem>();
         }
-        public void AddGameItem(string text)
+        public void AddGameItem(GameHandler gameHandler)
         {
             float x = 60;
             float y = 10 + currentY;
 
             currentY += 25;
 
-            DisplayGamesItem displayGamesItem = new DisplayGamesItem(text, x, y);
+            DisplayGamesItem displayGamesItem = new DisplayGamesItem(gameHandler, x, y);
             displayGamesItems.Add(displayGamesItem);
         }
-        public void Update()
+        public int Update()
         {
-
+            if(InputHandler.Press(Keys.Enter))
+            {
+                return (int)Simpsons.StartGame(displayGamesItems[selected].Game);
+            }
+            return (int)Simpsons.States.Saves;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -55,10 +59,12 @@ namespace simpsons.Core
     {
         public string DisplayID {get;set;}
         public Rectangle Rectangle {get;set;}
-        public DisplayGamesItem(string text,float x, float y)
+        public GameHandler Game{get;set;}
+        public DisplayGamesItem(GameHandler gameHandler,float x, float y)
         {
             Rectangle = new Rectangle((int)x,(int)y, 250, 100);
-            DisplayID = text;
+            DisplayID = gameHandler.GameID;
+            Game = gameHandler;
         }
     }
 }

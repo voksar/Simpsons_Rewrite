@@ -17,13 +17,14 @@ namespace simpsons.Core
 
         //Public variables
         public static GraphicsDevice gd{get;set;}
-        public static GameHandler gameHandler{get;set;}
         public static States State{get;set;}
         
         
         static DisplayGames displayGames;
         static Player player;
-        
+
+        static GameHandler gameHandler;
+        static List<GameHandler> gameHandlers;
 
         static Menu menu;
 
@@ -48,8 +49,6 @@ namespace simpsons.Core
             FontHandler.LoadContent(content);
             player = new Player("Player/homer", 300, 300, 5, 5);
             gd = gdm;
-
-
             menu = new Menu((int)States.Menu);
             menu.LoadContent(gd, window, content);
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
@@ -59,14 +58,14 @@ namespace simpsons.Core
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
             
+            enemies.Add(new Bart("Enemies/bart", 100, 30, 2,2,1));
+            gameHandlers = GameHandler.DeserializeOnStartup();
 
-            enemies.Add(new Bart("Enemies/bart", 100, 100, 5, 5, 1));
-            enemies.Add(new Bart("Enemies/bart", 200, 100, 5, 5, 1));
-            
-            displayGames.AddGameItem("TEST123");
-            displayGames.AddGameItem("TEST321");
-
+            foreach(GameHandler gh in gameHandlers)
+            {
+                displayGames.AddGameItem(gh);
             }
+        }
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
             foreach(Enemy e in enemies)
@@ -90,23 +89,33 @@ namespace simpsons.Core
         {
             menu.Draw(spriteBatch, window);
         }
-
-        public static States StartGame()
+        
+        public static States StartGame(GameHandler gh)
         {
-            gameHandler = new GameHandler();
-            gameHandler.GenerateGameID();
+            if(gh == null)
+            {
+                gameHandler = new GameHandler();
+                gameHandler.GenerateGameID();
+            }
+            else
+            {
+                gameHandler = gh;
+                foreach(Enemy e in gameHandler.Enemies)
+                    enemies.Add(e);
+                player = gameHandler.Player;
+            }
             return States.Run;
         }
-        public static void SerializeGame()
+        public static void ExitGame()
         {
-            gameHandler.SerializeGame(player, enemies, 0);
-            gameHandler.Dispose();
+            if(gameHandler != null)
+                gameHandler.SerializeGame(player, enemies, 0);
         }
 
         public static States DisplayGamesUpdate()
         {
-            displayGames.Update();
-            return States.Saves;
+            
+            return (States)displayGames.Update();
         }
         public static void DisplayGamesDraw(SpriteBatch spriteBatch)
         {

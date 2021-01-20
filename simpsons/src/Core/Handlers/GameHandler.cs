@@ -3,6 +3,7 @@ using simpsons.Core;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace simpsons.Core.Handlers
 {
@@ -15,8 +16,6 @@ namespace simpsons.Core.Handlers
 
         public void GenerateGameID()
         {
-            //Creates a GameID for each session.
-            //Not yet implemented to interact with other functions.
             string chars = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
             char[] newChars = new char[12];
             Random random = new Random();
@@ -45,13 +44,25 @@ namespace simpsons.Core.Handlers
             }
             else
             {
-                
+                bool isFound = false;
                 string json = File.ReadAllText("Test.json");
                 gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
                 new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+                int index = 0;
+                foreach((GameHandler gh, Int32 i) in gameList.Where(gh => gh.GameID == this.GameID).Select((gh, i) => (gh, i)))
+                {
+                    isFound = true;
+                    index = i;
+                }
+                if(isFound)
+                {
+                    gameList[index] = this;
+                }
+                else
+                {
+                    gameList.Add(this);
+                }
                 
-                gameList.Add(this);
-
                 string jsonOutput = JsonConvert.SerializeObject(gameList, Formatting.Indented,
                 new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
                 File.WriteAllText("Test.json", jsonOutput);
@@ -60,13 +71,25 @@ namespace simpsons.Core.Handlers
             
         }
         
+
+        //Denna funktion behöver inte ett objekt för att köras utan är kopplad till typen direkt.
+        public static List<GameHandler> DeserializeOnStartup()
+        {
+            List<GameHandler> gameList;
+
+            string json = File.ReadAllText("Test.json");
+            gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
+            new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+
+            return gameList;
+        }
+
         public void Dispose()
         {
             GameID = null;
             Player = null;
             Enemies = null;
         }
-
         
     }
 }

@@ -53,13 +53,13 @@ namespace simpsons
                     Simpsons.State = Simpsons.RunUpdate(Window, gameTime);
                     break;
                 case Simpsons.States.GameStart:
-                    Simpsons.State = Simpsons.StartGame();
+                    Simpsons.State = Simpsons.StartGame(null);
                     break;
                 case Simpsons.States.Saves:
                     Simpsons.State = Simpsons.DisplayGamesUpdate();
                     break;
                 case Simpsons.States.Quit:
-                    Simpsons.SerializeGame();
+                    Simpsons.ExitGame();
                     Exit();
                     break;
                 case Simpsons.States.Menu:
