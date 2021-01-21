@@ -20,13 +20,16 @@ namespace simpsons.Core
         public int RectangleWidth {get;set;}
         public float Opacity {get;set;}        
 
+
+
         int selected = 0;
-        int currentY = 50;
+        int currentY = 0;
         int frame = 0;
         bool allowKeyboard = false;
         Color selectedColor;
 
         Texture2D baseIcon;
+        Texture2D rectangleDisplayInfo;
         
         public DisplayGames()
         {
@@ -38,15 +41,17 @@ namespace simpsons.Core
             Texture = Helper.RectangleCreator(RectangleWidth, window.ClientBounds.Height,
             graphicsDevice, Color.Black, 0.8f);
             baseIcon = TextureHandler.Sprites["MenuIcons/Saves"];
+            rectangleDisplayInfo = Helper.RectangleCreator(400, 300, graphicsDevice, Color.Black, 0.9f
+            );
         }
         public void AddGameItem(GameHandler gameHandler)
         {
-            float y = currentY;
+            
             var measure = FontHandler.Fonts["Reno20"].MeasureString(gameHandler.GameID).X;
             float x = 740 - measure;
             
-            currentY += (int)(baseIcon.Height * 0.6) + 5;
-
+            currentY = 50 + (((int)(baseIcon.Height * 0.6) + 5) * displayGamesItems.Count);
+            float y = currentY;
             DisplayGamesItem displayGamesItem = new DisplayGamesItem(gameHandler, x, y);
             displayGamesItems.Add(displayGamesItem);
         }
@@ -110,6 +115,8 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, new Rectangle(RectangleX, 0, RectangleWidth, window.ClientBounds.Height)
             , Color.White);
+            spriteBatch.Draw(rectangleDisplayInfo, 
+            new Vector2(300, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
                 spriteBatch.Draw(baseIcon, new Vector2(
@@ -128,6 +135,28 @@ namespace simpsons.Core
                     Color.White, Opacity);
                 }
             }
+            DrawSaveInformation(spriteBatch, window);
+        }
+        
+        public void DrawSaveInformation(SpriteBatch spriteBatch, GameWindow window)
+        {
+            var measure = FontHandler.Fonts["Reno24"].MeasureString("SAVEINFORMATION").Length();
+            float x = (window.ClientBounds.Width / 2) - (measure / 2);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno24"], "SAVEINFORMATION",
+            new Vector2(x, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
+
+            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            "Enemies: " + displayGamesItems[selected].Game.Enemies.Count, 
+            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 10), Color.Green * Opacity);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            "Time: " + (int)displayGamesItems[selected].Game.TimeInGame, 
+            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 30), Color.Green * Opacity);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            "Score: " + displayGamesItems[selected].Game.Score, 
+            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 50), Color.Green * Opacity);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            "Last Played: " + displayGamesItems[selected].Game.LastPlayed.ToString(), 
+            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 70), Color.Green * Opacity);
         }
         public int StartStateChange(int amountX, int amountWidth, int targetX, int targetWidth)
         {
