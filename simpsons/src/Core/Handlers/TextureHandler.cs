@@ -9,7 +9,8 @@ namespace simpsons.Core.Handlers
     public static class TextureHandler
     {
         private static Texture2D playerTexture;
-        private static Texture2D enemyBart;
+        private static Texture2D enemyBartTexture;
+        private static Texture2D backgroundTexture;
 
         public static Dictionary<string, Texture2D> Sprites{get; private set;}
 
@@ -17,14 +18,20 @@ namespace simpsons.Core.Handlers
         {
             Sprites = new Dictionary<string, Texture2D>();
         }
-
+        public static void LoadPreContent(ContentManager content)
+        {
+            backgroundTexture = content.Load<Texture2D>("Backgrounds/background1");
+            Sprites.Add("Backgrounds/background1", backgroundTexture);
+        }
         public static void LoadContent(ContentManager content)
         {
             playerTexture = content.Load<Texture2D>("Player/homer");
-            enemyBart = content.Load<Texture2D>("Enemies/bart");
+            enemyBartTexture = content.Load<Texture2D>("Enemies/bart");
+            
 
             Sprites.Add("Player/homer", playerTexture);
-            Sprites.Add("Enemies/bart", enemyBart);
+            Sprites.Add("Enemies/bart", enemyBartTexture);
+            
         }
     }
 }

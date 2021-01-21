@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Backgrounds/background1.png</File>
     <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Enemies/bart.png</File>
     <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno14.spritefont</File>
     <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno20.spritefont</File>
@@ -26,6 +27,7 @@
     <File>D:/C#/Simpsons_Rewrite/simpsons/Content/Player/homer.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

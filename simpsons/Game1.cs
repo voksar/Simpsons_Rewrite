@@ -46,7 +46,7 @@ namespace simpsons
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Simpsons.LoadPreContent(Content);
+            Simpsons.LoadPreContent(Content, Window);
             //Start up new thread to not block Draw thread
             ThreadPool.QueueUserWorkItem(state => 
             {
@@ -57,12 +57,7 @@ namespace simpsons
 
         protected override void Update(GameTime gameTime)
         {
-            InputHandler.Update(gameTime);
-            Simpsons.UpdateTick();
-            if(Simpsons.Tick == 900)
-            {
-                Simpsons.UpdateGameSaves();
-            }
+            Simpsons.AlwaysUpdate(Window, gameTime);
             switch(Simpsons.State)
             {
                 case Simpsons.States.Loading:
@@ -97,6 +92,7 @@ namespace simpsons
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            Simpsons.AlwaysDraw(_spriteBatch);
             switch(Simpsons.State)
             {
                 case Simpsons.States.Loading:

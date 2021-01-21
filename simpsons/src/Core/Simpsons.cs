@@ -32,10 +32,13 @@ namespace simpsons.Core
         static DisplayGames displayGames;
         static Player player;
         static GameHandler gameHandler;
-        static List<GameHandler> gameHandlers;
         static Menu menu;
         static Random random;
+        static Background background;
+
         static List<Enemy> enemies;
+        static List<GameHandler> gameHandlers;
+
 
         static bool NeedUpdate = false;
 
@@ -53,10 +56,12 @@ namespace simpsons.Core
             Tick = 0;
 
         }
-        public static void LoadPreContent(ContentManager content)
+        public static void LoadPreContent(ContentManager content, GameWindow window)
         {
             //Load Pre textures and assets
             FontHandler.LoadContent(content);
+            TextureHandler.LoadPreContent(content);
+            background = new Background(TextureHandler.Sprites["Backgrounds/background1"], window);
         }
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {
@@ -156,7 +161,21 @@ namespace simpsons.Core
         {
             displayGames.Draw(spriteBatch);
         }
-        
+        public static void AlwaysUpdate(GameWindow window, GameTime gameTime)
+        {
+            background.Update(window, 2f);
+            InputHandler.Update(gameTime);
+            UpdateTick();
+            if(Tick == 900)
+            {
+                UpdateGameSaves();
+            }
+        }
+        public static void AlwaysDraw(SpriteBatch spriteBatch)
+        {
+            background.Draw(spriteBatch);
+        }
+
         public static void UpdateTick()
         {
             Tick++;

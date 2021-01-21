@@ -37,3 +37,4 @@ D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno.otf
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno14.xnb
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno20.xnb
 D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Fonts\Reno24.xnb
+D:\C#\Simpsons_Rewrite\simpsons\bin\Debug\netcoreapp3.1\Content\Backgrounds\background1.xnb
