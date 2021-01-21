@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using simpsons.Core.Handlers;
 
 namespace simpsons.Core.Helpers
 {
@@ -20,6 +21,42 @@ namespace simpsons.Core.Helpers
             for (int i = 0; i < data.Length; ++i) data[i] = c * opacity;
             rect.SetData(data);
             return rect;
+        }
+        //Högst icke optimerat, skall försöka bygga en shader för att få outlines på texten.
+        public static void DrawOutlineText(SpriteBatch spriteBatch, string text)
+        {
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(9,10), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(9,9), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(10,9), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(11,10), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(11,11), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(10,11), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(10,10), Color.White);
+        }
+        public static void DrawOutlineText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
+        {
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(position.X - 1, position.Y), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(position.X - 1, position.Y - 1), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(position.X, position.Y - 1), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(position.X + 1, position.Y), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(position.X + 1, position.Y + 1), Color.Black);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, new Vector2(position.X, position.Y + 1), Color.Black);
+
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
+            text, position, color);
         }
     }
     

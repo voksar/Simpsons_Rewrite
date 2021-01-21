@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using simpsons.Core.Handlers;
 using simpsons.Core;
+using System;
 
 namespace simpsons
 {
@@ -24,7 +25,10 @@ namespace simpsons
             // TODO: Add your initialization logic here
             graphics.PreferredBackBufferHeight = 1000;
             graphics.PreferredBackBufferWidth = 1000;
+            //Ta bort v-sync, cappa på 60 fps.
             graphics.SynchronizeWithVerticalRetrace = false;
+            IsFixedTimeStep = true;
+            TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
             graphics.ApplyChanges();
             //Intialize
             Simpsons.State = Simpsons.States.Menu;
@@ -82,7 +86,7 @@ namespace simpsons
                     Simpsons.DisplayGamesDraw(_spriteBatch);
                     break;
                 case Simpsons.States.Run:
-                    Simpsons.RunDraw(_spriteBatch);
+                    Simpsons.RunDraw(_spriteBatch, gameTime);
                     break;
                 case Simpsons.States.Menu:
                     Simpsons.MenuDraw(_spriteBatch, Window);

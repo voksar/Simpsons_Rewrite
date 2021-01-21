@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using Newtonsoft.Json;
 using simpsons.Core.Handlers;
+using simpsons.Core.Helpers;
 
 namespace simpsons.Core
 {
@@ -18,7 +19,7 @@ namespace simpsons.Core
 
         //Debugging tools
         public static bool DebuggerIsActive = true;
-
+        public static FrameCounter frameCounter;
         //Public variables
         
         public static GraphicsDevice gd{get;set;}
@@ -42,6 +43,8 @@ namespace simpsons.Core
 
         public static void Initialize()
         {
+            frameCounter = new FrameCounter();
+
             random = new Random();
             enemies = new List<Enemy>();
             TextureHandler.Initialize();
@@ -84,6 +87,7 @@ namespace simpsons.Core
         }
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
+            gameHandler.TimeInGame += gameTime.ElapsedGameTime.TotalSeconds;
             if(InputHandler.GoBackPressed())
             {
                 StopGame();
@@ -95,15 +99,17 @@ namespace simpsons.Core
             }
             return States.Run;
         }
-        public static void RunDraw(SpriteBatch spriteBatch)
+        public static void RunDraw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             player.Draw(spriteBatch);
             foreach(Enemy e in enemies)
                 e.Draw(spriteBatch);
             if(DebuggerIsActive)
             {
-                spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
-                gameHandler.GameID, new Vector2(10,10), Color.Red);
+                var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                frameCounter.Update(deltaTime);
+                string fps = string.Format("FPS: {0}", (int)frameCounter.AverageFramesPerSecond);
+                Helper.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps);
             }
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
@@ -124,6 +130,7 @@ namespace simpsons.Core
                 gameHandler = new GameHandler();
                 gameHandler.GenerateGameID();
                 gameHandler.Score = 0;
+                gameHandler.TimeInGame = 0;
             }
             else
             {
@@ -132,7 +139,7 @@ namespace simpsons.Core
                  //   enemies.Add(e);
                  enemies = gameHandler.Enemies;
                 player = gameHandler.Player;
-                gameHandler.Score = 0;
+                Console.WriteLine(gameHandler.TimeInGame);
             }
             return States.Run;
         }

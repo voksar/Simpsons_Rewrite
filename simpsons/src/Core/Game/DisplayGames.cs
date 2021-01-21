@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using simpsons.Core.Handlers;
+using simpsons.Core.Helpers;
 using System;
 namespace simpsons.Core
 {
@@ -22,7 +23,7 @@ namespace simpsons.Core
             float x = 60;
             float y = 10 + currentY;
 
-            currentY += 25;
+            currentY += 30;
 
             DisplayGamesItem displayGamesItem = new DisplayGamesItem(gameHandler, x, y);
             displayGamesItems.Add(displayGamesItem);
@@ -47,17 +48,15 @@ namespace simpsons.Core
             {
                 if(i == selected)
                 {
-                    spriteBatch.DrawString(FontHandler.Fonts["Reno20"], 
-                    displayGamesItems[i].DisplayID, 
-                    new Vector2(displayGamesItems[i].Rectangle.X, displayGamesItems[i].Rectangle.Y),
-                     Color.Green);
+                    Helper.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
+                    new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),
+                    Color.Green);
                 }
                 else 
                 {
-                    spriteBatch.DrawString(FontHandler.Fonts["Reno20"], 
-                    displayGamesItems[i].DisplayID, 
-                    new Vector2(displayGamesItems[i].Rectangle.X, displayGamesItems[i].Rectangle.Y),
-                     Color.Red);
+                    Helper.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
+                    new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),
+                    Color.White);
                 }
             }
         }

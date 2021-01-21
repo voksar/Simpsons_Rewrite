@@ -166,7 +166,6 @@ namespace simpsons.Core
         {
             if (opacity + 0.1f <= 1.0f)
                 opacity += 0.1f;
-            Rectangle rect = new Rectangle(rectX, 0, rectWidth, window.ClientBounds.Height);
             spriteBatch.Draw(re, new Rectangle(rectX, 0, rectWidth, window.ClientBounds.Height), Color.White);
             for (int i = 0; i < menu.Count; i++)
             {

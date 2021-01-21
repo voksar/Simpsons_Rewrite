@@ -12,6 +12,7 @@ namespace simpsons.Core.Handlers
     {
         private static string SerializeFilePath = "Test.json";
         public string GameID {get;set;}
+        public double TimeInGame {get;set;}
         public int Score {get;set;}
         public Player Player {get;set;}
         public List<Enemy> Enemies {get;set;}
@@ -74,7 +75,6 @@ namespace simpsons.Core.Handlers
         {
             
             int index = gameHandlers.FindIndex(item => item.GameID == gameHandler.GameID);
-            Console.WriteLine(index);
             if(index == -1)
             {
                 displayGames.AddGameItem(gameHandler);
@@ -85,16 +85,7 @@ namespace simpsons.Core.Handlers
                 gameHandlers[index] = gameHandler;
                 displayGames.displayGamesItems[index].Game = gameHandler;
             }
-            /*
-            if(isFound)
-            {
-                gameHandlers[index] = gameHandler;
-            }
-            else
-            {
-                displayGames.AddGameItem(gameHandler);
-                gameHandlers.Add(gameHandler);
-            }*/
+            
             return gameHandlers;
         }
 
