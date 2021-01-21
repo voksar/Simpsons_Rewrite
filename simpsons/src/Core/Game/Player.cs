@@ -3,25 +3,32 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using simpsons.Core.Handlers;
+using Newtonsoft.Json;
 
 namespace simpsons.Core
 {
     class Player : Entity
     {
-        public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY)
+        [JsonProperty]
+        public string BulletName {get;set;}
+        public Texture2D BulletTexture {get;set;}
+
+
+        public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName)
          : base(TextureName, X, Y, SpeedX, SpeedY)
         {
-
+            this.BulletName = BulletName;
+            BulletTexture = TextureHandler.Sprites[BulletName];
         }
         public void Update()
         {
-            if(InputHandler.IsPressing(Keys.Down) || InputHandler.Press(Keys.S))
+            if(InputHandler.IsPressing(Keys.Down) || InputHandler.IsPressing(Keys.S))
                 Y += SpeedY;
-            if(InputHandler.IsPressing(Keys.Up) || InputHandler.Press(Keys.W))
+            if(InputHandler.IsPressing(Keys.Up) || InputHandler.IsPressing(Keys.W))
                 Y -= SpeedY;
-            if(InputHandler.IsPressing(Keys.Left) || InputHandler.Press(Keys.A))
+            if(InputHandler.IsPressing(Keys.Left) || InputHandler.IsPressing(Keys.A))
                 X -= SpeedX;
-            if(InputHandler.IsPressing(Keys.Right) || InputHandler.Press(Keys.D))
+            if(InputHandler.IsPressing(Keys.Right) || InputHandler.IsPressing(Keys.D))
                 X += SpeedX;
             
         }

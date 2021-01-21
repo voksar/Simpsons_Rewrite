@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using simpsons.Core.Handlers;
 using simpsons.Core;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using simpsons.Core.Helpers;
 
 namespace simpsons
 {
@@ -11,6 +14,8 @@ namespace simpsons
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch _spriteBatch;
+        
+        private bool isLoaded = false;
 
         public Game1()
         {
@@ -31,7 +36,7 @@ namespace simpsons
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
             graphics.ApplyChanges();
             //Intialize
-            Simpsons.State = Simpsons.States.Menu;
+            Simpsons.State = Simpsons.States.Loading;
             Simpsons.Initialize();
 
 
@@ -41,18 +46,30 @@ namespace simpsons
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            Simpsons.LoadContent(Content, GraphicsDevice, Window);
-            // TODO: use this.Content to load your game content here
+            Simpsons.LoadPreContent(Content);
+            //Start up new thread to not block Draw thread
+            ThreadPool.QueueUserWorkItem(state => 
+            {
+                Simpsons.LoadContent(Content, GraphicsDevice, Window);
+                isLoaded = true;
+            });
         }
 
         protected override void Update(GameTime gameTime)
         {
-            /*if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Simpsons.State = Simpsons.States.Quit;*/
             InputHandler.Update(gameTime);
+            Simpsons.UpdateTick();
+            if(Simpsons.Tick == 900)
+            {
+                Simpsons.UpdateGameSaves();
+            }
             switch(Simpsons.State)
             {
+                case Simpsons.States.Loading:
+                    if(isLoaded)
+                        if(InputHandler.AnyPressed())
+                            Simpsons.State = Simpsons.States.Menu;
+                    break;
                 case Simpsons.States.Run:
                     Simpsons.State = Simpsons.RunUpdate(Window, gameTime);
                     break;
@@ -79,9 +96,15 @@ namespace simpsons
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
             switch(Simpsons.State)
             {
+                case Simpsons.States.Loading:
+                    if(isLoaded)
+                        Helper.DrawOutlineText(_spriteBatch, "Loading Done, press any key to continue");
+                    else
+                        Helper.DrawOutlineText(_spriteBatch, "Loading Content");
+                    break;
                 case Simpsons.States.Saves:
                     Simpsons.DisplayGamesDraw(_spriteBatch);
                     break;

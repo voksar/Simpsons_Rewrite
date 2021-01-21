@@ -9,6 +9,8 @@ namespace simpsons.Core.Handlers
     class PlayerInformationHandler
     {
         const string SerializeFilePath = "PlayerData.json";
+
+        
         public int Cash {get;set;}
         public string SelectedPlayer {get;set;}
         public string SelectedBullet {get;set;}
@@ -46,10 +48,9 @@ namespace simpsons.Core.Handlers
                 playerInformationHandler.SelectedPlayer = "Player/homer";
                 playerInformationHandler.SelectedBullet = "Temp/temp";
                 playerInformationHandler.UnlockedBullets = new List<string>();
-                playerInformationHandler.UnlockedPlayers = new List<string>(){"Player/homer"};
+                playerInformationHandler.UnlockedPlayers = new List<string>(){};
                 playerInformationHandler.SerializePlayerData();
             }
-            Console.WriteLine(playerInformationHandler.Cash);
             return playerInformationHandler;
         }
     }

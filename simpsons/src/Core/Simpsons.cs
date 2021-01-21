@@ -8,34 +8,36 @@ using System.Linq;
 using Newtonsoft.Json;
 using simpsons.Core.Handlers;
 using simpsons.Core.Helpers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace simpsons.Core
 {
     static class Simpsons
     {   
         //Statemanagement
-        public enum States {Run, Menu, Quit, GameStart, Saves}
+        public enum States {Run, Menu, Quit, GameStart, Saves, Loading}
 
         //Debugging tools
         public static bool DebuggerIsActive = true;
         public static FrameCounter frameCounter;
-        //Public variables
+        public static int Tick {get; private set;}
         
-        public static GraphicsDevice gd{get;set;}
+
+        //Public variables
+        public static GraphicsDevice graphicsDevice{get;set;}
         public static States State{get;set;}
         public static PlayerInformationHandler playerInformationHandler;
         
         static DisplayGames displayGames;
         static Player player;
-        
-
         static GameHandler gameHandler;
         static List<GameHandler> gameHandlers;
-
         static Menu menu;
-
         static Random random;
         static List<Enemy> enemies;
+
+        static bool NeedUpdate = false;
 
         public static void Initialize()
         {
@@ -48,16 +50,21 @@ namespace simpsons.Core
             FontHandler.Initialize();
             displayGames = new DisplayGames();
             playerInformationHandler = PlayerInformationHandler.Initialize();
+            Tick = 0;
 
+        }
+        public static void LoadPreContent(ContentManager content)
+        {
+            //Load Pre textures and assets
+            FontHandler.LoadContent(content);
         }
         public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
         {
             //Oklart vafan jag gör med denna, ska fixa
-            gd = gdm;
+            graphicsDevice = gdm;
 
-            //Load textures and assets
             TextureHandler.LoadContent(content);
-            FontHandler.LoadContent(content);
+            
 
             //Default setup
             InitialSetup();
@@ -67,7 +74,7 @@ namespace simpsons.Core
             
             //Menu load stuff
             menu = new Menu((int)States.Menu);
-            menu.LoadContent(gd, window, content);
+            menu.LoadContent(graphicsDevice, window, content);
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
                 content.Load<Texture2D>("MenuIcons/Play"));
                 menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.Saves, window,
@@ -83,6 +90,7 @@ namespace simpsons.Core
         }
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
+            
             gameHandler.TimeInGame += gameTime.ElapsedGameTime.TotalSeconds;
             if(InputHandler.GoBackPressed())
             {
@@ -105,8 +113,9 @@ namespace simpsons.Core
             {
                 var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 frameCounter.Update(deltaTime);
-                string fps = string.Format("FPS: {0}", (int)frameCounter.AverageFramesPerSecond);
-                Helper.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps);
+                string fps = string.Format("{0}",(int)frameCounter.AverageFramesPerSecond);
+                Helper.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps + 
+                " - " + (int)gameHandler.TimeInGame + " - " + Tick);
             }
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
@@ -134,22 +143,8 @@ namespace simpsons.Core
                 gameHandler = gameHandle;
                 enemies = gameHandler.Enemies;
                 player = gameHandler.Player;
-                Console.WriteLine(gameHandler.TimeInGame);
             }
             return States.Run;
-        }
-        public static void StopGame()
-        {
-            if(gameHandler != null)
-            {
-                gameHandler.SetProperties(player, enemies, 5);
-                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
-            }
-            gameHandler = null;
-        }
-        public static void ExitGame()
-        {
-            GameHandler.SerializeGame(gameHandlers);
         }
         public static States DisplayGamesUpdate()
         {
@@ -161,9 +156,41 @@ namespace simpsons.Core
         {
             displayGames.Draw(spriteBatch);
         }
+        
+        public static void UpdateTick()
+        {
+            Tick++;
+            Tick %= 1800;
+        }
+        public static void UpdateGameSaves()
+        {
+            if(NeedUpdate)
+            {
+                ThreadPool.QueueUserWorkItem(state => 
+                {
+                    Console.WriteLine("Updating the saves");
+                    GameHandler.SerializeGame(gameHandlers);
+                    NeedUpdate = false;
+                });
+            }
+        }
+        public static void StopGame()
+        {
+            if(gameHandler != null)
+            {
+                gameHandler.SetProperties(player, enemies, 5);
+                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
+                NeedUpdate = true;
+            }
+            gameHandler = null;
+        }
+        public static void ExitGame()
+        {
+            GameHandler.SerializeGame(gameHandlers);
+        }
         static void InitialSetup()
         {
-            player = new Player("Player/homer", 500,500, 5,5);
+            player = new Player("Player/homer", 500,500, 5,5, "Player/homer");
             enemies.Clear();
         }
     }

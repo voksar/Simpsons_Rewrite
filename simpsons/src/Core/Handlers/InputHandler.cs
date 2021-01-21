@@ -31,5 +31,15 @@ namespace simpsons.Core.Handlers
         {
             return currentState.IsKeyDown(key);
         }
+        public static bool AnyPressed()
+        {
+            
+            foreach (Keys key in Enum.GetValues(typeof(Keys)))
+            {
+                if (currentState.IsKeyDown(key) && Press(key))
+                    return true;
+            }
+            return false;
+        }
     }
 }
