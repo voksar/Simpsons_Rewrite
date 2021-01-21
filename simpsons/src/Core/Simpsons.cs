@@ -13,7 +13,6 @@ namespace simpsons.Core
 {
     static class Simpsons
     {   
-        
         //Statemanagement
         public enum States {Run, Menu, Quit, GameStart, Saves}
 
@@ -37,9 +36,6 @@ namespace simpsons.Core
 
         static Random random;
         static List<Enemy> enemies;
-
-        //static int MaxEnemyCount = 50;
-        //static float value = 300;
 
         public static void Initialize()
         {
@@ -93,6 +89,7 @@ namespace simpsons.Core
                 StopGame();
                 return States.Menu;
             }
+            player.Update();
             foreach(Enemy e in enemies)
             {
                 e.Update(gameTime, window, player);
@@ -135,9 +132,7 @@ namespace simpsons.Core
             else
             {
                 gameHandler = gameHandle;
-                //foreach(Enemy e in gameHandler.Enemies.ToList())
-                 //   enemies.Add(e);
-                 enemies = gameHandler.Enemies;
+                enemies = gameHandler.Enemies;
                 player = gameHandler.Player;
                 Console.WriteLine(gameHandler.TimeInGame);
             }

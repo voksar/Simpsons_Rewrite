@@ -27,5 +27,9 @@ namespace simpsons.Core.Handlers
         {
             return currentState.IsKeyDown(key) && !previousState.IsKeyDown(key);
         }
+        public static bool IsPressing(Keys key)
+        {
+            return currentState.IsKeyDown(key);
+        }
     }
 }
