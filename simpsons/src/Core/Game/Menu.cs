@@ -8,12 +8,24 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using simpsons.Core.Handlers;
 using simpsons.Core.Helpers;
+using simpsons.Core.Interfaces;
 
 namespace simpsons.Core
 {
     class Menu
     {
         
+        //Interface properties
+        /*public Texture2D Texture {get;set;}
+        public bool IsOpacityDone {get;set;}
+        public bool IsChangingState {get;set;}
+        public int RectangleX {get;set;}
+        public int RectangleWidth {get;set;}
+        public float Opacity {get;set;}  */ 
+
+
+
+
         SoundEffect soundEffect;
         List<MenuItem> menu;
         public int frame = 0;
@@ -152,6 +164,8 @@ namespace simpsons.Core
                     menu[selected].cX -= 6;
                 switch (state)
                 {
+                    case (int)Simpsons.States.Saves:
+                        return StartStateChange(10, 4, 250, 500);
                     default:
                         changeState = false;
                         return menu[selected].State;
@@ -187,7 +201,7 @@ namespace simpsons.Core
                 }
             }
         }
-        private int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth)
+        public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth)
         {
             foreach (MenuItem m in menu)
             {

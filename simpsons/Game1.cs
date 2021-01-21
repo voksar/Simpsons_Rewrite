@@ -91,7 +91,8 @@ namespace simpsons
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, 
+            SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             Simpsons.AlwaysDraw(_spriteBatch);
             switch(Simpsons.State)
             {
@@ -102,7 +103,7 @@ namespace simpsons
                         Helper.DrawOutlineText(_spriteBatch, "Loading Content");
                     break;
                 case Simpsons.States.Saves:
-                    Simpsons.DisplayGamesDraw(_spriteBatch);
+                    Simpsons.DisplayGamesDraw(_spriteBatch, Window);
                     break;
                 case Simpsons.States.Run:
                     Simpsons.RunDraw(_spriteBatch, gameTime);

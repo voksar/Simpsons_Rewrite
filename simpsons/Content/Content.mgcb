@@ -103,18 +103,6 @@
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Collection.png
 
-#begin MenuIcons/Collection.psd
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MenuIcons/Collection.psd
-
 #begin MenuIcons/Exit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -126,18 +114,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Exit.png
-
-#begin MenuIcons/Exit.psd
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MenuIcons/Exit.psd
 
 #begin MenuIcons/Highscore.png
 /importer:TextureImporter
@@ -151,18 +127,6 @@
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Highscore.png
 
-#begin MenuIcons/Highscore.psd
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MenuIcons/Highscore.psd
-
 #begin MenuIcons/Options.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -174,18 +138,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Options.png
-
-#begin MenuIcons/Options.psd
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MenuIcons/Options.psd
 
 #begin MenuIcons/Play.png
 /importer:TextureImporter
@@ -199,7 +151,7 @@
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Play.png
 
-#begin MenuIcons/Play.psd
+#begin MenuIcons/PlayNew.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -209,7 +161,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:MenuIcons/Play.psd
+/build:MenuIcons/PlayNew.png
+
+#begin MenuIcons/Saves.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuIcons/Saves.png
 
 #begin MenuIcons/Store.png
 /importer:TextureImporter

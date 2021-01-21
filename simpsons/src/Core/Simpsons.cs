@@ -81,13 +81,14 @@ namespace simpsons.Core
             menu = new Menu((int)States.Menu);
             menu.LoadContent(graphicsDevice, window, content);
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
-                content.Load<Texture2D>("MenuIcons/Play"));
+                content.Load<Texture2D>("MenuIcons/PlayNew"));
                 menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.Saves, window,
-                content.Load<Texture2D>("MenuIcons/Play"));
+                content.Load<Texture2D>("MenuIcons/Saves"));
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
 
             //Add previous games to the save manager
+            displayGames.LoadContent(window, graphicsDevice);
             foreach(GameHandler gh in gameHandlers)
             {
                 displayGames.AddGameItem(gh);
@@ -153,13 +154,11 @@ namespace simpsons.Core
         }
         public static States DisplayGamesUpdate()
         {
-            if(InputHandler.GoBackPressed())
-                return States.Menu;
             return (States)displayGames.Update();
         }
-        public static void DisplayGamesDraw(SpriteBatch spriteBatch)
+        public static void DisplayGamesDraw(SpriteBatch spriteBatch, GameWindow window)
         {
-            displayGames.Draw(spriteBatch);
+            displayGames.Draw(spriteBatch, window);
         }
         public static void AlwaysUpdate(GameWindow window, GameTime gameTime)
         {
