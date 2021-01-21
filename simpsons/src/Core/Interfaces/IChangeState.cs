@@ -13,5 +13,6 @@ namespace simpsons.Core.Interfaces
         float Opacity {get;set;}
 
         public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth);
+        public void LoadStateChangeVariables();
     }
 }

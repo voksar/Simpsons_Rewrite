@@ -23,6 +23,7 @@ namespace simpsons.Core
         int selected = 0;
         int currentY = 50;
         int frame = 0;
+        bool allowKeyboard = false;
         Color selectedColor;
 
         Texture2D baseIcon;
@@ -60,12 +61,13 @@ namespace simpsons.Core
             
             if(!IsChangingState)
             {
+                allowKeyboard = MouseHandler.CheckIfSameSpot();
                 if(Opacity + 0.05f <= 1.0f)
                     Opacity += 0.05f;
-                if(InputHandler.Press(Keys.Down))
+                if(InputHandler.Press(Keys.Down) && allowKeyboard)
                     if(selected < displayGamesItems.Count - 1)
                         selected++;
-                if(InputHandler.Press(Keys.Up))
+                if(InputHandler.Press(Keys.Up) && allowKeyboard)
                     if(selected > 0)
                         selected--;
                 //Checks if user presses enter
@@ -82,7 +84,8 @@ namespace simpsons.Core
                 for(int i = 0; i < displayGamesItems.Count; i++)
                 {
                     if(displayGamesItems[i].Rectangle.
-                    Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
+                    Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y)
+                    && !allowKeyboard)
                     {
                         selected = i;
                     }                

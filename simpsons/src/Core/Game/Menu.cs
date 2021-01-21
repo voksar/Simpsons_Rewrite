@@ -12,16 +12,16 @@ using simpsons.Core.Interfaces;
 
 namespace simpsons.Core
 {
-    class Menu
+    class Menu : IChangeState
     {
         
         //Interface properties
-        /*public Texture2D Texture {get;set;}
+        public Texture2D Texture {get;set;}
         public bool IsOpacityDone {get;set;}
         public bool IsChangingState {get;set;}
         public int RectangleX {get;set;}
         public int RectangleWidth {get;set;}
-        public float Opacity {get;set;}  */ 
+        public float Opacity {get;set;}  
 
 
 
@@ -39,27 +39,20 @@ namespace simpsons.Core
         float temp = 0.0f;
         bool moveNew = false;
         bool allowKeyboard = false;
-        KeyboardState prevState = Keyboard.GetState();
-        bool changeState = false;
-        int rectX = 0;
-        int rectWidth = 400;
-        bool loadInDone = true;
-
-        float opacity = 1.0f;
 
         private GraphicsDevice gd;
 
         int state;
-        Texture2D re;
         public Menu(int defaultMenuState)
         {
             menu = new List<MenuItem>();
             this.defaultMenuState = defaultMenuState;
             prevselected = selected;
+            LoadStateChangeVariables();
         }
         public void LoadContent(GraphicsDevice gd, GameWindow window, ContentManager content)
         {
-            re = Helper.RectangleCreator(rectWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
+            Texture = Helper.RectangleCreator(RectangleWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
             soundEffect = content.Load<SoundEffect>("Menu/changeSelectSound");
             this.gd = gd;
             
@@ -76,8 +69,13 @@ namespace simpsons.Core
         public int Update(GameTime gameTime,GameWindow window)
         {
             
-            if (!changeState && loadInDone)
+            if (!IsChangingState)
             {
+                if (Opacity + 0.1f <= 1.0f)
+                    Opacity += 0.1f;
+                frame++;
+                frame %= 30;
+                allowKeyboard = MouseHandler.CheckIfSameSpot();
                 prevselected = selected;
                 for (int i = 0; i < menu.Count; i++)
                 {
@@ -107,18 +105,16 @@ namespace simpsons.Core
                     }
                 }
 
-                frame++;
-                frame %= 30;
-                allowKeyboard = MouseHandler.CheckIfSameSpot();
+                
 
 
-                if (InputHandler.Press(Keys.Down))
+                if (InputHandler.Press(Keys.Down) && allowKeyboard)
                 {
                     selected++;
                     if (selected > menu.Count - 1)
                         selected = 0;
                 }
-                if (InputHandler.Press(Keys.Up))
+                if (InputHandler.Press(Keys.Up) && allowKeyboard)
                 {
                     selected--;
                     if (selected < 0)
@@ -140,7 +136,7 @@ namespace simpsons.Core
                 && menu[selected].Rec.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
                 {
                     soundEffect.Play(0.01f, 0, 0);  
-                    changeState = true;
+                    IsChangingState = true;
                     state = menu[selected].State;
 
                 }
@@ -155,7 +151,7 @@ namespace simpsons.Core
                     case (int)Simpsons.States.Saves:
                         return StartStateChange(10, 4, 250, 500);
                     default:
-                        changeState = false;
+                        IsChangingState = false;
                         return menu[selected].State;
                 }
 
@@ -166,9 +162,7 @@ namespace simpsons.Core
         }
         public void Draw(SpriteBatch spriteBatch, GameWindow window)
         {
-            if (opacity + 0.1f <= 1.0f)
-                opacity += 0.1f;
-            spriteBatch.Draw(re, new Rectangle(rectX, 0, rectWidth, window.ClientBounds.Height), Color.White);
+            spriteBatch.Draw(Texture, new Rectangle(RectangleX, 0, RectangleWidth, window.ClientBounds.Height), Color.White);
             for (int i = 0; i < menu.Count; i++)
             {
                 var c = Color.White;
@@ -179,13 +173,13 @@ namespace simpsons.Core
                     c = Color.Yellow;
                 if (i == selected)
                 {
-                    spriteBatch.Draw(menu[i].ItemTexture, new Vector2(menu[i].cX - 50, menu[i].cY), Color.White * opacity);
-                    spriteBatch.Draw(menu[i].Texture, new Vector2(menu[i].cX, menu[i].cY), c * opacity);
+                    spriteBatch.Draw(menu[i].ItemTexture, new Vector2(menu[i].cX - 50, menu[i].cY), Color.White * Opacity);
+                    spriteBatch.Draw(menu[i].Texture, new Vector2(menu[i].cX, menu[i].cY), c * Opacity);
                 }
                 else
                 {
-                    spriteBatch.Draw(menu[i].ItemTexture, new Vector2(menu[i].cX - 50, menu[i].cY), Color.White * opacity);
-                    spriteBatch.Draw(menu[i].Texture, new Vector2(menu[i].cX, menu[i].cY), Color.White * opacity);
+                    spriteBatch.Draw(menu[i].ItemTexture, new Vector2(menu[i].cX - 50, menu[i].cY), Color.White * Opacity);
+                    spriteBatch.Draw(menu[i].Texture, new Vector2(menu[i].cX, menu[i].cY), Color.White * Opacity);
                 }
             }
         }
@@ -204,22 +198,28 @@ namespace simpsons.Core
             }
             if (moveNew)
             {
-                rectX += increaseX;
-                rectWidth += increaseWidth;
-                if (rectX == targetX && rectWidth == targetWidth)
+                RectangleX += increaseX;
+                RectangleWidth += increaseWidth;
+                if (RectangleX == targetX && RectangleWidth == targetWidth)
                 {
-                    rectWidth = 400;
-                    rectX = 0;
+                    LoadStateChangeVariables();
                     moveNew = false;
-                    opacity = 0.0f;
                     foreach (MenuItem m in menu)
                         m.cX = m.Position.X;
-                    changeState = false;
+                    
                     return state;
                     
                 }
             }
             return defaultMenuState;
+        }
+        public void LoadStateChangeVariables()
+        {
+            IsOpacityDone = false;
+            IsChangingState = false;
+            RectangleX = 0;
+            RectangleWidth = 400;
+            Opacity = 0.0f;
         }
     }
     class MenuItem
