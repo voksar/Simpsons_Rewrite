@@ -54,7 +54,7 @@ namespace simpsons.Core
             displayGames = new DisplayGames();
             playerInformationHandler = PlayerInformationHandler.Initialize();
             Tick = 0;
-
+            MouseHandler.Initialize();
         }
         public static void LoadPreContent(ContentManager content, GameWindow window)
         {
@@ -128,8 +128,7 @@ namespace simpsons.Core
         {
             if(InputHandler.GoBackPressed())
                 return States.Quit;
-            MouseState mState = Mouse.GetState();
-            return (States)menu.Update(gameTime, mState, window);
+            return (States)menu.Update(gameTime,window);
         }
         public static void MenuDraw(SpriteBatch spriteBatch, GameWindow window)
         {
@@ -164,6 +163,7 @@ namespace simpsons.Core
         {
             background.Update(window, 2f);
             InputHandler.Update(gameTime);
+            MouseHandler.Update();
             UpdateTick();
             if(Tick == 900)
             {

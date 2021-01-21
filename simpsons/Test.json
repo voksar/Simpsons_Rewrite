@@ -1,7 +1,8 @@
 [
   {
-    "GameID": "G-XH93K6B5KDQ2",
-    "TimeInGame": 5.066646400000006,
+    "GameID": "G-9UFHC23L95K5",
+    "LastPlayed": "2021-01-21T21:16:22.5496416+01:00",
+    "TimeInGame": 1.5333271999999982,
     "Score": 5,
     "Player": {
       "BulletName": "Player/homer",
@@ -15,8 +16,9 @@
     "Enemies": []
   },
   {
-    "GameID": "G-TDD9TA9PRBM5",
-    "TimeInGame": 1.2333283999999987,
+    "GameID": "G-0K7CPNKIV4A2",
+    "LastPlayed": "2021-01-21T21:16:27.3327541+01:00",
+    "TimeInGame": 1.2499949999999986,
     "Score": 5,
     "Player": {
       "BulletName": "Player/homer",

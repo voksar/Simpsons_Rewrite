@@ -21,35 +21,42 @@ namespace simpsons.Core
         public float Opacity {get;set;}        
 
         int selected = 0;
-        int currentY = 10;
+        int currentY = 50;
+        int frame = 0;
+        Color selectedColor;
+
+        Texture2D baseIcon;
         
         public DisplayGames()
         {
             displayGamesItems = new List<DisplayGamesItem>();
-            IsOpacityDone = false;
-            IsChangingState = false;
-            RectangleX = 250;
-            RectangleWidth = 500;
-            Opacity = 0.0f;
+            LoadStateChangeVariables();
         }
         public void LoadContent(GameWindow window, GraphicsDevice graphicsDevice)
         {
             Texture = Helper.RectangleCreator(RectangleWidth, window.ClientBounds.Height,
             graphicsDevice, Color.Black, 0.8f);
+            baseIcon = TextureHandler.Sprites["MenuIcons/Saves"];
         }
         public void AddGameItem(GameHandler gameHandler)
         {
-            float x = 60;
-            float y = 10 + currentY;
-
-            currentY += 30;
+            float y = currentY;
+            var measure = FontHandler.Fonts["Reno20"].MeasureString(gameHandler.GameID).X;
+            float x = 740 - measure;
+            
+            currentY += (int)(baseIcon.Height * 0.6) + 5;
 
             DisplayGamesItem displayGamesItem = new DisplayGamesItem(gameHandler, x, y);
             displayGamesItems.Add(displayGamesItem);
         }
         public int Update()
         {
-            
+            frame++;
+            frame %= 30;
+            if (frame <= 15)
+                selectedColor = new Color(159, 255, 111);
+            else
+                selectedColor = Color.Yellow;
             
             if(!IsChangingState)
             {
@@ -61,11 +68,24 @@ namespace simpsons.Core
                 if(InputHandler.Press(Keys.Up))
                     if(selected > 0)
                         selected--;
-                if(InputHandler.Press(Keys.Enter))
+                //Checks if user presses enter
+                //or if the user presses mouse1 and is hovering over the correct object
+                if(InputHandler.Press(Keys.Enter) || MouseHandler.MouseState.LeftButton == ButtonState.Pressed
+                && displayGamesItems[selected].Rectangle.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
                     return (int)Simpsons.StartGame(displayGamesItems[selected].Game);
+                
                 if(InputHandler.GoBackPressed())
                 {   
                     IsChangingState = true;
+                }
+                
+                for(int i = 0; i < displayGamesItems.Count; i++)
+                {
+                    if(displayGamesItems[i].Rectangle.
+                    Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
+                    {
+                        selected = i;
+                    }                
                 }
                     
             }
@@ -89,11 +109,14 @@ namespace simpsons.Core
             , Color.White);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
+                spriteBatch.Draw(baseIcon, new Vector2(
+                    260, displayGamesItems[i].Rectangle.Y
+                ), null, Color.White * Opacity, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
                 if(i == selected)
                 {
                     Helper.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
                     new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),
-                    Color.Green, Opacity);
+                    selectedColor, Opacity);
                 }
                 else 
                 {
@@ -111,14 +134,18 @@ namespace simpsons.Core
             if(RectangleWidth == targetWidth && RectangleX == targetX)
             {
                 
-                Opacity = 0.0f;
-                IsOpacityDone = false;
-                IsChangingState = false;
-                RectangleX = 250;
-                RectangleWidth = 500;
+                LoadStateChangeVariables();
                 return (int)Simpsons.States.Menu;
             }
             return (int)Simpsons.States.Saves;
+        }
+        public void LoadStateChangeVariables()
+        {
+            IsOpacityDone = false;
+            IsChangingState = false;
+            RectangleX = 250;
+            RectangleWidth = 500;
+            Opacity = 0.0f;
         }
     }
     class DisplayGamesItem

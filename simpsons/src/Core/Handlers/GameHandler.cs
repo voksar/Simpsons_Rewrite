@@ -12,6 +12,7 @@ namespace simpsons.Core.Handlers
     {
         private static string SerializeFilePath = "Test.json";
         public string GameID {get;set;}
+        public DateTime LastPlayed {get;set;}
         public double TimeInGame {get;set;}
         public int Score {get;set;}
         public Player Player {get;set;}
@@ -23,6 +24,7 @@ namespace simpsons.Core.Handlers
             Player = player;
             Enemies = enemies;
             Score = score;
+            LastPlayed = DateTime.Now;
         }
         public void GenerateGameID()
         {

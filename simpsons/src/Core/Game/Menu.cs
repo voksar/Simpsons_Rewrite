@@ -33,13 +33,11 @@ namespace simpsons.Core
         int prevselected;
         float currentHeight = 0;
         MouseState mState;
-        double lastChange = 0;
-        Point p = new Point();
+        
         int defaultMenuState;
         
         float temp = 0.0f;
         bool moveNew = false;
-        MouseState prevmState = Mouse.GetState();
         bool allowKeyboard = false;
         KeyboardState prevState = Keyboard.GetState();
         bool changeState = false;
@@ -70,19 +68,17 @@ namespace simpsons.Core
         {
             float X = 60;
             float Y = 10 + currentHeight;
-
+            
             currentHeight += itemTexture.Height + 5;
             MenuItem temp = new MenuItem(itemTexture, new Vector2(X, Y), state, item);
             menu.Add(temp);
         }
-        public int Update(GameTime gameTime, MouseState mStatee, GameWindow window)
+        public int Update(GameTime gameTime,GameWindow window)
         {
             
             if (!changeState && loadInDone)
             {
-                KeyboardState keyboardState = Keyboard.GetState();
-                prevmState = mState;
-
+                prevselected = selected;
                 for (int i = 0; i < menu.Count; i++)
                 {
                     if (i == selected)
@@ -111,19 +107,10 @@ namespace simpsons.Core
                     }
                 }
 
-                prevselected = selected;
-                mState = mStatee;
                 frame++;
                 frame %= 30;
-                if (prevmState.X == mState.X && prevmState.Y == mState.Y)
-                {
-                    allowKeyboard = true;
-                }
-                else
-                    allowKeyboard = false;
+                allowKeyboard = MouseHandler.CheckIfSameSpot();
 
-                p.X = mState.X;
-                p.Y = mState.Y;
 
                 if (InputHandler.Press(Keys.Down))
                 {
@@ -141,15 +128,16 @@ namespace simpsons.Core
                 }
                 for (int i = 0; i < menu.Count; ++i)
                 {
-                    if (menu[i].Rec.Contains(p) && !allowKeyboard)
+                    if (menu[i].Rec.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y) 
+                    && !allowKeyboard)
                     {
                         selected = i;
                     }
                 }
-
-                prevState = keyboardState;
-                lastChange = gameTime.TotalGameTime.TotalMilliseconds;
-                if (InputHandler.Press(Keys.Enter) || mState.LeftButton == ButtonState.Pressed && menu[selected].Rec.Contains(p))
+                
+                if (InputHandler.Press(Keys.Enter) || 
+                mState.LeftButton == ButtonState.Pressed
+                && menu[selected].Rec.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
                 {
                     soundEffect.Play(0.01f, 0, 0);  
                     changeState = true;
@@ -189,7 +177,7 @@ namespace simpsons.Core
                     c = new Color(159, 255, 111);
                 else
                     c = Color.Yellow;
-                if (i == selected || menu[i].Rec.Contains(p) && !allowKeyboard)
+                if (i == selected)
                 {
                     spriteBatch.Draw(menu[i].ItemTexture, new Vector2(menu[i].cX - 50, menu[i].cY), Color.White * opacity);
                     spriteBatch.Draw(menu[i].Texture, new Vector2(menu[i].cX, menu[i].cY), c * opacity);

@@ -11,6 +11,7 @@ namespace simpsons.Core.Handlers
         private static Texture2D playerTexture;
         private static Texture2D enemyBartTexture;
         private static Texture2D backgroundTexture;
+        private static Texture2D saveIcon;
 
         public static Dictionary<string, Texture2D> Sprites{get; private set;}
 
@@ -27,8 +28,9 @@ namespace simpsons.Core.Handlers
         {
             playerTexture = content.Load<Texture2D>("Player/homer");
             enemyBartTexture = content.Load<Texture2D>("Enemies/bart");
+            saveIcon = content.Load<Texture2D>("MenuIcons/Saves");
             
-
+            Sprites.Add("MenuIcons/Saves", saveIcon);
             Sprites.Add("Player/homer", playerTexture);
             Sprites.Add("Enemies/bart", enemyBartTexture);
             
