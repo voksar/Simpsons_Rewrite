@@ -76,36 +76,6 @@ namespace simpsons.Core
                 frame %= 30;
                 allowKeyboard = MouseHandler.CheckIfSameSpot();
                 prevselected = selected;
-                for (int i = 0; i < menu.Count; i++)
-                {
-                    if (i == selected)
-                    {
-                        if (menu[i].cX + (2 * 60f * gameTime.ElapsedGameTime.TotalSeconds) <= menu[i].Position.X + 30) //15 frames to reach
-                        {
-                            menu[i].cX += (float)(2 * 60f * gameTime.ElapsedGameTime.TotalSeconds);
-                            
-                            menu[i].cY -= (float)Math.Sin(menu[i].SinValue);
-                            if(menu[i].SinValue == 0)
-                                Console.WriteLine(menu[i].SinValue);
-                            menu[i].SinValue += (0.15f) / (float)(60 * gameTime.TotalGameTime.TotalSeconds);
-                            
-                        }
-                        else
-                        {
-                            menu[i].cY = menu[i].Position.Y;
-                            menu[i].SinValue = 0.0f;
-                        }
-                    }
-                    else
-                    {
-                        if (menu[i].cX - (2 * 60f * gameTime.ElapsedGameTime.TotalSeconds) >= menu[i].Position.X)
-                            menu[i].cX -= (float)(2 * 60f * gameTime.ElapsedGameTime.TotalSeconds);
-                        menu[i].cY = menu[i].Position.Y;
-                    }
-                }
-
-                
-
 
                 if (InputHandler.Press(Keys.Down) && allowKeyboard)
                 {
@@ -138,6 +108,33 @@ namespace simpsons.Core
                     IsChangingState = true;
                     state = menu[selected].State;
 
+                }
+                for (int i = 0; i < menu.Count; i++)
+                {
+                    if (i == selected)
+                    {
+                        if (menu[i].cX + (2 * 60f * gameTime.ElapsedGameTime.TotalSeconds) < menu[i].Position.X + 30) //15 frames to reach
+                        {
+                            menu[i].cX += (float)(2 * 60f * gameTime.ElapsedGameTime.TotalSeconds);
+                            
+                            menu[i].cY += (float)Math.Sin(menu[i].SinValue) * (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
+                            
+                            Console.WriteLine((float)Math.Sin(menu[i].SinValue));
+                            menu[i].SinValue -= 0.15f * (float)(60 * gameTime.ElapsedGameTime.TotalSeconds);
+                            
+                        }
+                        else
+                        {
+                            menu[i].cY = menu[i].Position.Y;
+                            menu[i].SinValue = 0.0f;
+                        }
+                    }
+                    else
+                    {
+                        if (menu[i].cX - (2 * 60f * gameTime.ElapsedGameTime.TotalSeconds) >= menu[i].Position.X)
+                            menu[i].cX -= (float)(2 * 60f * gameTime.ElapsedGameTime.TotalSeconds);
+                        menu[i].cY = menu[i].Position.Y;
+                    }
                 }
             }
             else
