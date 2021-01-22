@@ -1,0 +1,20 @@
+{
+    "Version" : 
+    [
+        {
+            "Version" : "0.2.0",
+            "Release_Notes" : 
+            [
+                ""
+            ]
+        },
+        {
+            "Version": "0.1.0",
+            "Release_Notes" : 
+            [
+                "Core functionality added",
+                "Fully working Save and Load system"
+            ]
+        }
+    ]
+}
