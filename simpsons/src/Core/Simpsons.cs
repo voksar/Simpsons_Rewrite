@@ -111,7 +111,7 @@ namespace simpsons.Core
                 StopGame();
                 return States.Menu;
             }
-            player.Update(window);
+            player.Update(window, gameTime);
             foreach(Enemy e in enemies)
             {
                 e.Update(gameTime, window, player);
@@ -215,9 +215,9 @@ namespace simpsons.Core
         {
             GameHandler.SerializeGame(gameHandlers);
         }
-        static void InitialGameSetup()
+        public static void InitialGameSetup()
         {
-            player = new Player("Player/homer", 500,500, 5,5, "Player/homer");
+            player = new Player("Player/homer", 300,300, 500,500, "Player/homer");
             enemies.Clear();
         }
         public static void CreateFolderStructure()

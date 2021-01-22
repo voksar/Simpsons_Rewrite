@@ -32,7 +32,6 @@ namespace simpsons.Core
         int selected = 0;
         int prevselected;
         float currentHeight = 0;
-        MouseState mState;
         
         int defaultMenuState;
         
@@ -132,7 +131,7 @@ namespace simpsons.Core
                 }
                 
                 if (InputHandler.Press(Keys.Enter) || 
-                mState.LeftButton == ButtonState.Pressed
+                MouseHandler.MouseState.LeftButton == ButtonState.Pressed
                 && menu[selected].Rec.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
                 {
                     soundEffect.Play(0.01f, 0, 0);  
