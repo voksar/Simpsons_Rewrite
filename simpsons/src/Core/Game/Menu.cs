@@ -80,22 +80,26 @@ namespace simpsons.Core
                 {
                     if (i == selected)
                     {
-                        if (menu[i].cX + 2 != menu[i].Position.X + 30) //15 frames to reach
+                        if (menu[i].cX + (2 * 60f * gameTime.ElapsedGameTime.TotalSeconds) <= menu[i].Position.X + 30) //15 frames to reach
                         {
-                            menu[i].cX += 2;
-                            menu[i].cY -= (float)Math.Sin(temp) / 2;
-                            temp += 0.15f;
+                            menu[i].cX += (float)(2 * 60f * gameTime.ElapsedGameTime.TotalSeconds);
+                            
+                            menu[i].cY -= (float)Math.Sin(menu[i].SinValue);
+                            if(menu[i].SinValue == 0)
+                                Console.WriteLine(menu[i].SinValue);
+                            menu[i].SinValue += (0.15f) / (float)(60 * gameTime.TotalGameTime.TotalSeconds);
+                            
                         }
                         else
                         {
                             menu[i].cY = menu[i].Position.Y;
-                            temp = 0.0f;
+                            menu[i].SinValue = 0.0f;
                         }
                     }
                     else
                     {
-                        if (menu[i].cX - 2 != menu[i].Position.X && menu[i].cX > menu[i].Position.X)
-                            menu[i].cX -= 2;
+                        if (menu[i].cX - (2 * 60f * gameTime.ElapsedGameTime.TotalSeconds) >= menu[i].Position.X)
+                            menu[i].cX -= (float)(2 * 60f * gameTime.ElapsedGameTime.TotalSeconds);
                         menu[i].cY = menu[i].Position.Y;
                     }
                 }
@@ -219,6 +223,14 @@ namespace simpsons.Core
     }
     class MenuItem
     {
+        public Texture2D Texture {get;set;}
+        public Texture2D ItemTexture {get;set;}
+        public Vector2 Position {get;set;}
+        public int State {get;set;}
+        public Rectangle Rec{get;set;}
+        public float cX {get;set;}
+        public float cY {get;set;}
+        public float SinValue {get;set;}
         public MenuItem(Texture2D texture, Vector2 position, int currentState, Texture2D itemTexture)
         {
             Texture = texture;
@@ -228,13 +240,7 @@ namespace simpsons.Core
             cY = position.Y;
             ItemTexture = itemTexture;
             Rec = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            SinValue = 0;
         }
-        public Texture2D Texture {get;set;}
-        public Texture2D ItemTexture {get;set;}
-        public Vector2 Position {get;set;}
-        public int State {get;set;}
-        public Rectangle Rec{get;set;}
-        public float cX {get;set;}
-        public float cY {get;set;}
     }
 }

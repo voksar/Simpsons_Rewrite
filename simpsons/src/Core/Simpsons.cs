@@ -168,6 +168,7 @@ namespace simpsons.Core
             displayGames.Draw(spriteBatch, window);
         }
         public static void AlwaysUpdate(GameWindow window, GameTime gameTime)
+        
         {
             background.Update(window, 200f, gameTime);
             InputHandler.Update(gameTime);
