@@ -115,8 +115,6 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, new Rectangle(RectangleX, 0, RectangleWidth, window.ClientBounds.Height)
             , Color.White);
-            spriteBatch.Draw(rectangleDisplayInfo, 
-            new Vector2(300, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
                 spriteBatch.Draw(baseIcon, new Vector2(
@@ -135,11 +133,13 @@ namespace simpsons.Core
                     Color.White, Opacity);
                 }
             }
-            DrawSaveInformation(spriteBatch, window);
+            //DrawSaveInformation(spriteBatch, window);
         }
         
         public void DrawSaveInformation(SpriteBatch spriteBatch, GameWindow window)
         {
+            spriteBatch.Draw(rectangleDisplayInfo, 
+            new Vector2(300, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
             var measure = FontHandler.Fonts["Reno24"].MeasureString("SAVEINFORMATION").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
             spriteBatch.DrawString(FontHandler.Fonts["Reno24"], "SAVEINFORMATION",

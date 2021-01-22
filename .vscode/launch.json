@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/simpsons/bin/Debug/netcoreapp3.1/simpsons.dll",
+            "program": "${workspaceFolder}/simpsons/bin/Debug/netcoreapp3.1/win-x64/simpsons.dll",
             "args": [],
             "cwd": "${workspaceFolder}/simpsons",
             "console": "internalConsole",

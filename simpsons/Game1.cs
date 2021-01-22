@@ -23,6 +23,7 @@ namespace simpsons
             
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            this.Window.Title = "Simpsons";
         }
 
         protected override void Initialize()
@@ -34,6 +35,7 @@ namespace simpsons
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
+            //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             //Intialize
             Simpsons.State = Simpsons.States.Loading;

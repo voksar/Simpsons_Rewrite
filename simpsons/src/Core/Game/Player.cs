@@ -20,16 +20,18 @@ namespace simpsons.Core
             this.BulletName = BulletName;
             BulletTexture = TextureHandler.Sprites[BulletName];
         }
-        public void Update()
+        public void Update(GameWindow window)
         {
-            if(InputHandler.IsPressing(Keys.Down) || InputHandler.IsPressing(Keys.S))
-                Y += SpeedY;
-            if(InputHandler.IsPressing(Keys.Up) || InputHandler.IsPressing(Keys.W))
-                Y -= SpeedY;
+
             if(InputHandler.IsPressing(Keys.Left) || InputHandler.IsPressing(Keys.A))
                 X -= SpeedX;
             if(InputHandler.IsPressing(Keys.Right) || InputHandler.IsPressing(Keys.D))
                 X += SpeedX;
+            if(InputHandler.IsPressing(Keys.Down) || InputHandler.IsPressing(Keys.S))
+                Y += SpeedY;
+            if(InputHandler.IsPressing(Keys.Up) || InputHandler.IsPressing(Keys.W))
+                Y -= SpeedY;
+            
             
         }
         public override void Draw(SpriteBatch spriteBatch)

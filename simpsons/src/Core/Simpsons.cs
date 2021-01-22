@@ -103,7 +103,7 @@ namespace simpsons.Core
                 StopGame();
                 return States.Menu;
             }
-            player.Update();
+            player.Update(window);
             foreach(Enemy e in enemies)
             {
                 e.Update(gameTime, window, player);
