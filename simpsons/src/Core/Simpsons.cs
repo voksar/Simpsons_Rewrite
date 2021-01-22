@@ -30,6 +30,7 @@ namespace simpsons.Core
         public static States State{get;set;}
         public static PlayerInformationHandler playerInformationHandler;
         
+        //Objects
         static DisplayGames displayGames;
         static Player player;
         static GameHandler gameHandler;
@@ -43,6 +44,8 @@ namespace simpsons.Core
 
         static bool NeedUpdate = false;
 
+
+        //Initialization and content loading
         public static void Initialize()
         {
             CreateFolderStructure();
@@ -96,6 +99,9 @@ namespace simpsons.Core
                 displayGames.AddGameItem(gh);
             }
         }
+        
+        
+        //States and Drawers for the game
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
             
@@ -177,6 +183,7 @@ namespace simpsons.Core
             background.Draw(spriteBatch);
         }
 
+        //Misc functions for tasks and other nescessary stuff
         public static void UpdateTick()
         {
             Tick++;
@@ -213,7 +220,6 @@ namespace simpsons.Core
             player = new Player("Player/homer", 500,500, 5,5, "Player/homer");
             enemies.Clear();
         }
-    
         public static void CreateFolderStructure()
         {
             if(!Directory.Exists("Data/"))

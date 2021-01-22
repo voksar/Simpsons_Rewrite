@@ -8,8 +8,14 @@ namespace simpsons.Core.Handlers
 {
     public static class TextureHandler
     {
+        //Player related textures
         private static Texture2D playerTexture;
+
+        //Enemy related pictures
         private static Texture2D enemyBartTexture;
+
+
+        //Misc textures
         private static Texture2D backgroundTexture;
         private static Texture2D saveIcon;
 
