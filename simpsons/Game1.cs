@@ -33,7 +33,7 @@ namespace simpsons
             graphics.PreferredBackBufferWidth = 1000;
             //Ta bort v-sync, cappa på 60 fps.
             graphics.SynchronizeWithVerticalRetrace = false;
-            IsFixedTimeStep = true;
+            IsFixedTimeStep = false;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();

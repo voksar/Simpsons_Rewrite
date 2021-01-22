@@ -80,13 +80,9 @@ namespace simpsons.Core
                 {
                     if (i == selected)
                     {
-
-                        if (menu[i].cX + 2 != menu[i].Position.X + 30)
+                        if (menu[i].cX + 2 != menu[i].Position.X + 30) //15 frames to reach
                         {
-
                             menu[i].cX += 2;
-                            //Är endast ute efter de positiva värderna från Sin.
-                            //Detta är mellan 0-1-0 men kör 0-1 ~ och sätter sedan värdet till det förbestämda.
                             menu[i].cY -= (float)Math.Sin(temp) / 2;
                             temp += 0.15f;
                         }

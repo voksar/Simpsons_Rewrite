@@ -19,9 +19,9 @@ namespace simpsons.Core
             this.X = X;
             this.Y = Y;
         }
-        public void Update(GameWindow window, int nrBackgroundsY, float speed)
+        public void Update(GameWindow window, int nrBackgroundsY, float speed, GameTime gameTime)
         {
-            Y += speed;
+            Y += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (Y > window.ClientBounds.Height)
             {
                 Y = Y - nrBackgroundsY * Texture.Height;
@@ -63,12 +63,12 @@ namespace simpsons.Core
                 }
             }
         }
-        public void Update(GameWindow window, float speed)
+        public void Update(GameWindow window, float speed, GameTime gameTime)
         {
             
             for (int i = 0; i < nrBackgroundsX; i++)
                 for (int j = 0; j < nrBackgroundsY; j++)
-                    background[i, j].Update(window, nrBackgroundsY, speed);
+                    background[i, j].Update(window, nrBackgroundsY, speed, gameTime);
                     
         }
         public void Draw(SpriteBatch spriteBatch)

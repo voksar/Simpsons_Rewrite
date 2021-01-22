@@ -169,7 +169,7 @@ namespace simpsons.Core
         }
         public static void AlwaysUpdate(GameWindow window, GameTime gameTime)
         {
-            background.Update(window, 2f);
+            background.Update(window, 200f, gameTime);
             InputHandler.Update(gameTime);
             MouseHandler.Update();
             UpdateTick();
@@ -195,7 +195,6 @@ namespace simpsons.Core
             {
                 ThreadPool.QueueUserWorkItem(state => 
                 {
-                    Console.WriteLine("Updating the saves");
                     GameHandler.SerializeGame(gameHandlers);
                     NeedUpdate = false;
                 });
