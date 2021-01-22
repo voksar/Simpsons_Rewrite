@@ -10,6 +10,7 @@ using simpsons.Core.Handlers;
 using simpsons.Core.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace simpsons.Core
 {
@@ -44,6 +45,7 @@ namespace simpsons.Core
 
         public static void Initialize()
         {
+            CreateFolderStructure();
             frameCounter = new FrameCounter();
 
             random = new Random();
@@ -72,7 +74,7 @@ namespace simpsons.Core
             
 
             //Default setup
-            InitialSetup();
+            InitialGameSetup();
 
             //Deserialize all earlier games
             gameHandlers = GameHandler.DeserializeOnStartup();
@@ -206,10 +208,18 @@ namespace simpsons.Core
         {
             GameHandler.SerializeGame(gameHandlers);
         }
-        static void InitialSetup()
+        static void InitialGameSetup()
         {
             player = new Player("Player/homer", 500,500, 5,5, "Player/homer");
             enemies.Clear();
+        }
+    
+        public static void CreateFolderStructure()
+        {
+            if(!Directory.Exists("Data/"))
+                Directory.CreateDirectory("Data/");
+            if(!Directory.Exists("Saves/"))
+                Directory.CreateDirectory("Saves/");
         }
     }
 }

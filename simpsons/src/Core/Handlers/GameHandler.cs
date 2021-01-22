@@ -10,7 +10,7 @@ namespace simpsons.Core.Handlers
     [JsonObject(ItemRequired = Required.Always)]
     class GameHandler : IDisposable
     {
-        private static string SerializeFilePath = "Test.json";
+        private static string SerializeFilePath = "Saves/Saves.json";
         public string GameID {get;set;}
         public DateTime LastPlayed {get;set;}
         public double TimeInGame {get;set;}
@@ -56,11 +56,11 @@ namespace simpsons.Core.Handlers
         public static List<GameHandler> DeserializeOnStartup()
         {
             List<GameHandler> gameList;
-            if(!File.Exists("Test.json"))
+            if(!File.Exists(SerializeFilePath))
             {
-                File.WriteAllText("Test.json","");
+                File.WriteAllText(SerializeFilePath,"");
             }
-            string json = File.ReadAllText("Test.json");
+            string json = File.ReadAllText(SerializeFilePath);
               
             gameList = JsonConvert.DeserializeObject<List<GameHandler>>(json,
             new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});

@@ -8,7 +8,7 @@ namespace simpsons.Core.Handlers
     [JsonObject(ItemRequired = Required.Always)]
     class PlayerInformationHandler
     {
-        const string SerializeFilePath = "PlayerData.json";
+        const string SerializeFilePath = "Data/Player.json";
 
         
         public int Cash {get;set;}
