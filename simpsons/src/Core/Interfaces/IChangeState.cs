@@ -8,11 +8,11 @@ namespace simpsons.Core.Interfaces
         Texture2D Texture {get;set;}
         bool IsOpacityDone {get;set;}
         bool IsChangingState {get;set;}
-        int RectangleX {get;set;}
-        int RectangleWidth {get;set;}
+        float RectangleX {get;set;}
+        float RectangleWidth {get;set;}
         float Opacity {get;set;}
 
-        public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth);
+        public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth, GameTime gameTime);
         public void LoadStateChangeVariables();
     }
 }

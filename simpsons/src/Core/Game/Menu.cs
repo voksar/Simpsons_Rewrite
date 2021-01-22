@@ -19,8 +19,8 @@ namespace simpsons.Core
         public Texture2D Texture {get;set;}
         public bool IsOpacityDone {get;set;}
         public bool IsChangingState {get;set;}
-        public int RectangleX {get;set;}
-        public int RectangleWidth {get;set;}
+        public float RectangleX {get;set;}
+        public float RectangleWidth {get;set;}
         public float Opacity {get;set;}  
 
 
@@ -35,7 +35,6 @@ namespace simpsons.Core
         
         int defaultMenuState;
         
-        float temp = 0.0f;
         bool moveNew = false;
         bool allowKeyboard = false;
 
@@ -51,7 +50,7 @@ namespace simpsons.Core
         }
         public void LoadContent(GraphicsDevice gd, GameWindow window, ContentManager content)
         {
-            Texture = Helper.RectangleCreator(RectangleWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
+            Texture = Helper.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
             soundEffect = content.Load<SoundEffect>("Menu/changeSelectSound");
             this.gd = gd;
             
@@ -119,7 +118,6 @@ namespace simpsons.Core
                             
                             menu[i].cY += (float)Math.Sin(menu[i].SinValue) * (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
                             
-                            Console.WriteLine((float)Math.Sin(menu[i].SinValue));
                             menu[i].SinValue -= 0.15f * (float)(60 * gameTime.ElapsedGameTime.TotalSeconds);
                             
                         }
@@ -139,13 +137,13 @@ namespace simpsons.Core
             }
             else
             {
-                if (menu[selected].cX - 6 != menu[selected].Position.X
+                if (menu[selected].cX - (6 * gameTime.ElapsedGameTime.TotalSeconds * 60f) != menu[selected].Position.X
                     && menu[selected].cX > menu[selected].Position.X)
-                    menu[selected].cX -= 6;
+                    menu[selected].cX -= (float)(6 * gameTime.ElapsedGameTime.TotalSeconds * 60f);
                 switch (state)
                 {
                     case (int)Simpsons.States.Saves:
-                        return StartStateChange(10, 4, 250, 500);
+                        return StartStateChange(10, 4, 250, 500, gameTime);
                     default:
                         IsChangingState = false;
                         return menu[selected].State;
@@ -158,7 +156,7 @@ namespace simpsons.Core
         }
         public void Draw(SpriteBatch spriteBatch, GameWindow window)
         {
-            spriteBatch.Draw(Texture, new Rectangle(RectangleX, 0, RectangleWidth, window.ClientBounds.Height), Color.White);
+            spriteBatch.Draw(Texture, new Rectangle((int)RectangleX, 0, (int)RectangleWidth, window.ClientBounds.Height), Color.White);
             for (int i = 0; i < menu.Count; i++)
             {
                 var c = Color.White;
@@ -179,13 +177,13 @@ namespace simpsons.Core
                 }
             }
         }
-        public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth)
+        public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth, GameTime gameTime)
         {
             foreach (MenuItem m in menu)
             {
                 if (!moveNew)
                 {
-                    m.cX -= 15;
+                    m.cX -= (float)(15 * gameTime.ElapsedGameTime.TotalSeconds * 60);
                     if (m.cX + m.ItemTexture.Width + m.Texture.Width < 0)
                     {
                         moveNew = true;
@@ -194,15 +192,27 @@ namespace simpsons.Core
             }
             if (moveNew)
             {
-                RectangleX += increaseX;
-                RectangleWidth += increaseWidth;
+                var temporaryIncreaseX = 0f;
+                var temporaryIncreaseWidth = 0f;
+                temporaryIncreaseX = (float)(increaseX * gameTime.ElapsedGameTime.TotalSeconds * 60);
+                temporaryIncreaseWidth = (float)(increaseWidth * gameTime.ElapsedGameTime.TotalSeconds * 60);
+                if(RectangleX + temporaryIncreaseX >= targetX && temporaryIncreaseWidth + RectangleWidth >= targetWidth)
+                {
+                    RectangleX = targetX;
+                    RectangleWidth = targetWidth;
+                }
+                else
+                {
+                    RectangleX += temporaryIncreaseX;
+                    RectangleWidth += temporaryIncreaseWidth;
+                }
+                //Console.WriteLine($"{RectangleWidth}, {RectangleX}");
                 if (RectangleX == targetX && RectangleWidth == targetWidth)
                 {
                     LoadStateChangeVariables();
                     moveNew = false;
                     foreach (MenuItem m in menu)
                         m.cX = m.Position.X;
-                    
                     return state;
                     
                 }

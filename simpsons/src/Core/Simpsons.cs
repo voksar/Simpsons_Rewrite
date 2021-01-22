@@ -159,9 +159,9 @@ namespace simpsons.Core
             }
             return States.Run;
         }
-        public static States DisplayGamesUpdate()
+        public static States DisplayGamesUpdate(GameTime gameTime)
         {
-            return (States)displayGames.Update();
+            return (States)displayGames.Update(gameTime);
         }
         public static void DisplayGamesDraw(SpriteBatch spriteBatch, GameWindow window)
         {

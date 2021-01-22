@@ -16,8 +16,8 @@ namespace simpsons.Core
         public Texture2D Texture {get;set;}
         public bool IsOpacityDone {get;set;}
         public bool IsChangingState {get;set;}
-        public int RectangleX {get;set;}
-        public int RectangleWidth {get;set;}
+        public float RectangleX {get;set;}
+        public float RectangleWidth {get;set;}
         public float Opacity {get;set;}        
 
 
@@ -38,7 +38,7 @@ namespace simpsons.Core
         }
         public void LoadContent(GameWindow window, GraphicsDevice graphicsDevice)
         {
-            Texture = Helper.RectangleCreator(RectangleWidth, window.ClientBounds.Height,
+            Texture = Helper.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height,
             graphicsDevice, Color.Black, 0.8f);
             baseIcon = TextureHandler.Sprites["MenuIcons/Saves"];
             rectangleDisplayInfo = Helper.RectangleCreator(400, 300, graphicsDevice, Color.Black, 0.9f
@@ -55,8 +55,9 @@ namespace simpsons.Core
             DisplayGamesItem displayGamesItem = new DisplayGamesItem(gameHandler, x, y);
             displayGamesItems.Add(displayGamesItem);
         }
-        public int Update()
+        public int Update(GameTime gameTime)
         {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             frame++;
             frame %= 30;
             if (frame <= 15)
@@ -67,8 +68,8 @@ namespace simpsons.Core
             if(!IsChangingState)
             {
                 allowKeyboard = MouseHandler.CheckIfSameSpot();
-                if(Opacity + 0.05f <= 1.0f)
-                    Opacity += 0.05f;
+                if(Opacity + (0.05f * delta * 60) <= 1.0f)
+                    Opacity += (0.05f * delta * 60);
                 if(InputHandler.Press(Keys.Down) && allowKeyboard)
                     if(selected < displayGamesItems.Count - 1)
                         selected++;
@@ -77,10 +78,11 @@ namespace simpsons.Core
                         selected--;
                 //Checks if user presses enter
                 //or if the user presses mouse1 and is hovering over the correct object
-                if(InputHandler.Press(Keys.Enter) || MouseHandler.MouseState.LeftButton == ButtonState.Pressed
-                && displayGamesItems[selected].Rectangle.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
-                    return (int)Simpsons.StartGame(displayGamesItems[selected].Game);
-                
+                if(displayGamesItems.Count != 0)
+                    if(InputHandler.Press(Keys.Enter) || (MouseHandler.MouseState.LeftButton == ButtonState.Pressed
+                    && displayGamesItems[selected].Rectangle.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y)))
+                        return (int)Simpsons.StartGame(displayGamesItems[selected].Game);
+
                 if(InputHandler.GoBackPressed())
                 {   
                     IsChangingState = true;
@@ -101,19 +103,19 @@ namespace simpsons.Core
             {
                 
                 if(!IsOpacityDone)
-                    Opacity = Opacity - 0.1f;
+                    Opacity -= (0.1f * delta * 60);
                 if(Opacity <= 0 && !IsOpacityDone)
                     IsOpacityDone = true;
                 if(IsOpacityDone)
                 {
-                    return StartStateChange(10, 4, 0, 400);
+                    return StartStateChange(10, 4, 0, 400, gameTime);
                 }
             }
             return (int)Simpsons.States.Saves;
         }
         public void Draw(SpriteBatch spriteBatch, GameWindow window)
         {
-            spriteBatch.Draw(Texture, new Rectangle(RectangleX, 0, RectangleWidth, window.ClientBounds.Height)
+            spriteBatch.Draw(Texture, new Rectangle((int)RectangleX, 0, (int)RectangleWidth, window.ClientBounds.Height)
             , Color.White);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
@@ -158,11 +160,26 @@ namespace simpsons.Core
             "Last Played: " + displayGamesItems[selected].Game.LastPlayed.ToString(), 
             new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 70), Color.Green * Opacity);
         }
-        public int StartStateChange(int amountX, int amountWidth, int targetX, int targetWidth)
+        public int StartStateChange(int amountX, int amountWidth, int targetX, int targetWidth, GameTime gameTime)
         {
             //Console.WriteLine($"Target X: {targetX} \n Current X: {rectangleX} \n Target Width: {targetWidth} \n Current Width: {rectangleWidth}");
-            RectangleX -= amountX;
-            RectangleWidth -= amountWidth;
+            var temporaryamountX = 0f;
+            var temporaryamountWidth = 0f;
+            
+
+            temporaryamountX = (float)(amountX * gameTime.ElapsedGameTime.TotalSeconds * 60);;
+            temporaryamountWidth = (float)(amountWidth * gameTime.ElapsedGameTime.TotalSeconds * 60);
+
+            if(RectangleX - temporaryamountX <= targetX && RectangleWidth - temporaryamountWidth <= targetWidth)
+            {
+                RectangleX = targetX;
+                RectangleWidth = targetWidth;
+            }
+            else
+            {
+                RectangleX -= temporaryamountX;
+                RectangleWidth -= temporaryamountWidth;
+            }
             if(RectangleWidth == targetWidth && RectangleX == targetX)
             {
                 

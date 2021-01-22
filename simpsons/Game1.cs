@@ -31,7 +31,6 @@ namespace simpsons
             // TODO: Add your initialization logic here
             graphics.PreferredBackBufferHeight = 1000;
             graphics.PreferredBackBufferWidth = 1000;
-            //Ta bort v-sync, cappa på 60 fps.
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
@@ -74,7 +73,7 @@ namespace simpsons
                     Simpsons.State = Simpsons.StartGame(null);
                     break;
                 case Simpsons.States.Saves:
-                    Simpsons.State = Simpsons.DisplayGamesUpdate();
+                    Simpsons.State = Simpsons.DisplayGamesUpdate(gameTime);
                     break;
                 case Simpsons.States.Quit:
                     Simpsons.ExitGame();
