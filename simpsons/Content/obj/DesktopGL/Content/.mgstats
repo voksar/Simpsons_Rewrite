@@ -1,3 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.png","d:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Store.xnb","TextureProcessor","Texture2DContent",3110,10085,0,1062381
-"d:/C#/Simpsons_Rewrite/simpsons/Content/MenuIcons/Store.psd","d:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/MenuIcons/Store.xnb","TextureProcessor","Texture2DContent",31945,10085,0,0014519
