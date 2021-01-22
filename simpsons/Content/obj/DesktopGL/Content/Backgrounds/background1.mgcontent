@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/C#/Simpsons_Rewrite/simpsons/Content/Backgrounds/background1.png</SourceFile>
+  <SourceFile>d:/C#/Simpsons_Rewrite/simpsons/Content/Backgrounds/background1.png</SourceFile>
   <SourceTime>2021-01-16T18:50:34.435229+01:00</SourceTime>
-  <DestFile>D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/Backgrounds/background1.xnb</DestFile>
-  <DestTime>2021-01-22T13:10:06.0411636+01:00</DestTime>
+  <DestFile>d:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/Backgrounds/background1.xnb</DestFile>
+  <DestTime>2021-01-22T13:19:06.6133584+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

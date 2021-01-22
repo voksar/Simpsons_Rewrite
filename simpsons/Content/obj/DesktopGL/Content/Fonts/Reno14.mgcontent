@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno14.spritefont</SourceFile>
+  <SourceFile>d:/C#/Simpsons_Rewrite/simpsons/Content/Fonts/Reno14.spritefont</SourceFile>
   <SourceTime>2021-01-16T18:50:34.4402342+01:00</SourceTime>
-  <DestFile>D:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/Fonts/Reno14.xnb</DestFile>
-  <DestTime>2021-01-22T13:10:06.1362493+01:00</DestTime>
+  <DestFile>d:/C#/Simpsons_Rewrite/simpsons/Content/bin/DesktopGL/Content/Fonts/Reno14.xnb</DestFile>
+  <DestTime>2021-01-22T13:19:06.687425+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
