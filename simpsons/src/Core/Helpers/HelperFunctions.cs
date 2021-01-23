@@ -76,6 +76,24 @@ namespace simpsons.Core.Helpers
             spriteBatch.DrawString(FontHandler.Fonts["Reno20"],
             text, position, color * opacity);
         }
+        public static void DrawOutlineText(string font,SpriteBatch spriteBatch, string text, Vector2 position, Color color, float opacity)
+        {
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, new Vector2(position.X - 1, position.Y), Color.Black * opacity);
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, new Vector2(position.X - 1, position.Y - 1), Color.Black * opacity);
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, new Vector2(position.X, position.Y - 1), Color.Black * opacity);
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, new Vector2(position.X + 1, position.Y), Color.Black * opacity);
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, new Vector2(position.X + 1, position.Y + 1), Color.Black * opacity);
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, new Vector2(position.X, position.Y + 1), Color.Black * opacity);
+
+            spriteBatch.DrawString(FontHandler.Fonts[font],
+            text, position, color * opacity);
+        }
     }
     
 }

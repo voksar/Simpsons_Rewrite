@@ -33,7 +33,7 @@ namespace simpsons
             graphics.PreferredBackBufferWidth = 1000;
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
-            TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 60);
+            TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 144);
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             //Intialize

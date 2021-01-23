@@ -5,7 +5,8 @@
             "Version" : "0.2.0",
             "Release_Notes" : 
             [
-                ""
+                "Added same timing no matter what frames user is playing on",
+                "Fixed issues with menu where states text would slowly go up if spamming a button"
             ]
         },
         {

@@ -117,6 +117,10 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, new Rectangle((int)RectangleX, 0, (int)RectangleWidth, window.ClientBounds.Height)
             , Color.White);
+            var measure = FontHandler.Fonts["Reno24"].MeasureString("Saves").Length();
+            float x = (window.ClientBounds.Width / 2) - (measure / 2);
+            Helper.DrawOutlineText("Reno24",spriteBatch, "Saves", 
+            new Vector2(x, 10), Color.White, Opacity);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
                 spriteBatch.Draw(baseIcon, new Vector2(
@@ -163,8 +167,8 @@ namespace simpsons.Core
         public int StartStateChange(int amountX, int amountWidth, int targetX, int targetWidth, GameTime gameTime)
         {
             //Console.WriteLine($"Target X: {targetX} \n Current X: {rectangleX} \n Target Width: {targetWidth} \n Current Width: {rectangleWidth}");
-            var temporaryamountX = 0f;
-            var temporaryamountWidth = 0f;
+            float temporaryamountX = 0f;
+            float temporaryamountWidth = 0f;
             
 
             temporaryamountX = (float)(amountX * gameTime.ElapsedGameTime.TotalSeconds * 60);;
