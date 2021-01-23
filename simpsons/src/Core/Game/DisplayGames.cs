@@ -166,7 +166,6 @@ namespace simpsons.Core
         }
         public int StartStateChange(int amountX, int amountWidth, int targetX, int targetWidth, GameTime gameTime)
         {
-            //Console.WriteLine($"Target X: {targetX} \n Current X: {rectangleX} \n Target Width: {targetWidth} \n Current Width: {rectangleWidth}");
             float temporaryamountX = 0f;
             float temporaryamountWidth = 0f;
             

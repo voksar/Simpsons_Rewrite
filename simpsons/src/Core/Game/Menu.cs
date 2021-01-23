@@ -78,12 +78,14 @@ namespace simpsons.Core
 
                 if (InputHandler.Press(Keys.Down) && allowKeyboard)
                 {
+                    menu[selected].SinValue = 0;
                     selected++;
                     if (selected > menu.Count - 1)
                         selected = 0;
                 }
                 if (InputHandler.Press(Keys.Up) && allowKeyboard)
                 {
+                    menu[selected].SinValue = 0;
                     selected--;
                     if (selected < 0)
                         selected = menu.Count - 1;
