@@ -29,8 +29,8 @@ namespace simpsons
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferHeight = 1000;
-            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 144);
@@ -47,11 +47,11 @@ namespace simpsons
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Simpsons.LoadPreContent(Content, Window);
+            Simpsons.LoadPreContent(Content, Window, GraphicsDevice);
             //Start up new thread to not block Draw thread
             ThreadPool.QueueUserWorkItem(state => 
             {
-                Simpsons.LoadContent(Content, GraphicsDevice, Window);
+                Simpsons.LoadContent(Content, Window);
                 isLoaded = true;
             });
         }
@@ -91,17 +91,12 @@ namespace simpsons
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, 
             SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
             Simpsons.AlwaysDraw(_spriteBatch);
             switch(Simpsons.State)
             {
                 case Simpsons.States.Loading:
-                    if(isLoaded)
-                        Helper.DrawOutlineText(_spriteBatch, "Loading Done, press any key to continue");
-                    else
-                        Helper.DrawOutlineText(_spriteBatch, "Loading Content");
                     break;
                 case Simpsons.States.Saves:
                     Simpsons.DisplayGamesDraw(_spriteBatch, Window);

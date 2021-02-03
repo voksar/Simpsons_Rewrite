@@ -61,6 +61,16 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Reno24.spritefont
 
+#begin Fonts/VCR.ttf
+/copy:Fonts/VCR.ttf
+
+#begin Fonts/VCR16.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/VCR16.spritefont
+
 #begin Menu/changeSelectSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -90,6 +100,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Menu/Play.png
+
+#begin Menu/Saves.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Menu/Saves.png
 
 #begin MenuIcons/Collection.png
 /importer:TextureImporter

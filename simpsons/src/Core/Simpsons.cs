@@ -11,6 +11,7 @@ using simpsons.Core.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using MonoGame;
 
 namespace simpsons.Core
 {
@@ -29,7 +30,8 @@ namespace simpsons.Core
         public static GraphicsDevice graphicsDevice{get;set;}
         public static States State{get;set;}
         public static PlayerInformationHandler playerInformationHandler;
-        
+
+
         //Objects
         static DisplayGames displayGames;
         static Player player;
@@ -43,7 +45,6 @@ namespace simpsons.Core
 
 
         static bool NeedUpdate = false;
-
 
         //Initialization and content loading
         public static void Initialize()
@@ -61,17 +62,16 @@ namespace simpsons.Core
             Tick = 0;
             MouseHandler.Initialize();
         }
-        public static void LoadPreContent(ContentManager content, GameWindow window)
+        public static void LoadPreContent(ContentManager content, GameWindow window, GraphicsDevice graphics)
         {
+            graphicsDevice = graphics;
             //Load Pre textures and assets
             FontHandler.LoadContent(content);
             TextureHandler.LoadPreContent(content);
             background = new Background(TextureHandler.Sprites["Backgrounds/background1"], window);
         }
-        public static void LoadContent(ContentManager content, GraphicsDevice gdm, GameWindow window)
+        public static void LoadContent(ContentManager content, GameWindow window)
         {
-            //Oklart vafan jag gör med denna, ska fixa
-            graphicsDevice = gdm;
 
             TextureHandler.LoadContent(content);
             
@@ -87,7 +87,7 @@ namespace simpsons.Core
             menu.LoadContent(graphicsDevice, window, content);
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
                 content.Load<Texture2D>("MenuIcons/PlayNew"));
-                menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.Saves, window,
+            menu.AddItem(content.Load<Texture2D>("Menu/Saves"), (int)States.Saves, window,
                 content.Load<Texture2D>("MenuIcons/Saves"));
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
@@ -98,19 +98,22 @@ namespace simpsons.Core
             {
                 displayGames.AddGameItem(gh);
             }
+
+ 
         }
         
         
+        
+
         //States and Drawers for the game
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
-            
             gameHandler.TimeInGame += gameTime.ElapsedGameTime.TotalSeconds;
             if(InputHandler.GoBackPressed())
             {
                 StopGame();
                 return States.Menu;
-            }
+            }     
             player.Update(window, gameTime);
             foreach(Enemy e in enemies)
             {
