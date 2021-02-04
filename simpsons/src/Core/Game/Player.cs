@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace simpsons.Core
 {
-    class Player : Entity
+    public class Player : Entity
     {
         [JsonProperty]
         public string BulletName {get;set;}

@@ -8,7 +8,7 @@ using simpsons.Core.Handlers;
 namespace simpsons.Core
 {
     [JsonObject(MemberSerialization.OptIn)]
-    class Entity
+    public class Entity
     {
         protected Vector2 vector;
         protected Vector2 speed;

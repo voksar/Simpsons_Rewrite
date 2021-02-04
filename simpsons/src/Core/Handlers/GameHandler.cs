@@ -10,7 +10,7 @@ namespace simpsons.Core.Handlers
     [JsonObject(ItemRequired = Required.Always)]
     class GameHandler : IDisposable
     {
-        private static string SerializeFilePath = "Saves/Saves.json";
+        private static string SerializeFilePath = "Data/Saves.json";
         public string GameID {get;set;}
         public DateTime LastPlayed {get;set;}
         public double TimeInGame {get;set;}

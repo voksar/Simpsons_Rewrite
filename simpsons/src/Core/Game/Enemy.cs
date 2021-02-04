@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace simpsons.Core
 {
-    abstract class Enemy : Entity
+    public abstract class Enemy : Entity
     {
         [JsonProperty]
         public int Health {get;set;}
@@ -38,6 +38,28 @@ namespace simpsons.Core
             Y += SpeedY;
             if (vector.Y > window.ClientBounds.Height + Texture.Height)
             { IsAlive = false; }
+        }
+    }
+    public class Boss : Enemy
+    {
+        public enum Type
+        {
+            Maggie,
+            Wiggum
+        }
+
+        [JsonProperty]
+        public Type BossType {get;set;}
+
+
+        public Boss(string TextureName, float X, float Y, float SpeedX, float SpeedY, int Health, Type BossType) : 
+        base(TextureName, X, Y, SpeedX, SpeedY, Health)
+        {
+            this.BossType = BossType;
+        }
+        public override void Update(GameTime gameTime, GameWindow window, Player player)
+        {
+            Console.WriteLine(this.BossType.ToString());
         }
     }
 }

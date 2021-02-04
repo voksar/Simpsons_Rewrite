@@ -98,8 +98,6 @@ namespace simpsons.Core
             {
                 displayGames.AddGameItem(gh);
             }
-
- 
         }
         
         //States and Drawers for the game
@@ -224,8 +222,6 @@ namespace simpsons.Core
         {
             if(!Directory.Exists("Data/"))
                 Directory.CreateDirectory("Data/");
-            if(!Directory.Exists("Saves/"))
-                Directory.CreateDirectory("Saves/");
         }
     }
 }
