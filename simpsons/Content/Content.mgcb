@@ -54,23 +54,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Reno20.spritefont
 
-#begin Fonts/Reno24.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Reno24.spritefont
-
-#begin Fonts/VCR.ttf
-/copy:Fonts/VCR.ttf
-
-#begin Fonts/VCR16.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/VCR16.spritefont
-
 #begin Menu/changeSelectSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

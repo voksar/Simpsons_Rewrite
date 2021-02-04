@@ -42,15 +42,19 @@ namespace simpsons.Core.Handlers
             }
             
             if(playerInformationHandler == null)
-            {
-                playerInformationHandler = new PlayerInformationHandler();
-                playerInformationHandler.Cash = 0;
-                playerInformationHandler.SelectedPlayer = "Player/homer";
-                playerInformationHandler.SelectedBullet = "Temp/temp";
-                playerInformationHandler.UnlockedBullets = new List<string>();
-                playerInformationHandler.UnlockedPlayers = new List<string>(){};
-                playerInformationHandler.SerializePlayerData();
-            }
+                playerInformationHandler = SetDefaultData(playerInformationHandler);
+            return playerInformationHandler;
+        }
+        public static PlayerInformationHandler SetDefaultData(PlayerInformationHandler playerInformationHandler)
+        {
+            playerInformationHandler = new PlayerInformationHandler();
+            playerInformationHandler.Cash = 0;
+            playerInformationHandler.SelectedPlayer = "Player/homer";
+            playerInformationHandler.SelectedBullet = "Temp/temp";
+            playerInformationHandler.UnlockedBullets = new List<string>();
+            playerInformationHandler.UnlockedPlayers = new List<string>(){};
+            playerInformationHandler.SerializePlayerData();
+            
             return playerInformationHandler;
         }
     }

@@ -11,9 +11,7 @@ namespace simpsons.Core.Handlers
 
         static SpriteFont reno14;
         static SpriteFont reno20;
-        static SpriteFont reno24;
 
-        static SpriteFont vcr16;
 
         public static void Initialize()
         {
@@ -24,15 +22,9 @@ namespace simpsons.Core.Handlers
         {
             reno14 = content.Load<SpriteFont>("Fonts/Reno14");
             reno20 = content.Load<SpriteFont>("Fonts/Reno20");
-            reno24 = content.Load<SpriteFont>("Fonts/Reno24");
-            
-            vcr16 = content.Load<SpriteFont>("Fonts/VCR16");
 
             Fonts.Add("Reno14", reno14);
             Fonts.Add("Reno20", reno20);
-            Fonts.Add("Reno24", reno24);
-
-            Fonts.Add("VCR16", vcr16);
         }
     }
 }

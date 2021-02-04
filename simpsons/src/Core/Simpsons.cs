@@ -139,6 +139,7 @@ namespace simpsons.Core
         public static void MenuDraw(SpriteBatch spriteBatch, GameWindow window)
         {
             menu.Draw(spriteBatch, window);
+            spriteBatch.DrawString(FontHandler.Fonts["Unfinished"], "Voksar", Vector2.Zero, Color.Red);
         }
         public static States StartGame(GameHandler gameHandle)
         {
