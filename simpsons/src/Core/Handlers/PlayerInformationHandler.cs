@@ -33,8 +33,8 @@ namespace simpsons.Core.Handlers
             //Try to deserialize, if it fails, set it to null and create a new object.
             try
             {
-                 playerInformationHandler = JsonConvert.DeserializeObject<PlayerInformationHandler>(
-                json, new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
+                playerInformationHandler = JsonConvert.DeserializeObject<PlayerInformationHandler>(
+                    json, new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
             }
             catch
             {

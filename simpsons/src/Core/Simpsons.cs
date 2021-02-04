@@ -43,7 +43,7 @@ namespace simpsons.Core
         static List<Enemy> enemies;
         static List<GameHandler> gameHandlers;
 
-
+        //If gamedata has been modified
         static bool NeedUpdate = false;
 
         //Initialization and content loading
@@ -102,9 +102,6 @@ namespace simpsons.Core
  
         }
         
-        
-        
-
         //States and Drawers for the game
         public static States RunUpdate(GameWindow window, GameTime gameTime)
         {
