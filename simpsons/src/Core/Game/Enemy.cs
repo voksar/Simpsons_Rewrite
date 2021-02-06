@@ -42,6 +42,34 @@ namespace simpsons.Core
 
             if (vector.Y > window.ClientBounds.Height + Texture.Height)
                 IsAlive = false;
+            //Remove object if not alive
+            if(!IsAlive)
+                Simpsons.Enemies.Remove(this);
+        }
+    }
+    class Burns : Enemy
+    {
+        public Burns(string TextureName, float X, float Y, float SpeedX, float SpeedY, int Health)
+         : base(TextureName, X, Y, SpeedX, SpeedY, Health)
+        {
+            
+        }
+
+        public override void Update(GameTime gameTime, GameWindow window, Player player)
+        {
+            X += SpeedX;
+            Y += SpeedY;
+
+
+            if (X > window.ClientBounds.Width - Texture.Width || X < 0)
+            {
+                SpeedX *= -1;
+            }
+            
+
+            if (vector.Y > window.ClientBounds.Height + Texture.Height)
+                IsAlive = false;
+            //Remove object if not alive
             if(!IsAlive)
                 Simpsons.Enemies.Remove(this);
         }

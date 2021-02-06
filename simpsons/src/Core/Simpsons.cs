@@ -5,13 +5,10 @@ using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using Newtonsoft.Json;
 using simpsons.Core.Handlers;
 using simpsons.Core.Helpers;
 using System.Threading;
-using System.Threading.Tasks;
 using System.IO;
-using MonoGame;
 
 namespace simpsons.Core
 {
@@ -224,7 +221,7 @@ namespace simpsons.Core
         }
         public static void InitialGameSetup()
         {
-            player = new Player("Player/homer", 300,300, 500,500, "Player/homer");
+            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet);
             Enemies.Clear();
         }
         public static void CreateFolderStructure()
