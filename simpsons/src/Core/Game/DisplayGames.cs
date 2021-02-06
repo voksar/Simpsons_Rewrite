@@ -117,9 +117,9 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, new Rectangle((int)RectangleX, 0, (int)RectangleWidth, window.ClientBounds.Height)
             , Color.White);
-            var measure = FontHandler.Fonts["Reno24"].MeasureString("Saves").Length();
+            var measure = FontHandler.Fonts["Reno20"].MeasureString("Saves").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
-            Helper.DrawOutlineText("Reno24",spriteBatch, "Saves", 
+            Helper.DrawOutlineText("Reno20",spriteBatch, "Saves", 
             new Vector2(x, 10), Color.White, Opacity);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {

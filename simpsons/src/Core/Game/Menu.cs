@@ -178,6 +178,11 @@ namespace simpsons.Core
                     spriteBatch.Draw(menu[i].Texture, new Vector2(menu[i].cX, menu[i].cY), Color.White * Opacity);
                 }
             }
+
+            var widthOfText = FontHandler.Fonts["Reno20"].MeasureString(Simpsons.playerInformationHandler.Cash + "$");
+            Vector2 positionCashText = new Vector2(400 - widthOfText.X, 0);
+            spriteBatch.DrawString(FontHandler.Fonts["Reno20"], Simpsons.playerInformationHandler.Cash + "$"
+            , positionCashText, Color.White * Opacity);
         }
         public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth, GameTime gameTime)
         {

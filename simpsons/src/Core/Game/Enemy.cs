@@ -10,6 +10,7 @@ namespace simpsons.Core
     {
         [JsonProperty]
         public int Health {get;set;}
+
         public Enemy(string TextureName, float X, float Y, float SpeedX, float SpeedY, int Health)
          : base(TextureName, X, Y, SpeedX, SpeedY)
         {
@@ -30,14 +31,19 @@ namespace simpsons.Core
         public override void Update(GameTime gameTime, GameWindow window, Player player)
         {
             X += SpeedX;
+            Y += SpeedY;
+
 
             if (X > window.ClientBounds.Width - Texture.Width || X < 0)
             {
                 SpeedX *= -1;
             }
-            Y += SpeedY;
+            
+
             if (vector.Y > window.ClientBounds.Height + Texture.Height)
-            { IsAlive = false; }
+                IsAlive = false;
+            if(!IsAlive)
+                Simpsons.Enemies.Remove(this);
         }
     }
     public class Boss : Enemy
@@ -50,7 +56,6 @@ namespace simpsons.Core
 
         [JsonProperty]
         public Type BossType {get;set;}
-
 
         public Boss(string TextureName, float X, float Y, float SpeedX, float SpeedY, int Health, Type BossType) : 
         base(TextureName, X, Y, SpeedX, SpeedY, Health)

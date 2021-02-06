@@ -43,6 +43,7 @@ namespace simpsons.Core.Handlers
             
             if(playerInformationHandler == null)
                 playerInformationHandler = SetDefaultData(playerInformationHandler);
+                
             return playerInformationHandler;
         }
         public static PlayerInformationHandler SetDefaultData(PlayerInformationHandler playerInformationHandler)
@@ -52,7 +53,7 @@ namespace simpsons.Core.Handlers
             playerInformationHandler.SelectedPlayer = "Player/homer";
             playerInformationHandler.SelectedBullet = "Temp/temp";
             playerInformationHandler.UnlockedBullets = new List<string>();
-            playerInformationHandler.UnlockedPlayers = new List<string>(){};
+            playerInformationHandler.UnlockedPlayers = new List<string>(){"Player/homer"};
             playerInformationHandler.SerializePlayerData();
             
             return playerInformationHandler;

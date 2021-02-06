@@ -12,7 +12,7 @@ namespace simpsons.Core.Interfaces
         float RectangleWidth {get;set;}
         float Opacity {get;set;}
 
-        public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth, GameTime gameTime);
+        public int StartStateChange(int changeX, int changeWidth, int targetX, int targetWidth, GameTime gameTime);
         public void LoadStateChangeVariables();
     }
 }
