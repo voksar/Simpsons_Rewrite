@@ -39,7 +39,7 @@ namespace simpsons.Core
         static Background background;
         static SpawnManager spawnManager;
 
-
+        
 
         static List<GameHandler> gameHandlers;
 
@@ -114,7 +114,7 @@ namespace simpsons.Core
             if(InputHandler.Press(Keys.Space))
                 playerInformationHandler.Cash++;   
             player.Update(window, gameTime);
-            //spawnManager.Update(Enemies);
+            spawnManager.Update(Enemies, gameTime, gameHandler);
             foreach(Enemy e in Enemies.ToList())
             {
                 e.Update(gameTime, window, player);

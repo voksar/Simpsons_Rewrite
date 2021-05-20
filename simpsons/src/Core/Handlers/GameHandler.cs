@@ -8,7 +8,7 @@ using System.Linq;
 namespace simpsons.Core.Handlers
 {
     [JsonObject(ItemRequired = Required.Always)]
-    class GameHandler : IDisposable
+    public class GameHandler : IDisposable
     {
         private static string SerializeFilePath = "Data/Saves.json";
         public string GameID {get;set;}

@@ -42,6 +42,7 @@ namespace simpsons.Core
 
             if (vector.Y > window.ClientBounds.Height + Texture.Height)
                 IsAlive = false;
+            
             //Remove object if not alive
             if(!IsAlive)
                 Simpsons.Enemies.Remove(this);

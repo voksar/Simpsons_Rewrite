@@ -8,7 +8,7 @@ using simpsons.Core.Interfaces;
 using System;
 namespace simpsons.Core
 {
-    class DisplayGames : IChangeState
+    public class DisplayGames : IChangeState
     {
         public List<DisplayGamesItem> displayGamesItems{get;set;}
         
@@ -200,7 +200,7 @@ namespace simpsons.Core
             Opacity = 0.0f;
         }
     }
-    class DisplayGamesItem
+    public class DisplayGamesItem
     {
         public string DisplayID {get;set;}
         public Rectangle Rectangle {get;set;}

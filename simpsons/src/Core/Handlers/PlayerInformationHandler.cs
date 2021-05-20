@@ -51,7 +51,7 @@ namespace simpsons.Core.Handlers
             playerInformationHandler = new PlayerInformationHandler();
             playerInformationHandler.Cash = 0;
             playerInformationHandler.SelectedPlayer = "Player/homer";
-            playerInformationHandler.SelectedBullet = "Temp/temp";
+            playerInformationHandler.SelectedBullet = "Player/homer";
             playerInformationHandler.UnlockedBullets = new List<string>();
             playerInformationHandler.UnlockedPlayers = new List<string>(){"Player/homer"};
             playerInformationHandler.SerializePlayerData();

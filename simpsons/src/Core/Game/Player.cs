@@ -35,9 +35,7 @@ namespace simpsons.Core
             if(Y < window.ClientBounds.Height - Texture.Height)
                 if(InputHandler.IsPressing(Keys.Down) || InputHandler.IsPressing(Keys.S))
                     Y += SpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;;
-            
-            
-            
+                    
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

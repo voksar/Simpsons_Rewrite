@@ -41,8 +41,6 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, vector, Color.White);
         }
-        
-
         public bool CheckCollision(Entity other)
         {
             Rectangle myRect = new Rectangle(Convert.ToInt32(X), Convert.ToInt32(Y), Convert.ToInt32(Texture.Width), Convert.ToInt32(Texture.Height));
