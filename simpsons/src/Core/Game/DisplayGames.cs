@@ -40,7 +40,7 @@ namespace simpsons.Core
         {
             Texture = Utilities.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height,
             graphicsDevice, Color.Black, 0.8f);
-            baseIcon = TextureHandler.Sprites["MenuIcons/Saves"];
+            baseIcon = TextureHandler.Sprites["MenuIcons\\Saves"];
             rectangleDisplayInfo = Utilities.RectangleCreator(400, 300, graphicsDevice, Color.Black, 0.9f
             );
         }

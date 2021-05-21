@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using simpsons.Core.Handlers;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework.Content;
 
 namespace simpsons.Core.Utils
 {
@@ -94,6 +97,26 @@ namespace simpsons.Core.Utils
             spriteBatch.DrawString(FontHandler.Fonts[font],
             text, position, color * opacity);
         }
+    
+        public static void AutoLoader<T>(AutoLoaderSettings autoLoaderSettings, Dictionary<string, T> collection)
+        {
+            string _relativePath;
+            var toBeLoadedFiles = autoLoaderSettings.Files.Where(s => autoLoaderSettings.AcceptableExtensions.Any(x => s.Contains(x)));
+
+            foreach(string file in toBeLoadedFiles)
+            {
+                _relativePath = file;
+                autoLoaderSettings.AcceptableExtensions.ForEach(x => _relativePath = _relativePath.Replace(x, "").Replace(autoLoaderSettings.ReplacePath, ""));
+                collection.Add(_relativePath, autoLoaderSettings.Content.Load<T>(_relativePath));
+            }
+        }
     }
     
+    public class AutoLoaderSettings 
+    {
+        public string ReplacePath;
+        public ContentManager Content;
+        public List<string> AcceptableExtensions;
+        public string[] Files;
+    }
 }
