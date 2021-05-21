@@ -20,7 +20,8 @@ namespace simpsons.Core.Handlers
         {
             "MenuIcons",
             "Player",
-            "Enemies"
+            "Enemies",
+            "Icons"
         };
 
         private static List <string> _acceptableExtensions = new List<string>()

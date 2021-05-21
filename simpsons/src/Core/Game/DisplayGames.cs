@@ -117,9 +117,9 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, new Rectangle((int)RectangleX, 0, (int)RectangleWidth, window.ClientBounds.Height)
             , Color.White);
-            var measure = FontHandler.Fonts["Reno20"].MeasureString("Saves").Length();
+            var measure = FontHandler.Fonts["Fonts\\Reno20"].MeasureString("Saves").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
-            Utilities.DrawOutlineText("Reno20",spriteBatch, "Saves", 
+            Utilities.DrawOutlineText("Fonts\\Reno20",spriteBatch, "Saves", 
             new Vector2(x, 10), Color.White, Opacity);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
@@ -146,21 +146,21 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(rectangleDisplayInfo, 
             new Vector2(300, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
-            var measure = FontHandler.Fonts["Reno24"].MeasureString("SAVEINFORMATION").Length();
+            var measure = FontHandler.Fonts["Fonts\\Reno24"].MeasureString("SAVEINFORMATION").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
             spriteBatch.DrawString(FontHandler.Fonts["Reno24"], "SAVEINFORMATION",
             new Vector2(x, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
 
-            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
             "Enemies: " + displayGamesItems[selected].Game.Enemies.Count, 
             new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 10), Color.Green * Opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
             "Time: " + (int)displayGamesItems[selected].Game.TimeInGame, 
             new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 30), Color.Green * Opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
             "Score: " + displayGamesItems[selected].Game.Score, 
             new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 50), Color.Green * Opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Reno14"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
             "Last Played: " + displayGamesItems[selected].Game.LastPlayed.ToString(), 
             new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 70), Color.Green * Opacity);
         }

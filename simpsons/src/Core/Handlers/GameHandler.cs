@@ -1,3 +1,5 @@
+
+
 using System.Collections.Generic;
 using simpsons.Core;
 using Newtonsoft.Json;
@@ -7,27 +9,33 @@ using System.Linq;
 
 namespace simpsons.Core.Handlers
 {
-    [JsonObject(ItemRequired = Required.Always)]
+    [JsonObject(ItemRequired = Required.AllowNull)]
     public class GameHandler : IDisposable
     {
         private static string SerializeFilePath = "Data/Saves.json";
+
         public string GameID {get;set;}
         public DateTime LastPlayed {get;set;}
         public double TimeInGame {get;set;}
         public int Score {get;set;}
         public Player Player {get;set;}
+        public Companion Companion {get;set;}
         public Dictionary<string, bool> SpawnedBosses{get;set;}
         public List<Enemy> Enemies {get;set;}
         
 
-
-        public void SetProperties(Player player, List<Enemy> enemies, int score)
+        #nullable enable
+        public void SetProperties(Player player, List<Enemy> enemies, int score, Companion? companion)
         {
             Player = player;
             Enemies = enemies;
             Score = score;
             LastPlayed = DateTime.Now;
+            if(companion != null)
+                Companion = companion;
         }
+        #nullable disable
+
         public void GenerateGameID()
         {
             //Available characters for gameid

@@ -30,7 +30,7 @@ namespace simpsons.Core
         public static PlayerInformationHandler playerInformationHandler{get;set;}
         public static List<Enemy> Enemies {get;set;}
 
-        //Objects
+
         static DisplayGames displayGames;
         static Player player;
         static GameHandler gameHandler;
@@ -38,6 +38,7 @@ namespace simpsons.Core
         static Random random;
         static Background background;
         static SpawnManager spawnManager;
+        static Companion companion;
 
         
 
@@ -118,6 +119,8 @@ namespace simpsons.Core
             if(InputHandler.Press(Keys.Space))
                 playerInformationHandler.Cash++;   
             player.Update(window, gameTime);
+            if(companion != null)
+                companion.Update();
             spawnManager.Update(Enemies, gameTime, gameHandler);
             foreach(Enemy e in Enemies.ToList())
             {
@@ -128,6 +131,8 @@ namespace simpsons.Core
         public static void RunDraw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             player.Draw(spriteBatch);
+            if(companion != null)
+                companion.Draw(spriteBatch);
             foreach(Enemy e in Enemies)
                 e.Draw(spriteBatch);
             if(DebuggerIsActive)
@@ -135,8 +140,8 @@ namespace simpsons.Core
                 var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 frameCounter.Update(deltaTime);
                 string fps = string.Format("{0}",(int)frameCounter.AverageFramesPerSecond);
-                Utilities.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps + 
-                " - " + (int)gameHandler.TimeInGame + " - " + Tick + " - " + Enemies.Count + " - " + playerInformationHandler.Cash);
+                //Utilities.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps + 
+                //" - " + (int)gameHandler.TimeInGame + " - " + Tick + " - " + Enemies.Count + " - " + playerInformationHandler.Cash);
             }
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
@@ -168,6 +173,7 @@ namespace simpsons.Core
                 gameHandler = gameHandle;
                 Enemies = gameHandler.Enemies;
                 player = gameHandler.Player;
+                companion = gameHandler.Companion;
             }
             return States.Run;
         }
@@ -217,7 +223,7 @@ namespace simpsons.Core
         {
             if(gameHandler != null)
             {
-                gameHandler.SetProperties(player, Enemies, 5);
+                gameHandler.SetProperties(player, Enemies, 5, companion);
                 gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
                 NeedUpdate = true;
             }
@@ -230,8 +236,14 @@ namespace simpsons.Core
         }
         public static void InitialGameSetup()
         {
-            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet);
+            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
             Enemies.Clear();
+
+            if(playerInformationHandler.UnlockedCompanion)
+            {
+                Console.WriteLine("Yes");
+                companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5);
+            }
         }
         public static void CreateFolderStructure()
         {

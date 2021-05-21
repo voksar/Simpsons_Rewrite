@@ -7,18 +7,12 @@ using Newtonsoft.Json;
 
 namespace simpsons.Core
 {
-    public class Player : Entity
+    public class Player : PlayerEntity
     {
-        [JsonProperty]
-        public string BulletName {get;set;}
-        public Texture2D BulletTexture {get;set;}
-
-
-        public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName)
-         : base(TextureName, X, Y, SpeedX, SpeedY)
+        public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health)
+         : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
         {
-            this.BulletName = BulletName;
-            BulletTexture = TextureHandler.Sprites[BulletName];
+            
         }
         public void Update(GameWindow window, GameTime gameTime)
         {
@@ -40,6 +34,33 @@ namespace simpsons.Core
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, vector, Color.White);
+            for (int i = 1; i <= HealthMax; i++)
+            {
+                float x = (32 * i) - 32;
+                if (i <= Health)
+                    spriteBatch.Draw(TextureHandler.Sprites["Player\\heart"], new Vector2(x, 5), Color.White);
+                else
+                    spriteBatch.Draw(TextureHandler.Sprites["Player\\heartdead"], new Vector2(x, 5), Color.White);
+            }
         }
+    }
+
+    public class Companion : PlayerEntity
+    {
+         public Companion(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health)
+         : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
+         {
+
+         }
+
+         public void Update()
+         {
+
+         }
+
+         public override void Draw(SpriteBatch spriteBatch)
+         {
+             spriteBatch.Draw(Texture, vector, Color.White);
+         }
     }
 }

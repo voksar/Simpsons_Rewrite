@@ -16,6 +16,7 @@ namespace simpsons.Core.Handlers
         public string SelectedBullet {get;set;}
         public List<string> UnlockedPlayers {get;set;}
         public List<string> UnlockedBullets {get;set;}
+        public bool UnlockedCompanion {get;set;}
 
 
         public void SerializePlayerData()
@@ -42,18 +43,19 @@ namespace simpsons.Core.Handlers
             }
             
             if(playerInformationHandler == null)
-                playerInformationHandler = SetDefaultData(playerInformationHandler);
+                playerInformationHandler = SetDefaultData();
                 
             return playerInformationHandler;
         }
-        public static PlayerInformationHandler SetDefaultData(PlayerInformationHandler playerInformationHandler)
+        public static PlayerInformationHandler SetDefaultData()
         {
-            playerInformationHandler = new PlayerInformationHandler();
+            PlayerInformationHandler playerInformationHandler = new PlayerInformationHandler();
             playerInformationHandler.Cash = 0;
             playerInformationHandler.SelectedPlayer = "Player\\homer";
-            playerInformationHandler.SelectedBullet = "Player\\homer";
-            playerInformationHandler.UnlockedBullets = new List<string>();
-            playerInformationHandler.UnlockedPlayers = new List<string>(){"Player/homer"};
+            playerInformationHandler.SelectedBullet = "Player\\defaultbullet";
+            playerInformationHandler.UnlockedBullets = new List<string>(){"Player\\defaultbullet"};
+            playerInformationHandler.UnlockedPlayers = new List<string>(){"Player\\homer"};
+            playerInformationHandler.UnlockedCompanion = false;
             playerInformationHandler.SerializePlayerData();
             
             return playerInformationHandler;
