@@ -28,7 +28,7 @@ namespace simpsons.Core
 
         SoundEffect soundEffect;
         List<MenuItem> menu;
-        public int frame = 0;
+        float frame = 0;
         int selected = 0;
         int prevselected;
         float currentHeight = 0;
@@ -71,8 +71,8 @@ namespace simpsons.Core
             {
                 if (Opacity + 0.1f <= 1.0f)
                     Opacity += 0.1f;
-                frame++;
-                frame %= 30;
+                frame += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                frame %= 0.8f;
                 allowKeyboard = MouseHandler.CheckIfSameSpot();
                 prevselected = selected;
 
@@ -145,7 +145,7 @@ namespace simpsons.Core
                 switch (state)
                 {
                     case (int)Simpsons.States.Saves:
-                        return StartStateChange(10, 2, 550, 500, gameTime);
+                        return StartStateChange(15, 3, 550, 500, gameTime);
                     default:
                         IsChangingState = false;
                         return menu[selected].State;
@@ -163,7 +163,7 @@ namespace simpsons.Core
             {
                 var c = Color.White;
                 //Ha frame baserad flashing på selected texten
-                if (frame <= 15)
+                if (frame <= 0.4)
                     c = new Color(159, 255, 111);
                 else
                     c = Color.Yellow;

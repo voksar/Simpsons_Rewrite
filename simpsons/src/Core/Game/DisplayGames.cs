@@ -25,7 +25,7 @@ namespace simpsons.Core
 
         int selected = 0;
         int currentY = 0;
-        int frame = 0;
+        float frame = 0;
         bool allowKeyboard = false;
         Color selectedColor;
 
@@ -63,9 +63,11 @@ namespace simpsons.Core
         public int Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            frame++;
-            frame %= 30;
-            if (frame <= 15)
+            /*frame++;
+            frame %= 30;*/
+            frame += delta;
+            frame %= 0.8f;
+            if (frame <= 0.4)
                 selectedColor = new Color(159, 255, 111);
             else
                 selectedColor = Color.Yellow;
@@ -140,7 +142,7 @@ namespace simpsons.Core
                     IsOpacityDone = true;
                 if(IsOpacityDone)
                 {
-                    return StartStateChange(10, 2, 0, 400, gameTime);
+                    return StartStateChange(15, 3, 0, 400, gameTime);
                 }
             }
             return (int)Simpsons.States.Saves;
