@@ -2,6 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using simpsons.Core.Utils;
+using System;
 
 namespace simpsons.Core.Handlers
 {
@@ -9,22 +13,55 @@ namespace simpsons.Core.Handlers
     {
         public static Dictionary<string, SpriteFont> Fonts {get; private set;}
 
-        static SpriteFont reno14;
-        static SpriteFont reno20;
+
+        private static List<string> _acceptablePaths = new List<string>()
+        {
+            "Fonts"
+        };
+
+        private static List <string> _acceptableExtensions = new List<string>()
+        {
+            ".spritefont"
+        };
+
+        private static string _currentPath;
+
+        private static string _nextPath;
 
 
         public static void Initialize()
         {
             Fonts = new Dictionary<string, SpriteFont>();
+            _currentPath = Directory.GetCurrentDirectory() + "\\Content\\";
         }
 
         public static void LoadContent(ContentManager content)
         {
-            reno14 = content.Load<SpriteFont>("Fonts/Reno14");
-            reno20 = content.Load<SpriteFont>("Fonts/Reno20");
+                        //Auto-loader for any textures located in _acceptablePaths folder
+            foreach(string path in _acceptablePaths)
+            {
 
-            Fonts.Add("Reno14", reno14);
-            Fonts.Add("Reno20", reno20);
+                //add path to next path
+                _nextPath = _currentPath + path;
+                
+                
+
+                //get all files in the accepted path
+                var files = Directory.GetFiles(_nextPath);
+
+                //Setup settings for autoloading
+                AutoLoaderSettings autoLoaderSettings = new AutoLoaderSettings()
+                {
+                    ReplacePath = _currentPath,
+                    AcceptableExtensions = _acceptableExtensions,
+                    Content = content,
+                    Files = files,
+                };
+
+                Utilities.AutoLoader(autoLoaderSettings, Fonts);
+                
+                
+            }
         }
     }
 }

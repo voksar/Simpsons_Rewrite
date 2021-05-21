@@ -47,7 +47,7 @@ namespace simpsons.Core
         public void AddGameItem(GameHandler gameHandler)
         {
             
-            var measure = FontHandler.Fonts["Reno20"].MeasureString(gameHandler.GameID).X;
+            var measure = FontHandler.Fonts["Fonts\\Reno20"].MeasureString(gameHandler.GameID).X;
             float x = 740 - measure;
             
             currentY = 50 + (((int)(baseIcon.Height * 0.6) + 5) * displayGamesItems.Count);

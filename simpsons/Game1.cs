@@ -108,8 +108,8 @@ namespace simpsons
                     Simpsons.MenuDraw(_spriteBatch, Window);
                     break;
             }
-            _spriteBatch.DrawString(FontHandler.Fonts["Reno20"],"Memory:" + GC.GetTotalMemory(false) / 1024, new Vector2(0, 30), Color.White);
-            _spriteBatch.DrawString(FontHandler.Fonts["Reno14"], "Simpsons(v0.2.0)", new Vector2(0, 700), Color.White * 0.5f);
+            _spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],"Memory:" + GC.GetTotalMemory(false) / 1024, new Vector2(0, 30), Color.White);
+            _spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"], "Simpsons(v0.2.0)", new Vector2(0, 700), Color.White * 0.5f);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

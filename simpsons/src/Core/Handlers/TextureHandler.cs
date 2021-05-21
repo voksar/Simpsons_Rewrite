@@ -33,7 +33,6 @@ namespace simpsons.Core.Handlers
 
         private static string _nextPath;
 
-        private static string _relativePath;
 
         public static void Initialize()
         {
