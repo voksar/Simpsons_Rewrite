@@ -2,9 +2,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using simpsons.Core.Handlers;
 
-namespace simpsons.Core.Helpers
+namespace simpsons.Core.Utils
 {
-    static class Helper
+    static class Utilities
     {
         public static Texture2D RectangleCreator(int dim1, int dim2, GraphicsDevice gd, Color c)
         {

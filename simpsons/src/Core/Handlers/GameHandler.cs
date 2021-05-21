@@ -16,7 +16,9 @@ namespace simpsons.Core.Handlers
         public double TimeInGame {get;set;}
         public int Score {get;set;}
         public Player Player {get;set;}
+        public Dictionary<string, bool> SpawnedBosses{get;set;}
         public List<Enemy> Enemies {get;set;}
+        
 
 
         public void SetProperties(Player player, List<Enemy> enemies, int score)
@@ -28,6 +30,7 @@ namespace simpsons.Core.Handlers
         }
         public void GenerateGameID()
         {
+            //Available characters for gameid
             string chars = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
             char[] newChars = new char[12];
             Random random = new Random();
@@ -37,7 +40,7 @@ namespace simpsons.Core.Handlers
                 newChars[i] = chars[random.Next(chars.Length)];
             }
             string finalString = new string(newChars);
-            GameID = "G-" + finalString;
+            GameID = "GID-" + finalString;
         }
         
         public static void SerializeGame(List<GameHandler> gameHandlers)

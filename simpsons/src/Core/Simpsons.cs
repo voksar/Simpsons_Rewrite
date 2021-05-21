@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using simpsons.Core.Handlers;
-using simpsons.Core.Helpers;
+using simpsons.Core.Utils;
 using System.Threading;
 using System.IO;
 
@@ -76,13 +76,17 @@ namespace simpsons.Core
         {
 
             TextureHandler.LoadContent(content);
-            
+
+
+
+
 
             //Default setup
             InitialGameSetup();
             //Deserialize all earlier games
             gameHandlers = GameHandler.DeserializeOnStartup();
             
+
             //Menu load stuff
             menu = new Menu((int)States.Menu);
             menu.LoadContent(graphicsDevice, window, content);
@@ -131,7 +135,7 @@ namespace simpsons.Core
                 var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
                 frameCounter.Update(deltaTime);
                 string fps = string.Format("{0}",(int)frameCounter.AverageFramesPerSecond);
-                Helper.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps + 
+                Utilities.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps + 
                 " - " + (int)gameHandler.TimeInGame + " - " + Tick + " - " + Enemies.Count + " - " + playerInformationHandler.Cash);
             }
         }
@@ -153,6 +157,11 @@ namespace simpsons.Core
                 gameHandler.GenerateGameID();
                 gameHandler.Score = 0;
                 gameHandler.TimeInGame = 0;
+                gameHandler.SpawnedBosses = new Dictionary<string, bool>()
+                {
+                    { "Maggie", false },
+                    { "Wiggum", false }
+                };
             }
             else
             {
@@ -177,7 +186,7 @@ namespace simpsons.Core
             InputHandler.Update(gameTime);
             MouseHandler.Update();
             UpdateTick();
-            if(Tick == 900)
+            if(Tick == 0)
             {
                 UpdateGameSaves();
             }
@@ -191,7 +200,7 @@ namespace simpsons.Core
         public static void UpdateTick()
         {
             Tick++;
-            Tick %= 1800;
+            Tick %= 25000;
         }
         public static void UpdateGameSaves()
         {

@@ -6,7 +6,7 @@ using simpsons.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using simpsons.Core.Helpers;
+using simpsons.Core.Utils;
 
 namespace simpsons
 {
@@ -29,17 +29,17 @@ namespace simpsons
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.PreferredBackBufferWidth = 1600;
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / 144);
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
             //Intialize
+            ResolutionUtils.SetResolution(1600, 900);
             Simpsons.State = Simpsons.States.Loading;
             Simpsons.Initialize();
-
 
             base.Initialize();
         }

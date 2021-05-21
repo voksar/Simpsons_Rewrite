@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using simpsons.Core.Handlers;
-using simpsons.Core.Helpers;
+using simpsons.Core.Utils;
 using simpsons.Core.Interfaces;
 using System;
 namespace simpsons.Core
@@ -38,10 +38,10 @@ namespace simpsons.Core
         }
         public void LoadContent(GameWindow window, GraphicsDevice graphicsDevice)
         {
-            Texture = Helper.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height,
+            Texture = Utilities.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height,
             graphicsDevice, Color.Black, 0.8f);
             baseIcon = TextureHandler.Sprites["MenuIcons/Saves"];
-            rectangleDisplayInfo = Helper.RectangleCreator(400, 300, graphicsDevice, Color.Black, 0.9f
+            rectangleDisplayInfo = Utilities.RectangleCreator(400, 300, graphicsDevice, Color.Black, 0.9f
             );
         }
         public void AddGameItem(GameHandler gameHandler)
@@ -119,7 +119,7 @@ namespace simpsons.Core
             , Color.White);
             var measure = FontHandler.Fonts["Reno20"].MeasureString("Saves").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
-            Helper.DrawOutlineText("Reno20",spriteBatch, "Saves", 
+            Utilities.DrawOutlineText("Reno20",spriteBatch, "Saves", 
             new Vector2(x, 10), Color.White, Opacity);
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
@@ -128,13 +128,13 @@ namespace simpsons.Core
                 ), null, Color.White * Opacity, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
                 if(i == selected)
                 {
-                    Helper.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
+                    Utilities.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
                     new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),
                     selectedColor, Opacity);
                 }
                 else 
                 {
-                    Helper.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
+                    Utilities.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
                     new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),
                     Color.White, Opacity);
                 }
