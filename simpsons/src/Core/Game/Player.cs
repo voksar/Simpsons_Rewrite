@@ -34,7 +34,7 @@ namespace simpsons.Core
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, vector, Color.White);
+            
             spriteBatch.Draw(TextureHandler.Sprites["Icons\\Border01"], new Vector2(5,5), Color.White);
             for (int i = 1; i <= HealthMax; i++)
             {
@@ -44,6 +44,7 @@ namespace simpsons.Core
                 else
                     spriteBatch.Draw(TextureHandler.Sprites["Player\\heartdead"], new Vector2(x, 5), Color.White);
             }
+            spriteBatch.Draw(Texture, vector, Color.White);
         }
     }
 
@@ -64,7 +65,7 @@ namespace simpsons.Core
 
             var posX = width - 5 - borderTexture.Width;
 
-            spriteBatch.Draw(Texture, vector, Color.White);
+            
             spriteBatch.Draw(TextureHandler.Sprites["Icons\\Border01"], new Vector2(posX,5), Color.White);
             for (int i = 1; i <= HealthMax; i++)
             {
@@ -74,6 +75,7 @@ namespace simpsons.Core
                 else
                     spriteBatch.Draw(TextureHandler.Sprites["Player\\heartdead"], new Vector2(x, 5), Color.White);
             }
+            spriteBatch.Draw(Texture, vector, Color.White);
         }
     }
 }
