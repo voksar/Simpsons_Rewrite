@@ -145,7 +145,7 @@ namespace simpsons.Core
                 switch (state)
                 {
                     case (int)Simpsons.States.Saves:
-                        return StartStateChange(10, 4, 250, 500, gameTime);
+                        return StartStateChange(10, 2, 550, 500, gameTime);
                     default:
                         IsChangingState = false;
                         return menu[selected].State;

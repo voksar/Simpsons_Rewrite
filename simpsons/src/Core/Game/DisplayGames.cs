@@ -6,6 +6,7 @@ using simpsons.Core.Handlers;
 using simpsons.Core.Utils;
 using simpsons.Core.Interfaces;
 using System;
+using System.Linq;
 namespace simpsons.Core
 {
     public class DisplayGames : IChangeState
@@ -30,7 +31,10 @@ namespace simpsons.Core
 
         Texture2D baseIcon;
         Texture2D rectangleDisplayInfo;
-        
+
+        private string _deleteMessage;
+        private float _durationOpacity = 1f;
+
         public DisplayGames()
         {
             displayGamesItems = new List<DisplayGamesItem>();
@@ -48,9 +52,10 @@ namespace simpsons.Core
         {
             
             var measure = FontHandler.Fonts["Fonts\\Reno20"].MeasureString(gameHandler.GameID).X;
-            float x = 740 - measure;
+            //-10 from right border
+            float x = 1040 - measure;
             
-            currentY = 50 + (((int)(baseIcon.Height * 0.6) + 5) * displayGamesItems.Count);
+            currentY = 75 + (((int)(baseIcon.Height * 0.6) + 5) * displayGamesItems.Count);
             float y = currentY;
             DisplayGamesItem displayGamesItem = new DisplayGamesItem(gameHandler, x, y);
             displayGamesItems.Add(displayGamesItem);
@@ -64,7 +69,7 @@ namespace simpsons.Core
                 selectedColor = new Color(159, 255, 111);
             else
                 selectedColor = Color.Yellow;
-            
+            Timer(gameTime);
             if(!IsChangingState)
             {
                 allowKeyboard = MouseHandler.CheckIfSameSpot();
@@ -76,6 +81,33 @@ namespace simpsons.Core
                 if(InputHandler.Press(Keys.Up) && allowKeyboard)
                     if(selected > 0)
                         selected--;
+                if(InputHandler.Press(Keys.D) && allowKeyboard)
+                {
+
+
+                    GameHandler _gameHandler = displayGamesItems[selected].Game;
+                    Simpsons.RemoveGameHandler(_gameHandler);
+                    for(int i = selected; i < displayGamesItems.Count; i++)
+                    {
+                        var tempRect = displayGamesItems[i].Rectangle;
+                        Rectangle rect = new Rectangle(tempRect.X, tempRect.Y - 35 , tempRect.Width, tempRect.Height);
+                        displayGamesItems[i].Rectangle = rect;
+                    }
+
+                    
+
+                    displayGamesItems.RemoveAt(selected);
+                    _durationOpacity = 1f;
+                    _deleteMessage = $"Game {_gameHandler.GameID} deleted";
+
+                    if(displayGamesItems.ElementAtOrDefault(selected) == null)
+                    {
+                        selected--;
+                    }
+
+                    if(displayGamesItems.Count == 0)
+                        selected = 0;
+                }
                 //Checks if user presses enter
                 //or if the user presses mouse1 and is hovering over the correct object
                 if(displayGamesItems.Count != 0)
@@ -108,7 +140,7 @@ namespace simpsons.Core
                     IsOpacityDone = true;
                 if(IsOpacityDone)
                 {
-                    return StartStateChange(10, 4, 0, 400, gameTime);
+                    return StartStateChange(10, 2, 0, 400, gameTime);
                 }
             }
             return (int)Simpsons.States.Saves;
@@ -119,18 +151,22 @@ namespace simpsons.Core
             , Color.White);
             var measure = FontHandler.Fonts["Fonts\\Reno20"].MeasureString("Saves").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
-            Utilities.DrawOutlineText("Fonts\\Reno20",spriteBatch, "Saves", 
-            new Vector2(x, 10), Color.White, Opacity);
+            Utilities.DrawOutlineText("Fonts\\Reno20",spriteBatch, "Saves", new Vector2(x, 10), Color.White, Opacity);
+
+            if(_deleteMessage != null)
+            {
+                var measureDelete = FontHandler.Fonts["Fonts\\Reno14"].MeasureString(_deleteMessage).Length();
+                float xDelete = (window.ClientBounds.Width / 2) - (measureDelete / 2);
+                Utilities.DrawOutlineText("Fonts\\Reno14",spriteBatch, _deleteMessage, new Vector2(xDelete, 45), Color.Red, _durationOpacity);
+            }
             for(int i = 0; i < displayGamesItems.Count; i++)
             {
                 spriteBatch.Draw(baseIcon, new Vector2(
-                    260, displayGamesItems[i].Rectangle.Y
+                    560, displayGamesItems[i].Rectangle.Y
                 ), null, Color.White * Opacity, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
                 if(i == selected)
                 {
-                    Utilities.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,
-                    new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),
-                    selectedColor, Opacity);
+                    Utilities.DrawOutlineText(spriteBatch, displayGamesItems[i].DisplayID,new Vector2(displayGamesItems[i].Rectangle.X,displayGamesItems[i].Rectangle.Y),selectedColor, Opacity);
                 }
                 else 
                 {
@@ -139,31 +175,23 @@ namespace simpsons.Core
                     Color.White, Opacity);
                 }
             }
-            //DrawSaveInformation(spriteBatch, window);
         }
         
-        public void DrawSaveInformation(SpriteBatch spriteBatch, GameWindow window)
+        private void Timer(GameTime gameTime)
         {
-            spriteBatch.Draw(rectangleDisplayInfo, 
-            new Vector2(300, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
-            var measure = FontHandler.Fonts["Fonts\\Reno24"].MeasureString("SAVEINFORMATION").Length();
-            float x = (window.ClientBounds.Width / 2) - (measure / 2);
-            spriteBatch.DrawString(FontHandler.Fonts["Reno24"], "SAVEINFORMATION",
-            new Vector2(x, window.ClientBounds.Height - rectangleDisplayInfo.Height - 25), Color.White * Opacity);
+            if(_deleteMessage != null)
+            {
+                _durationOpacity -= (float)gameTime.ElapsedGameTime.TotalSeconds / 2;
+                if(_durationOpacity <= 0)
+                {
+                    _deleteMessage = null;
+                    _durationOpacity = 1f;
 
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
-            "Enemies: " + displayGamesItems[selected].Game.Enemies.Count, 
-            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 10), Color.Green * Opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
-            "Time: " + (int)displayGamesItems[selected].Game.TimeInGame, 
-            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 30), Color.Green * Opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
-            "Score: " + displayGamesItems[selected].Game.Score, 
-            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 50), Color.Green * Opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"],
-            "Last Played: " + displayGamesItems[selected].Game.LastPlayed.ToString(), 
-            new Vector2(310, window.ClientBounds.Height - rectangleDisplayInfo.Height + 70), Color.Green * Opacity);
+                }    
+            }
+            
         }
+
         public int StartStateChange(int amountX, int amountWidth, int targetX, int targetWidth, GameTime gameTime)
         {
             float temporaryamountX = 0f;
@@ -195,7 +223,7 @@ namespace simpsons.Core
         {
             IsOpacityDone = false;
             IsChangingState = false;
-            RectangleX = 250;
+            RectangleX = 550;
             RectangleWidth = 500;
             Opacity = 0.0f;
         }

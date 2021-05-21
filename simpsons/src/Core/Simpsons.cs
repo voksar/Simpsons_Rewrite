@@ -241,7 +241,6 @@ namespace simpsons.Core
 
             if(playerInformationHandler.UnlockedCompanion)
             {
-                Console.WriteLine("Yes");
                 companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5);
             }
         }
@@ -249,6 +248,19 @@ namespace simpsons.Core
         {
             if(!Directory.Exists("Data/"))
                 Directory.CreateDirectory("Data/");
+        }
+
+        public static void RemoveGameHandler(GameHandler _gameHandler)
+        {
+            int index = gameHandlers.FindIndex(item => item.GameID == _gameHandler.GameID);
+            if(index == -1)
+            {
+                Console.WriteLine("No game found");
+            }
+            else
+            {
+                gameHandlers.RemoveAt(index);
+            }
         }
     }
 }

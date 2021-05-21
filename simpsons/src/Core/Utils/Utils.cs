@@ -108,7 +108,6 @@ namespace simpsons.Core.Utils
             {
                 _relativePath = file;
                 autoLoaderSettings.AcceptableExtensions.ForEach(x => _relativePath = _relativePath.Replace(x, "").Replace(autoLoaderSettings.ReplacePath, ""));
-                Console.WriteLine(_relativePath);
                 collection.Add(_relativePath, autoLoaderSettings.Content.Load<T>(_relativePath));
             }
         }
