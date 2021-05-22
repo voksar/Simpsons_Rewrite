@@ -241,7 +241,7 @@ namespace simpsons.Core
 
             if(playerInformationHandler.UnlockedCompanion)
             {
-                companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5);
+                companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
             }
         }
         public static void CreateFolderStructure()

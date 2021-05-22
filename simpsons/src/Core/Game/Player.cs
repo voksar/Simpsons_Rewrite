@@ -50,12 +50,19 @@ namespace simpsons.Core
 
     public class Companion : PlayerEntity
     {
-        public Companion(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health)
+        //Link up the companion to the player
+        [JsonProperty]
+        public Player Player {get;set;}
+
+        
+        public Companion(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health, Player Player)
         : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
         {
+            this.Player = Player;
         }
         public void Update()
         {
+            Console.WriteLine(Player.X);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
