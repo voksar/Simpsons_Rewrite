@@ -12,7 +12,7 @@ using simpsons.Core.Interfaces;
 
 namespace simpsons.Core
 {
-    class Menu : IChangeState
+    class Menu : IState
     {
         
         //Interface properties

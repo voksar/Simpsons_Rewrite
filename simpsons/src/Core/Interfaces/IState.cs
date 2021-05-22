@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace simpsons.Core.Interfaces
 {
-    interface IChangeState
+    interface IState
     {
         Texture2D Texture {get;set;}
         bool IsOpacityDone {get;set;}

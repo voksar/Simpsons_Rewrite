@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 namespace simpsons.Core
 {
-    public class DisplayGames : IChangeState
+    public class DisplayGames : IState
     {
         public List<DisplayGamesItem> displayGamesItems{get;set;}
         
