@@ -324,7 +324,7 @@
 /processorParam:TextureFormat=Color
 /build:StoreIcons/BorderSquare.png
 
-#begin StoreIcons/Homer.png
+#begin StoreIcons/homer.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -334,7 +334,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:StoreIcons/Homer.png
+/build:StoreIcons/homer.png
 
 #begin StoreIcons/LeftArrow.png
 /importer:TextureImporter
@@ -348,7 +348,7 @@
 /processorParam:TextureFormat=Color
 /build:StoreIcons/LeftArrow.png
 
-#begin StoreIcons/Lisa.png
+#begin StoreIcons/lisa.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -358,7 +358,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:StoreIcons/Lisa.png
+/build:StoreIcons/lisa.png
 
 #begin StoreIcons/Lock.png
 /importer:TextureImporter
@@ -372,7 +372,7 @@
 /processorParam:TextureFormat=Color
 /build:StoreIcons/Lock.png
 
-#begin StoreIcons/Marge.png
+#begin StoreIcons/marge.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -382,7 +382,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:StoreIcons/Marge.png
+/build:StoreIcons/marge.png
 
 #begin StoreIcons/RightArrow.png
 /importer:TextureImporter

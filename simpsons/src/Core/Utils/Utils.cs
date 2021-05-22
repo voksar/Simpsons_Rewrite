@@ -107,8 +107,10 @@ namespace simpsons.Core.Utils
             foreach(string file in toBeLoadedFiles)
             {
                 _relativePath = file;
+                
                 autoLoaderSettings.AcceptableExtensions.ForEach(x => _relativePath = _relativePath.Replace(x, "").Replace(autoLoaderSettings.ReplacePath, ""));
                 collection.Add(_relativePath, autoLoaderSettings.Content.Load<T>(_relativePath));
+                Console.WriteLine(_relativePath);
             }
         }
     }

@@ -36,6 +36,7 @@ namespace simpsons.Core
         //Variable declarations
         Texture2D StoreRectangle;
         Texture2D RasterizerRectangle;
+        Vector2 RasterizerPosition = new Vector2(450, 200);
         int defaultState;
 
 
@@ -65,7 +66,7 @@ namespace simpsons.Core
 
             StoreRectangle = Utilities.RectangleCreator((int)RectangleWidth, ResolutionUtils.Height,
             graphicsDevice, Color.Black, 0.8f);
-            RasterizerRectangle = new Texture2D(graphicsDevice, 50, 50);
+            RasterizerRectangle = new Texture2D(graphicsDevice, 100, 100);
         }
         public int Update()
         {
@@ -76,13 +77,13 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(StoreRectangle, 
             new Rectangle((int)RectangleX, 0, (int)RectangleWidth, ResolutionUtils.Height), Color.White);
-
+            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\BorderSquare"], new Vector2(448, 198), Color.White);
             spriteBatch.End();
 
             RasterizerState rasterizerState = new RasterizerState();
             rasterizerState.ScissorTestEnable = true;
             spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
-            spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle(450, 200, RasterizerRectangle.Width, RasterizerRectangle.Height);
+            spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)RasterizerPosition.X, (int)RasterizerPosition.Y, RasterizerRectangle.Width, RasterizerRectangle.Height);
             spriteBatch.Begin(rasterizerState: rasterizerState);
 
             foreach(StoreItem si in MainStore[0])
@@ -116,14 +117,16 @@ namespace simpsons.Core
 
             Vector2 position = new Vector2(x,y);
 
-
-            _currentWidth[index] += TextureHandler.Sprites[name].Width;
+            string textureName = name.Replace("Player", "StoreIcons");
+            _currentWidth[index] += TextureHandler.Sprites[textureName].Width;
 
             if(_playerInformationHandler.UnlockedPlayers.Contains(name))
                 unlocked = true;
 
+            
+
             MainStore[index].Add(new StoreItem(
-                TextureHandler.Sprites[name], position, name, CharacterList.Characters[name], unlocked 
+                TextureHandler.Sprites[textureName], position, name, CharacterList.Characters[name], unlocked 
             ));
         }
     }

@@ -79,7 +79,7 @@ namespace simpsons.Core
         {
 
             TextureHandler.LoadContent(content);
-            store.Load(graphicsDevice);
+            
 
 
 
@@ -88,7 +88,7 @@ namespace simpsons.Core
             InitialGameSetup();
             //Deserialize all earlier games
             gameHandlers = GameHandler.DeserializeOnStartup();
-            
+            store.Load(graphicsDevice);
 
             //Menu load stuff
             menu = new Menu((int)States.Menu);
