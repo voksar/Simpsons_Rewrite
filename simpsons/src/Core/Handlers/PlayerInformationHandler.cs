@@ -6,7 +6,7 @@ namespace simpsons.Core.Handlers
 {
     //Requires all values to be present in the json
     [JsonObject(ItemRequired = Required.Always)]
-    class PlayerInformationHandler
+    public class PlayerInformationHandler
     {
         const string SerializeFilePath = "Data/Player.json";
 

@@ -79,6 +79,9 @@ namespace simpsons
                     Simpsons.ExitGame();
                     Exit();
                     break;
+                case Simpsons.States.Store:
+                    Simpsons.State = Simpsons.StoreUpdate();
+                    break;
                 case Simpsons.States.Menu:
                     Simpsons.State = Simpsons.MenuUpdate(gameTime, Window);
                     break;
@@ -106,6 +109,9 @@ namespace simpsons
                     break;
                 case Simpsons.States.Menu:
                     Simpsons.MenuDraw(_spriteBatch, Window);
+                    break;
+                case Simpsons.States.Store:
+                    Simpsons.StoreDraw(_spriteBatch);
                     break;
             }
             _spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"], "Simpsons(v0.2.0)", new Vector2(0, 700), Color.White * 0.5f);

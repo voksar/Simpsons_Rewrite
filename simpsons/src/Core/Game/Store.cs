@@ -14,6 +14,12 @@ namespace simpsons.Core
 {
     public class Store : IState
     {
+
+        //private variable declarations
+        private List<int> _currentWidth = new List<int>();
+        private PlayerInformationHandler _playerInformationHandler;
+
+
         //Interface properties
         public Texture2D Texture {get;set;}
         public bool IsOpacityDone {get;set;}
@@ -22,19 +28,69 @@ namespace simpsons.Core
         public float RectangleWidth {get;set;}
         public float Opacity {get;set;} 
 
-        public Store()
+        
+        public Dictionary<int, List<StoreItem>> MainStore {get;set;}
+
+        
+
+        //Variable declarations
+        Texture2D StoreRectangle;
+        Texture2D RasterizerRectangle;
+        int defaultState;
+
+
+        public Store(PlayerInformationHandler playerInformationHandler, int state)
         {
+            defaultState = state;
+            _playerInformationHandler = playerInformationHandler;
+
+            MainStore = new Dictionary<int, List<StoreItem>>()
+            {
+                { 0 ,new List<StoreItem>() },
+            };
+
+            for(int i = 1; i <= MainStore.Count; i++)
+            {
+                _currentWidth.Add(0);
+            }
+
             LoadStateChangeVariables();
         }
-
-        public void Update()
+        public void Load(GraphicsDevice graphicsDevice)
         {
+            foreach(KeyValuePair<string, int> item in CharacterList.Characters)
+            {
+                AddItem(0, item.Key, item.Value);
+            }
 
+            StoreRectangle = Utilities.RectangleCreator((int)RectangleWidth, ResolutionUtils.Height,
+            graphicsDevice, Color.Black, 0.8f);
+            RasterizerRectangle = new Texture2D(graphicsDevice, 50, 50);
+        }
+        public int Update()
+        {
+            return defaultState;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+            spriteBatch.Draw(StoreRectangle, 
+            new Rectangle((int)RectangleX, 0, (int)RectangleWidth, ResolutionUtils.Height), Color.White);
+
+            spriteBatch.End();
+
+            RasterizerState rasterizerState = new RasterizerState();
+            rasterizerState.ScissorTestEnable = true;
+            spriteBatch.GraphicsDevice.RasterizerState = rasterizerState;
+            spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle(450, 200, RasterizerRectangle.Width, RasterizerRectangle.Height);
+            spriteBatch.Begin(rasterizerState: rasterizerState);
+
+            foreach(StoreItem si in MainStore[0])
+            {
+                spriteBatch.Draw(si.Texture, si.Position, si.Color);
+            }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
         }
 
 
@@ -51,22 +107,54 @@ namespace simpsons.Core
             RectangleWidth = 500;
             Opacity = 0.0f;
         }
+
+        public void AddItem(int index, string name, int cost)
+        {
+            float x = 450 + _currentWidth[index];
+            float y = 200 + (150 * index);
+            bool unlocked = false;
+
+            Vector2 position = new Vector2(x,y);
+
+
+            _currentWidth[index] += TextureHandler.Sprites[name].Width;
+
+            if(_playerInformationHandler.UnlockedPlayers.Contains(name))
+                unlocked = true;
+
+            MainStore[index].Add(new StoreItem(
+                TextureHandler.Sprites[name], position, name, CharacterList.Characters[name], unlocked 
+            ));
+        }
     }
 
-    class StoreItem
+    public class StoreItem
     {
 
-        public StoreItem(Texture2D texture, Vector2 position, int state, string name)
+        public StoreItem(Texture2D texture, Vector2 position, string name, int cost, bool unlocked)
         {
             Texture = texture;
             Position = position;
-            State = state;
             Name = name;
+            XSwap = position.X;
+            YSwap = position.Y;
+            Unlocked = unlocked;
+
+
+            if(!Unlocked)
+                Color = new Color(54,69,79);
+            else
+                Color = new Color(255,255,255);
         }
 
         public Texture2D Texture {get;set;}
         public Vector2 Position {get;set;}
-        public int State {get;set;}
         public string Name {get;set;}
+        public int Cost {get;set;}
+        public bool Unlocked {get;set;}
+        public Color Color {get;set;}
+
+        public float XSwap {get;set;}
+        public float YSwap {get;set;}
     }
 }

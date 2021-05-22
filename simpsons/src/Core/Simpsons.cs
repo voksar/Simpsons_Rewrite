@@ -15,7 +15,7 @@ namespace simpsons.Core
     static class Simpsons
     {   
         //Statemanagement
-        public enum States {Run, Menu, Quit, GameStart, Saves, Loading}
+        public enum States {Run, Menu, Quit, GameStart, Saves, Loading, Store}
 
         #region Debuggingtools
         public static bool DebuggerIsActive = true;
@@ -25,7 +25,7 @@ namespace simpsons.Core
         
 
         //Public variables and declarations
-        public static GraphicsDevice graphicsDevice{get;set;}
+        public static GraphicsDevice graphicsDevice {get;set;}
         public static States State{get;set;}
         public static PlayerInformationHandler playerInformationHandler{get;set;}
         public static List<Enemy> Enemies {get;set;}
@@ -39,6 +39,7 @@ namespace simpsons.Core
         static Background background;
         static SpawnManager spawnManager;
         static Companion companion;
+        static Store store;
 
         
 
@@ -64,6 +65,7 @@ namespace simpsons.Core
             Tick = 0;
             MouseHandler.Initialize();
             spawnManager = new SpawnManager();
+            store = new Store(playerInformationHandler, (int)States.Store);
         }
         public static void LoadPreContent(ContentManager content, GameWindow window, GraphicsDevice graphics)
         {
@@ -77,7 +79,7 @@ namespace simpsons.Core
         {
 
             TextureHandler.LoadContent(content);
-
+            store.Load(graphicsDevice);
 
 
 
@@ -94,6 +96,8 @@ namespace simpsons.Core
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
                 content.Load<Texture2D>("MenuIcons/PlayNew"));
             menu.AddItem(content.Load<Texture2D>("Menu/Saves"), (int)States.Saves, window,
+                content.Load<Texture2D>("MenuIcons/Saves"));
+            menu.AddItem(content.Load<Texture2D>("Menu/Saves"), (int)States.Store, window,
                 content.Load<Texture2D>("MenuIcons/Saves"));
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
@@ -200,6 +204,16 @@ namespace simpsons.Core
         public static void AlwaysDraw(SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
+        }
+        public static States StoreUpdate()
+        {
+            if(InputHandler.GoBackPressed())
+                return States.Quit;
+            return (States)store.Update();
+        }   
+        public static void StoreDraw(SpriteBatch spriteBatch)
+        {
+            store.Draw(spriteBatch);
         }
 
         //Misc functions for tasks and other nescessary stuff
