@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,8 @@ namespace simpsons.Core
 {
     public class Store : IState
     {
+        //Constants
+        const int TargetX = 750;
 
         //private variable declarations
         private List<int> _currentWidth = new List<int>();
@@ -32,12 +35,18 @@ namespace simpsons.Core
         public Dictionary<int, List<StoreItem>> MainStore {get;set;}
 
         
+        private enum StateTracker { Left, Right, None }
+
+        private StateTracker stateTracker = StateTracker.None;
+
 
         //Variable declarations
         Texture2D StoreRectangle;
         Texture2D RasterizerRectangle;
         Vector2 RasterizerPosition = new Vector2(750, 200);
         int defaultState;
+        int selectedy = 0;
+        int[] selected;
 
 
         public Store(PlayerInformationHandler playerInformationHandler, int state)
@@ -55,6 +64,9 @@ namespace simpsons.Core
                 _currentWidth.Add(0);
             }
 
+            selected = new int[MainStore.Count];
+            Array.Fill(selected, 0);
+
             LoadStateChangeVariables();
         }
         public void Load(GraphicsDevice graphicsDevice)
@@ -70,6 +82,58 @@ namespace simpsons.Core
         }
         public int Update()
         {
+            switch(stateTracker)
+            {
+                case StateTracker.Left:
+                    foreach(StoreItem item in MainStore[selectedy])
+                    {
+                        
+                        item.X += 1;
+                    }
+                    /*
+                    if(MainStore[selectedy][selectedVal[selectedy]].X == targetX)
+                    */
+                    if(MainStore[selectedy][selected[selectedy]].X >= TargetX)
+                    {
+                        stateTracker = StateTracker.None;
+                        MainStore[selectedy][selected[selectedy]].X = TargetX;
+                    }
+                    break;
+
+                case StateTracker.Right:
+                    foreach(StoreItem item in MainStore[selectedy])
+                    {
+                        item.X -= 1;
+                    }
+                    if(MainStore[selectedy][selected[selectedy]].X <= TargetX)
+                    {
+                        stateTracker = StateTracker.None;
+                        MainStore[selectedy][selected[selectedy]].X = TargetX;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if(InputHandler.Press(Keys.Right))
+            {
+                if(MainStore[selectedy].Count - 1 > selected[selectedy] && stateTracker == StateTracker.None)
+                {
+                    selected[selectedy]++;
+                    stateTracker = StateTracker.Right;
+                }
+                
+            }
+            if(InputHandler.Press(Keys.Left))
+            {
+                if(selected[selectedy] > 0 && stateTracker == StateTracker.None)
+                {
+                    stateTracker = StateTracker.Left;
+                    selected[selectedy]--;
+                }
+                
+            }
+
             return defaultState;
         }
 
@@ -90,7 +154,7 @@ namespace simpsons.Core
             {
                 foreach(StoreItem item in subStore.Value)
                 {
-                    spriteBatch.Draw(item.Texture, item.Position, item.Color);
+                    spriteBatch.Draw(item.Texture, new Vector2(item.X, item.Y), item.Color);
                 }
             }
             spriteBatch.End();
@@ -142,8 +206,8 @@ namespace simpsons.Core
             Texture = texture;
             Position = position;
             Name = name;
-            XSwap = position.X;
-            YSwap = position.Y;
+            X = position.X;
+            Y = position.Y;
             Unlocked = unlocked;
 
 
@@ -160,7 +224,7 @@ namespace simpsons.Core
         public bool Unlocked {get;set;}
         public Color Color {get;set;}
 
-        public float XSwap {get;set;}
-        public float YSwap {get;set;}
+        public float X {get;set;}
+        public float Y {get;set;}
     }
 }
