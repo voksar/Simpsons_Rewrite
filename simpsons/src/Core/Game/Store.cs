@@ -34,11 +34,15 @@ namespace simpsons.Core
         
         public Dictionary<int, List<StoreItem>> MainStore {get;set;}
 
-        
+        //Keeps track of what state the store is in
         private enum StateTracker { Left, Right, None }
-
         private StateTracker stateTracker = StateTracker.None;
 
+        private Color _color;
+
+        private Color _colorYellow = Color.Yellow;
+        private Color _colorGreen = new Color(159, 255, 111);
+        private Color _colorArrows;
 
         //Variable declarations
         Texture2D StoreRectangle;
@@ -47,6 +51,9 @@ namespace simpsons.Core
         int defaultState;
         int selectedy = 0;
         int[] selected;
+
+        float frame = 0;
+        
 
 
         public Store(PlayerInformationHandler playerInformationHandler, int state)
@@ -80,15 +87,17 @@ namespace simpsons.Core
             graphicsDevice, Color.Black, 0.8f);
             RasterizerRectangle = new Texture2D(graphicsDevice, 100, 100);
         }
-        public int Update()
+        public int Update(GameTime gameTime)
         {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            UpdatePriceColor();
             switch(stateTracker)
             {
                 case StateTracker.Left:
                     foreach(StoreItem item in MainStore[selectedy])
                     {
                         
-                        item.X += 1;
+                        item.X += 5 * delta * 60;
                     }
                     /*
                     if(MainStore[selectedy][selectedVal[selectedy]].X == targetX)
@@ -103,7 +112,7 @@ namespace simpsons.Core
                 case StateTracker.Right:
                     foreach(StoreItem item in MainStore[selectedy])
                     {
-                        item.X -= 1;
+                        item.X -= 5 * delta * 60;
                     }
                     if(MainStore[selectedy][selected[selectedy]].X <= TargetX)
                     {
@@ -114,25 +123,91 @@ namespace simpsons.Core
                 default:
                     break;
             }
+            
+            StoreItem selectedItem = MainStore[selectedy][selected[selectedy]];
+            if(!selectedItem.Unlocked && _playerInformationHandler.Cash < selectedItem.Cost)
+                _color = Color.Red; 
+            else if(_playerInformationHandler.SelectedPlayer == selectedItem.Name)
+                _color = Color.Green;
+            else
+                _color = Color.Yellow;
+            
+            if(!IsChangingState)
+            {
+                frame += delta;
+                frame %= 0.8f;
+                if (frame <= 0.4)
+                    _colorArrows = _colorGreen;
+                else
+                    _colorArrows = _colorYellow;
 
-            if(InputHandler.Press(Keys.Right))
-            {
-                if(MainStore[selectedy].Count - 1 > selected[selectedy] && stateTracker == StateTracker.None)
+                if(Opacity + (0.05f * 60 * delta) <= 1f)
                 {
-                    selected[selectedy]++;
-                    stateTracker = StateTracker.Right;
+                    Opacity += (0.05f * 60 * delta);
                 }
-                
-            }
-            if(InputHandler.Press(Keys.Left))
-            {
-                if(selected[selectedy] > 0 && stateTracker == StateTracker.None)
+                if(Opacity >= 1f)
+                    Opacity = 1f;
+
+                if(InputHandler.Press(Keys.Right))
                 {
-                    stateTracker = StateTracker.Left;
-                    selected[selectedy]--;
-                }
+                    if(MainStore[selectedy].Count - 1 > selected[selectedy] && stateTracker == StateTracker.None)
+                    {
+                        selected[selectedy]++;
+                        stateTracker = StateTracker.Right;
+                    }
                 
+                }
+                if(InputHandler.Press(Keys.Left))
+                {
+                    if(selected[selectedy] > 0 && stateTracker == StateTracker.None)
+                    {
+                        stateTracker = StateTracker.Left;
+                        selected[selectedy]--;
+                    }
+
+                }
+
+                if(InputHandler.Press(Keys.Enter))
+                {
+                    var item = MainStore[selectedy][selected[selectedy]];
+                    if(!item.Unlocked)
+                    {
+                        if(_playerInformationHandler.Cash >= item.Cost)
+                        {
+                            _playerInformationHandler.UnlockedPlayers.Add(item.Name);
+                            _playerInformationHandler.Cash -= item.Cost;
+                            _playerInformationHandler.SelectedPlayer = item.Name;
+                            item.Unlocked = true;
+                            Simpsons.Reload();
+                        }
+                    }
+                    else
+                    {
+                        _playerInformationHandler.SelectedPlayer = item.Name;
+                        Simpsons.Reload();
+                        IsChangingState = true;
+                    }
+
+                }
+
+                if(InputHandler.GoBackPressed() && stateTracker == StateTracker.None)
+                    IsChangingState = true;
+
             }
+            else 
+            {
+                Opacity -= (0.05f * 60 * delta);
+
+                if(Opacity <= 0 && !IsOpacityDone)
+                    IsOpacityDone = true;
+
+                if(IsOpacityDone)
+                {
+                    return StartStateChange(15, 3, 0, 400, gameTime);
+                }
+            }
+
+            
 
             return defaultState;
         }
@@ -141,7 +216,14 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(StoreRectangle, 
             new Rectangle((int)RectangleX, 0, (int)RectangleWidth, ResolutionUtils.Height), Color.White);
-            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\BorderSquare"], new Vector2(748, 198), Color.White * 0.5f);
+            
+            
+            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\BorderSquare"], new Vector2(748, 198), Opacity * _color * 0.5f);
+            if(selected[selectedy] > 0)
+                spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\LeftArrow"], new Vector2(660, 200), _colorArrows * Opacity);
+            if(selected[selectedy] < MainStore[selectedy].Count - 1)
+                spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\RightArrow"], new Vector2(840, 200), _colorArrows * Opacity);
+
             spriteBatch.End();
 
             RasterizerState rasterizerState = new RasterizerState();
@@ -154,7 +236,26 @@ namespace simpsons.Core
             {
                 foreach(StoreItem item in subStore.Value)
                 {
-                    spriteBatch.Draw(item.Texture, new Vector2(item.X, item.Y), item.Color);
+                    if(!item.Unlocked)
+                    {
+                        SpriteFont costFont = FontHandler.Fonts["Fonts\\Reno14"];
+                        var costLength = costFont.MeasureString(item.Cost + "$");
+                        float costX = (item.X + item.Texture.Width / 2) - (costLength.X / 2);
+                        float costY = item.Y + item.Texture.Height - costLength.Y;
+
+                        spriteBatch.Draw(item.Texture, new Vector2(item.X, item.Y), Color.Black * Opacity);
+
+                        spriteBatch.DrawString(costFont, $"{item.Cost}$", new Vector2(costX, costY), item.CostColor * Opacity);
+                        
+                        if(_playerInformationHandler.Cash < item.Cost)
+                            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\Lock"], new Vector2(item.X, item.Y), item.Color * Opacity);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(item.Texture, new Vector2(item.X, item.Y), Color.White * Opacity);
+                    }
+
+                    
                 }
             }
             spriteBatch.End();
@@ -164,7 +265,30 @@ namespace simpsons.Core
 
         public int StartStateChange(int changeX, int changeWidth, int targetX, int targetWidth, GameTime gameTime)
         {
-            return 0;
+            float temporaryamountX = 0f;
+            float temporaryamountWidth = 0f;
+            
+
+            temporaryamountX = (float)(changeX * gameTime.ElapsedGameTime.TotalSeconds * 60);
+            temporaryamountWidth = (float)(changeWidth * gameTime.ElapsedGameTime.TotalSeconds * 60);
+
+            if(RectangleX - temporaryamountX <= targetX && RectangleWidth - temporaryamountWidth <= targetWidth)
+            {
+                RectangleX = targetX;
+                RectangleWidth = targetWidth;
+            }
+            else
+            {
+                RectangleX -= temporaryamountX;
+                RectangleWidth -= temporaryamountWidth;
+            }
+            if(RectangleWidth == targetWidth && RectangleX == targetX)
+            {
+                
+                LoadStateChangeVariables();
+                return (int)Simpsons.States.Menu;
+            }
+            return (int)Simpsons.States.Store;
         }
 
         public void LoadStateChangeVariables()
@@ -190,11 +314,20 @@ namespace simpsons.Core
             if(_playerInformationHandler.UnlockedPlayers.Contains(name))
                 unlocked = true;
 
-            
-
             MainStore[index].Add(new StoreItem(
                 TextureHandler.Sprites[textureName], position, name, CharacterList.Characters[name], unlocked 
             ));
+        }
+
+        private void UpdatePriceColor()
+        {
+            foreach(StoreItem item in MainStore[selectedy])
+            {
+                if(item.Cost > _playerInformationHandler.Cash)
+                    item.CostColor = Color.Red;
+                else
+                    item.CostColor = Color.Green;
+            }
         }
     }
 
@@ -209,12 +342,10 @@ namespace simpsons.Core
             X = position.X;
             Y = position.Y;
             Unlocked = unlocked;
-
+            Cost = cost;
 
             if(!Unlocked)
                 Color = new Color(54,69,79);
-            else
-                Color = new Color(255,255,255);
         }
 
         public Texture2D Texture {get;set;}
@@ -223,6 +354,7 @@ namespace simpsons.Core
         public int Cost {get;set;}
         public bool Unlocked {get;set;}
         public Color Color {get;set;}
+        public Color CostColor {get;set;}
 
         public float X {get;set;}
         public float Y {get;set;}

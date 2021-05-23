@@ -17,7 +17,8 @@ namespace simpsons.Core.Handlers
         public List<string> UnlockedPlayers {get;set;}
         public List<string> UnlockedBullets {get;set;}
         public bool UnlockedCompanion {get;set;}
-
+        public int TotalKills {get;set;}
+        public int Deaths {get;set;}
 
         public void SerializePlayerData()
         {
@@ -56,6 +57,8 @@ namespace simpsons.Core.Handlers
             playerInformationHandler.UnlockedBullets = new List<string>(){"Player\\defaultbullet"};
             playerInformationHandler.UnlockedPlayers = new List<string>(){"Player\\homer"};
             playerInformationHandler.UnlockedCompanion = false;
+            playerInformationHandler.Deaths = 0;
+            playerInformationHandler.TotalKills = 0;
             playerInformationHandler.SerializePlayerData();
             
             return playerInformationHandler;

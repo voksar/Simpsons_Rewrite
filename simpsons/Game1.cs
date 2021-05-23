@@ -80,7 +80,7 @@ namespace simpsons
                     Exit();
                     break;
                 case Simpsons.States.Store:
-                    Simpsons.State = Simpsons.StoreUpdate();
+                    Simpsons.State = Simpsons.StoreUpdate(gameTime);
                     break;
                 case Simpsons.States.Menu:
                     Simpsons.State = Simpsons.MenuUpdate(gameTime, Window);

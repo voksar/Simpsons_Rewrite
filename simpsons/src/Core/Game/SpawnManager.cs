@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using simpsons.Core.Handlers;
 using Microsoft.Xna.Framework;
+using System.Collections.ObjectModel;
 
 namespace simpsons.Core
 {
@@ -24,7 +25,7 @@ namespace simpsons.Core
             SpawnNumber = new Random();
         }
 
-        public void Update(List<Enemy> enemies, GameTime gameTime, GameHandler gameHandler)
+        public void Update(ObservableCollection<Enemy> enemies, GameTime gameTime, GameHandler gameHandler)
         {
             finalSpawnValue = defaultValue / (spawnRate / 5) + (int)(gameHandler.TimeInGame / spawnRate); 
             double spawnValue = RandomGenerator.NextDouble();
@@ -34,12 +35,11 @@ namespace simpsons.Core
                 if(enemies.Count < SpawnCap)
                 {
                     if(spawnValue <= 0.5)
-                        Console.WriteLine("Less than 0.5");
-                        //enemies.Add(new Bart("Enemies\\bart",10, 10, 0.1f,0.1f,1));
+                        enemies.Add(new Bart("Enemies\\bart",10, 10, 0.1f,0.1f,1));
                     if(spawnValue > 0.5 && spawnValue <= 0.8)
-                        Console.WriteLine("Less than 0.8 and greater than 0.5");
+                        return;
                     if(spawnValue > 0.8)
-                        Console.WriteLine("Greater than 0.8");
+                        return;
                 }
             }
             

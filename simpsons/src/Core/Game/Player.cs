@@ -62,7 +62,6 @@ namespace simpsons.Core
         }
         public void Update()
         {
-            Console.WriteLine(Player.X);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

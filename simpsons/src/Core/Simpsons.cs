@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System;
 using System.Linq;
 using simpsons.Core.Handlers;
@@ -28,7 +29,7 @@ namespace simpsons.Core
         public static GraphicsDevice graphicsDevice {get;set;}
         public static States State{get;set;}
         public static PlayerInformationHandler playerInformationHandler{get;set;}
-        public static List<Enemy> Enemies {get;set;}
+        public static ObservableCollection<Enemy> Enemies {get;set;}
 
 
         static DisplayGames displayGames;
@@ -56,7 +57,7 @@ namespace simpsons.Core
             frameCounter = new FrameCounter();
 
             random = new Random();
-            Enemies = new List<Enemy>();
+            
             TextureHandler.Initialize();
             InputHandler.Initialize();
             FontHandler.Initialize();
@@ -84,8 +85,6 @@ namespace simpsons.Core
 
 
 
-            //Default setup
-            InitialGameSetup();
             //Deserialize all earlier games
             gameHandlers = GameHandler.DeserializeOnStartup();
             store.Load(graphicsDevice);
@@ -102,6 +101,9 @@ namespace simpsons.Core
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
                 content.Load<Texture2D>("MenuIcons/Exit"));
 
+
+            //check progress on eg. dog unlock etc
+            CheckProgress();
 
             //Add previous games to the save manager
             displayGames.LoadContent(window, graphicsDevice);
@@ -128,6 +130,14 @@ namespace simpsons.Core
             spawnManager.Update(Enemies, gameTime, gameHandler);
             foreach(Enemy e in Enemies.ToList())
             {
+                if(e.CheckCollision(player))
+                {
+                    e.IsAlive = false;
+                }
+                
+                if(!e.IsAlive)
+                    Enemies.Remove(e);
+                    
                 e.Update(gameTime, window, player);
             }
             return States.Run;
@@ -162,15 +172,11 @@ namespace simpsons.Core
         {
             if(gameHandle == null)
             {
-                gameHandler = new GameHandler();
-                gameHandler.GenerateGameID();
-                gameHandler.Score = 0;
-                gameHandler.TimeInGame = 0;
-                gameHandler.SpawnedBosses = new Dictionary<string, bool>()
-                {
-                    { "Maggie", false },
-                    { "Wiggum", false }
-                };
+                gameHandler = GameHandler.GenerateHandler(playerInformationHandler);
+                Enemies = gameHandler.Enemies;
+                player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
+                if(playerInformationHandler.UnlockedCompanion)
+                    companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
             }
             else
             {
@@ -179,6 +185,8 @@ namespace simpsons.Core
                 player = gameHandler.Player;
                 companion = gameHandler.Companion;
             }
+
+            Enemies.CollectionChanged += EnemiesChanged;
             return States.Run;
         }
         public static States DisplayGamesUpdate(GameTime gameTime)
@@ -190,7 +198,6 @@ namespace simpsons.Core
             displayGames.Draw(spriteBatch, window);
         }
         public static void AlwaysUpdate(GameWindow window, GameTime gameTime)
-        
         {
             background.Update(window, 200f, gameTime);
             InputHandler.Update(gameTime);
@@ -200,16 +207,15 @@ namespace simpsons.Core
             {
                 UpdateGameSaves();
             }
+                
         }
         public static void AlwaysDraw(SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
         }
-        public static States StoreUpdate()
+        public static States StoreUpdate(GameTime gameTime)
         {
-            if(InputHandler.GoBackPressed())
-                return States.Quit;
-            return (States)store.Update();
+            return (States)store.Update(gameTime);
         }   
         public static void StoreDraw(SpriteBatch spriteBatch)
         {
@@ -241,22 +247,13 @@ namespace simpsons.Core
                 gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
                 NeedUpdate = true;
             }
+            
             gameHandler = null;
         }
         public static void ExitGame()
         {
             GameHandler.SerializeGame(gameHandlers);
             playerInformationHandler.SerializePlayerData();
-        }
-        public static void InitialGameSetup()
-        {
-            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
-            Enemies.Clear();
-
-            if(playerInformationHandler.UnlockedCompanion)
-            {
-                companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
-            }
         }
         public static void CreateFolderStructure()
         {
@@ -275,6 +272,28 @@ namespace simpsons.Core
             {
                 gameHandlers.RemoveAt(index);
             }
+        }
+
+        public static void Reload()
+        {
+            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
+        }
+
+        private static void CheckProgress()
+        {
+            if(playerInformationHandler.TotalKills >= 25000 & !playerInformationHandler.UnlockedCompanion)
+                playerInformationHandler.UnlockedCompanion = true;
+        }
+        private static void EnemiesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                playerInformationHandler.TotalKills++;
+                playerInformationHandler.Cash++;
+                gameHandler.Score++;
+                CheckProgress();
+            }
+                
         }
     }
 }

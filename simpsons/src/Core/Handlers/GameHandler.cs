@@ -1,6 +1,5 @@
-
-
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using simpsons.Core;
 using Newtonsoft.Json;
 using System;
@@ -13,7 +12,7 @@ namespace simpsons.Core.Handlers
     public class GameHandler : IDisposable
     {
         private static string SerializeFilePath = "Data/Saves.json";
-
+        public ObservableCollection<Enemy> Enemies {get;set;}
         public string GameID {get;set;}
         public DateTime LastPlayed {get;set;}
         public double TimeInGame {get;set;}
@@ -21,11 +20,24 @@ namespace simpsons.Core.Handlers
         public Player Player {get;set;}
         public Companion Companion {get;set;}
         public Dictionary<string, bool> SpawnedBosses{get;set;}
-        public List<Enemy> Enemies {get;set;}
-        
+
+        public static GameHandler GenerateHandler(PlayerInformationHandler playerInformationHandler)
+        {   
+            GameHandler gameHandler = new GameHandler();
+            gameHandler.Enemies = new ObservableCollection<Enemy>();
+            gameHandler.GenerateGameID();
+            gameHandler.Score = 0;
+            gameHandler.TimeInGame = 0;
+            gameHandler.SpawnedBosses = new Dictionary<string, bool>()
+            {
+                { "Maggie", false },
+                { "Wiggum", false }
+            };
+            return gameHandler;
+        }
 
         #nullable enable
-        public void SetProperties(Player player, List<Enemy> enemies, int score, Companion? companion)
+        public void SetProperties(Player player, ObservableCollection<Enemy> enemies, int score, Companion? companion)
         {
             Player = player;
             Enemies = enemies;
