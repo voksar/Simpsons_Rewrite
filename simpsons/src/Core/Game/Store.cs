@@ -36,7 +36,7 @@ namespace simpsons.Core
         //Variable declarations
         Texture2D StoreRectangle;
         Texture2D RasterizerRectangle;
-        Vector2 RasterizerPosition = new Vector2(450, 200);
+        Vector2 RasterizerPosition = new Vector2(750, 200);
         int defaultState;
 
 
@@ -77,7 +77,7 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(StoreRectangle, 
             new Rectangle((int)RectangleX, 0, (int)RectangleWidth, ResolutionUtils.Height), Color.White);
-            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\BorderSquare"], new Vector2(448, 198), Color.White);
+            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\BorderSquare"], new Vector2(748, 198), Color.White * 0.5f);
             spriteBatch.End();
 
             RasterizerState rasterizerState = new RasterizerState();
@@ -86,9 +86,12 @@ namespace simpsons.Core
             spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)RasterizerPosition.X, (int)RasterizerPosition.Y, RasterizerRectangle.Width, RasterizerRectangle.Height);
             spriteBatch.Begin(rasterizerState: rasterizerState);
 
-            foreach(StoreItem si in MainStore[0])
+            foreach(KeyValuePair<int, List<StoreItem>> subStore in MainStore)
             {
-                spriteBatch.Draw(si.Texture, si.Position, si.Color);
+                foreach(StoreItem si in subStore.Value)
+                {
+                    spriteBatch.Draw(si.Texture, si.Position, si.Color);
+                }
             }
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
@@ -111,7 +114,7 @@ namespace simpsons.Core
 
         public void AddItem(int index, string name, int cost)
         {
-            float x = 450 + _currentWidth[index];
+            float x = 750 + _currentWidth[index];
             float y = 200 + (150 * index);
             bool unlocked = false;
 
