@@ -88,9 +88,9 @@ namespace simpsons.Core
 
             foreach(KeyValuePair<int, List<StoreItem>> subStore in MainStore)
             {
-                foreach(StoreItem si in subStore.Value)
+                foreach(StoreItem item in subStore.Value)
                 {
-                    spriteBatch.Draw(si.Texture, si.Position, si.Color);
+                    spriteBatch.Draw(item.Texture, item.Position, item.Color);
                 }
             }
             spriteBatch.End();
