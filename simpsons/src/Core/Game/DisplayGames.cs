@@ -85,34 +85,36 @@ namespace simpsons.Core
                         selected--;
                 if(InputHandler.Press(Keys.D) && allowKeyboard)
                 {
-
-
-                    GameHandler _gameHandler = displayGamesItems[selected].Game;
-                    Simpsons.RemoveGameHandler(_gameHandler);
-                    for(int i = selected; i < displayGamesItems.Count; i++)
+                    if(displayGamesItems.Any())
                     {
-                        var tempRect = displayGamesItems[i].Rectangle;
-                        Rectangle rect = new Rectangle(tempRect.X, tempRect.Y - 35 , tempRect.Width, tempRect.Height);
-                        displayGamesItems[i].Rectangle = rect;
-                    }
+                        GameHandler _gameHandler = displayGamesItems[selected].Game;
+                        Simpsons.RemoveGameHandler(_gameHandler);
+                        for(int i = selected; i < displayGamesItems.Count; i++)
+                        {
+                            var tempRect = displayGamesItems[i].Rectangle;
+                            Rectangle rect = new Rectangle(tempRect.X, tempRect.Y - 35 , tempRect.Width, tempRect.Height);
+                            displayGamesItems[i].Rectangle = rect;
+                        }
 
+
+
+                        displayGamesItems.RemoveAt(selected);
+                        _durationOpacity = 1f;
+                        _deleteMessage = $"Game {_gameHandler.GameID} deleted";
+
+                        if(displayGamesItems.ElementAtOrDefault(selected) == null)
+                        {
+                            selected--;
+                        }
+
+                        if(displayGamesItems.Count == 0)
+                            selected = 0;
+                    }
                     
-
-                    displayGamesItems.RemoveAt(selected);
-                    _durationOpacity = 1f;
-                    _deleteMessage = $"Game {_gameHandler.GameID} deleted";
-
-                    if(displayGamesItems.ElementAtOrDefault(selected) == null)
-                    {
-                        selected--;
-                    }
-
-                    if(displayGamesItems.Count == 0)
-                        selected = 0;
                 }
                 //Checks if user presses enter
                 //or if the user presses mouse1 and is hovering over the correct object
-                if(displayGamesItems.Count != 0)
+                if(displayGamesItems.Any())
                     if(InputHandler.Press(Keys.Enter) || (MouseHandler.MouseState.LeftButton == ButtonState.Pressed
                     && displayGamesItems[selected].Rectangle.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y)))
                         return (int)Simpsons.StartGame(displayGamesItems[selected].Game);
@@ -159,7 +161,14 @@ namespace simpsons.Core
             {
                 var measureDelete = FontHandler.Fonts["Fonts\\Reno14"].MeasureString(_deleteMessage).Length();
                 float xDelete = (window.ClientBounds.Width / 2) - (measureDelete / 2);
-                Utilities.DrawOutlineText("Fonts\\Reno14",spriteBatch, _deleteMessage, new Vector2(xDelete, 45), Color.Red, _durationOpacity);
+                Utilities.DrawOutlineText("Fonts\\Reno14",spriteBatch, _deleteMessage, new Vector2(xDelete, 45), Color.Red, _durationOpacity * Opacity);
+            }
+            if(!displayGamesItems.Any() && _deleteMessage == null)
+            {
+                var measureEmpty = FontHandler.Fonts["Fonts\\Reno14"].MeasureString("You have no saves!").Length();
+                float emptyX = (window.ClientBounds.Width / 2) - (measureEmpty / 2);
+                Utilities.DrawOutlineText("Fonts\\Reno14",spriteBatch, "You have no saves!", new Vector2(emptyX, 45), Color.White, Opacity);
+            
             }
             for(int i = 0; i < displayGamesItems.Count; i++)
             {

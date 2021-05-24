@@ -20,11 +20,18 @@ namespace simpsons.Core.Handlers
         public int TotalKills {get;set;}
         public int Deaths {get;set;}
 
+        private string _defaultPlayer = "Player\\homer";
+
         public void SerializePlayerData()
         {
             string output = JsonConvert.SerializeObject(this, Formatting.Indented,
             new JsonSerializerSettings(){TypeNameHandling = TypeNameHandling.Auto});
             File.WriteAllText(SerializeFilePath, output);
+        }
+        public void VerifyUnlockedPlayer()
+        {
+            if(!UnlockedPlayers.Contains(SelectedPlayer))
+                SelectedPlayer = _defaultPlayer;
         }
         public static PlayerInformationHandler Initialize()
         {

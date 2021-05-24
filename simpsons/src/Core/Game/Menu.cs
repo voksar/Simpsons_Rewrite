@@ -66,15 +66,24 @@ namespace simpsons.Core
         }
         public int Update(GameTime gameTime,GameWindow window)
         {
-            
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (!IsChangingState)
             {
-                if (Opacity + 0.1f <= 1.0f)
-                    Opacity += 0.1f;
+                if(Opacity + (0.05f * 60 * delta) <= 1f)
+                {
+                    Opacity += (0.05f * 60 * delta);
+                }
+                if(Opacity >= 1f)
+                    Opacity = 1f;
+
                 frame += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 frame %= 0.8f;
                 allowKeyboard = MouseHandler.CheckIfSameSpot();
                 prevselected = selected;
+
+                if(InputHandler.GoBackPressed())
+                    return (int)Simpsons.States.Quit;
 
                 if (InputHandler.Press(Keys.Down) && allowKeyboard)
                 {
@@ -142,17 +151,24 @@ namespace simpsons.Core
                 if (menu[selected].cX - (6 * gameTime.ElapsedGameTime.TotalSeconds * 60f) != menu[selected].Position.X
                     && menu[selected].cX > menu[selected].Position.X)
                     menu[selected].cX -= (float)(6 * gameTime.ElapsedGameTime.TotalSeconds * 60f);
-                switch (state)
-                {
-                    case (int)Simpsons.States.Saves:
-                        return StartStateChange(15, 3, 550, 500, gameTime);
-                    case (int)Simpsons.States.Store:
-                        return StartStateChange(15, 3, 550, 500, gameTime);
-                    default:
-                        IsChangingState = false;
-                        return menu[selected].State;
-                }
+                Opacity -= (0.05f * 60 * delta);
 
+                if(Opacity <= 0 && !IsOpacityDone)
+                    IsOpacityDone = true;
+
+                if(IsOpacityDone)
+                {
+                    switch (state)
+                    {
+                        case (int)Simpsons.States.Saves:
+                            return StartStateChange(15, 3, 550, 500, gameTime);
+                        case (int)Simpsons.States.Store:
+                            return StartStateChange(15, 3, 550, 500, gameTime);
+                        default:
+                            IsChangingState = false;
+                            return menu[selected].State;
+                    }
+                }
             }
             if (prevselected != selected)
                 soundEffect.Play(0.01f, 0, 0);

@@ -160,8 +160,6 @@ namespace simpsons.Core
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
         {
-            if(InputHandler.GoBackPressed())
-                return States.Quit;
             return (States)menu.Update(gameTime,window);
         }
         public static void MenuDraw(SpriteBatch spriteBatch, GameWindow window)
@@ -172,8 +170,9 @@ namespace simpsons.Core
         {
             if(gameHandle == null)
             {
-                gameHandler = GameHandler.GenerateHandler(playerInformationHandler);
+                gameHandler = GameHandler.GenerateHandler();
                 Enemies = gameHandler.Enemies;
+                playerInformationHandler.VerifyUnlockedPlayer();
                 player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
                 if(playerInformationHandler.UnlockedCompanion)
                     companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);

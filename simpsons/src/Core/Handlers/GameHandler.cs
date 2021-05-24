@@ -21,7 +21,7 @@ namespace simpsons.Core.Handlers
         public Companion Companion {get;set;}
         public Dictionary<string, bool> SpawnedBosses{get;set;}
 
-        public static GameHandler GenerateHandler(PlayerInformationHandler playerInformationHandler)
+        public static GameHandler GenerateHandler()
         {   
             GameHandler gameHandler = new GameHandler();
             gameHandler.Enemies = new ObservableCollection<Enemy>();
