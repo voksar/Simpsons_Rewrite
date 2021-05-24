@@ -39,6 +39,8 @@ namespace simpsons.Core
                 SpeedX *= -1;
             }
             
+            if(Health <= 0)
+                IsAlive = false;
 
             if (vector.Y > window.ClientBounds.Height + Texture.Height)
                 IsAlive = false;
@@ -67,9 +69,6 @@ namespace simpsons.Core
 
             if (vector.Y > window.ClientBounds.Height + Texture.Height)
                 IsAlive = false;
-            //Remove object if not alive
-            if(!IsAlive)
-                Simpsons.Enemies.Remove(this);
         }
     }
     public class Boss : Enemy

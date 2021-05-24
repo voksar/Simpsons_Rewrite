@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System;
+using System.Linq;
 using simpsons.Core.Handlers;
 using simpsons.Core.Utils;
 using Newtonsoft.Json;
@@ -10,10 +12,11 @@ namespace simpsons.Core
 {
     public class Player : PlayerEntity
     {
+        public List<Bullet> Bullets;
         public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health)
          : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
         {
-            
+            Bullets = new List<Bullet>();
         }
         public void Update(GameWindow window, GameTime gameTime)
         {
@@ -30,6 +33,19 @@ namespace simpsons.Core
             if(Y < window.ClientBounds.Height - Texture.Height)
                 if(InputHandler.IsPressing(Keys.Down) || InputHandler.IsPressing(Keys.S))
                     Y += SpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;;
+
+            if(InputHandler.Press(Keys.Space))
+                Bullets.Add(new Bullet(
+                    BulletName, X, Y, 0, -250f
+                ));
+
+            foreach(Bullet bullet in Bullets.ToList())
+            {
+                bullet.Update(gameTime);
+                if(!bullet.IsAlive)
+                    Bullets.Remove(bullet);
+            }
+                
                     
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -45,6 +61,9 @@ namespace simpsons.Core
                     spriteBatch.Draw(TextureHandler.Sprites["Player\\heartdead"], new Vector2(x, 5), Color.White);
             }
             spriteBatch.Draw(Texture, vector, Color.White);
+
+            foreach(Bullet bullet in Bullets)
+                bullet.Draw(spriteBatch);
         }
     }
 
@@ -54,14 +73,22 @@ namespace simpsons.Core
         [JsonProperty]
         public Player Player {get;set;}
 
-        
+        public List<Bullet> Bullets;
+
         public Companion(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health, Player Player)
         : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
         {
             this.Player = Player;
+            Bullets = new List<Bullet>();
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
+            foreach(Bullet bullet in Bullets.ToList())
+            {
+                bullet.Update(gameTime);
+                if(!bullet.IsAlive)
+                    Bullets.Remove(bullet);
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -82,6 +109,9 @@ namespace simpsons.Core
                     spriteBatch.Draw(TextureHandler.Sprites["Player\\heartdead"], new Vector2(x, 5), Color.White);
             }
             spriteBatch.Draw(Texture, vector, Color.White);
+
+            foreach(Bullet bullet in Bullets)
+                bullet.Draw(spriteBatch);
         }
     }
 }

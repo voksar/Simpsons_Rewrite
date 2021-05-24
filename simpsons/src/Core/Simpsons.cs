@@ -122,18 +122,36 @@ namespace simpsons.Core
                 StopGame();
                 return States.Menu;
             }
-            if(InputHandler.Press(Keys.Space))
-                playerInformationHandler.Cash++;   
+
             player.Update(window, gameTime);
+
             if(companion != null)
-                companion.Update();
+                companion.Update(gameTime);
+
             spawnManager.Update(Enemies, gameTime, gameHandler);
+
             foreach(Enemy e in Enemies.ToList())
             {
-                if(e.CheckCollision(player))
+                foreach(Bullet bullet in player.Bullets.ToList())
                 {
-                    e.IsAlive = false;
+                    if(bullet.CheckCollision(e))
+                    {
+                        e.Health -= playerInformationHandler.Damage;
+                        player.Bullets.Remove(bullet);
+                    }
                 }
+                if(companion != null)
+                {
+                    foreach(Bullet bullet in companion.Bullets.ToList())
+                    {
+                        if(bullet.CheckCollision(e))
+                        {
+                            e.Health -= playerInformationHandler.Damage;
+                            companion.Bullets.Remove(bullet);
+                        }
+                    }
+                }
+                
                 
                 if(!e.IsAlive)
                     Enemies.Remove(e);
@@ -298,7 +316,6 @@ namespace simpsons.Core
                 gameHandler.Score++;
                 CheckProgress();
             }
-                
         }
     }
 }

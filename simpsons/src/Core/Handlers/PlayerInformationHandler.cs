@@ -19,6 +19,7 @@ namespace simpsons.Core.Handlers
         public bool UnlockedCompanion {get;set;}
         public int TotalKills {get;set;}
         public int Deaths {get;set;}
+        public int Damage {get;set;}
 
         private string _defaultPlayer = "Player\\homer";
 
@@ -63,6 +64,7 @@ namespace simpsons.Core.Handlers
             playerInformationHandler.UnlockedBullets = new List<string>(){"Player\\defaultbullet"};
             playerInformationHandler.UnlockedPlayers = new List<string>(){"Player\\homer"};
             playerInformationHandler.SerializePlayerData();
+            playerInformationHandler.Damage = 1;
             
             return playerInformationHandler;
         }
