@@ -23,7 +23,6 @@ namespace simpsons
             
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            this.Window.Title = "Simpsons";
         }
 
         protected override void Initialize()

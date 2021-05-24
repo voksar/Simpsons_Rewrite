@@ -149,14 +149,11 @@ namespace simpsons.Core
                 companion.Draw(spriteBatch);
             foreach(Enemy e in Enemies)
                 e.Draw(spriteBatch);
-            if(DebuggerIsActive)
-            {
-                var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                frameCounter.Update(deltaTime);
-                string fps = string.Format("{0}",(int)frameCounter.AverageFramesPerSecond);
-                //Utilities.DrawOutlineText(spriteBatch, gameHandler.GameID + " - " + fps + 
-                //" - " + (int)gameHandler.TimeInGame + " - " + Tick + " - " + Enemies.Count + " - " + playerInformationHandler.Cash);
-            }
+
+            float x_cash = 5;
+            float y_cash = 10 + TextureHandler.Sprites["Icons\\Border01"].Height;
+
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"], playerInformationHandler.Cash + "$", new Vector2(x_cash, y_cash), Color.White);
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
         {
@@ -199,6 +196,7 @@ namespace simpsons.Core
         public static void AlwaysUpdate(GameWindow window, GameTime gameTime)
         {
             background.Update(window, 200f, gameTime);
+
             InputHandler.Update(gameTime);
             MouseHandler.Update();
             UpdateTick();
@@ -206,7 +204,15 @@ namespace simpsons.Core
             {
                 UpdateGameSaves();
             }
-                
+
+            if(DebuggerIsActive)
+            {
+                double x = 2;
+                x = Math.Pow(x, 20);
+                int usage = ((int)GC.GetTotalMemory(false) / (int)x);
+                window.Title = $"Simpsons - Development - Build (0.2.0) - {frameCounter.FormattedFPS()} - {usage}MB";
+            }
+            
         }
         public static void AlwaysDraw(SpriteBatch spriteBatch)
         {

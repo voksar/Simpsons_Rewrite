@@ -38,5 +38,11 @@ namespace simpsons.Core
             TotalSeconds += deltaTime;
             return true;
         }
+
+        public string FormattedFPS()
+        {
+            string fps = string.Format("{0}",(int)AverageFramesPerSecond);
+            return fps;
+        }
     }
 }
