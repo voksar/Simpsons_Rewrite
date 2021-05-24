@@ -312,6 +312,11 @@ namespace simpsons.Core
             Vector2 position = new Vector2(x,y);
 
             string textureName = name.Replace("Player", "StoreIcons");
+
+            if(!TextureHandler.Sprites.ContainsKey(textureName))
+            {
+                textureName = "StoreIcons\\homer";
+            }
             _currentWidth[index] += TextureHandler.Sprites[textureName].Width;
 
             if(_playerInformationHandler.UnlockedPlayers.Contains(name))

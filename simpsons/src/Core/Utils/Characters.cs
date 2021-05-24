@@ -10,7 +10,10 @@ namespace simpsons.Core.Utils
         {
             { "Player\\homer", 0 },
             { "Player\\lisa", 2500 },
-            { "Player\\marge", 5000 }
+            { "Player\\marge", 5000 },
+            { "Player\\krusty", 10000 },
+            { "Player\\bob", 25000 },
+            { "Player\\flanders", 50000 }
         };
     }
 }

@@ -216,6 +216,18 @@
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Store.psd
 
+#begin Player/bob.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Player/bob.png
+
 #begin Player/companion.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -239,6 +251,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Player/defaultbullet.png
+
+#begin Player/flanders.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Player/flanders.png
 
 #begin Player/heart.png
 /importer:TextureImporter
@@ -276,7 +300,7 @@
 /processorParam:TextureFormat=Color
 /build:Player/homer.png
 
-#begin Player/lisa.png
+#begin Player/krusty.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -286,7 +310,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/lisa.png
+/build:Player/krusty.png
 
 #begin Player/lisa.png
 /importer:TextureImporter
