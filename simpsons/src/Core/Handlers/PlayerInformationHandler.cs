@@ -51,14 +51,10 @@ namespace simpsons.Core.Handlers
         public static PlayerInformationHandler SetDefaultData()
         {
             PlayerInformationHandler playerInformationHandler = new PlayerInformationHandler();
-            playerInformationHandler.Cash = 0;
             playerInformationHandler.SelectedPlayer = "Player\\homer";
             playerInformationHandler.SelectedBullet = "Player\\defaultbullet";
             playerInformationHandler.UnlockedBullets = new List<string>(){"Player\\defaultbullet"};
             playerInformationHandler.UnlockedPlayers = new List<string>(){"Player\\homer"};
-            playerInformationHandler.UnlockedCompanion = false;
-            playerInformationHandler.Deaths = 0;
-            playerInformationHandler.TotalKills = 0;
             playerInformationHandler.SerializePlayerData();
             
             return playerInformationHandler;
