@@ -112,6 +112,10 @@ namespace simpsons.Core.Utils
                 
             }
         }
+        public static bool BetweenRanges(int a, int b, int number)
+        {
+            return (a <= number && number <= b);
+        }
     }
     
     public class AutoLoaderSettings 

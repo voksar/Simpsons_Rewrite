@@ -19,8 +19,8 @@ namespace simpsons.Core
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Y += SpeedY * delta;
-            X += SpeedX * delta;
+            Y += SpeedY * delta * 60;
+            X += SpeedX * delta * 60;
 
             if(X < 0 || X + Texture.Width > ResolutionUtils.Width)
                 IsAlive = false;

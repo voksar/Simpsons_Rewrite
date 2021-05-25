@@ -7,12 +7,13 @@ using System.Linq;
 using simpsons.Core.Handlers;
 using simpsons.Core.Utils;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace simpsons.Core
 {
     public class Player : PlayerEntity
     {
-        public List<Bullet> Bullets;
+        public List<Bullet> Bullets {get;set;}
         public Player(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health)
          : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
         {
@@ -36,7 +37,7 @@ namespace simpsons.Core
 
             if(InputHandler.Press(Keys.Space))
                 Bullets.Add(new Bullet(
-                    BulletName, X, Y, 0, -250f
+                    BulletName, X, Y, 0, -8f
                 ));
 
             foreach(Bullet bullet in Bullets.ToList())
@@ -55,54 +56,6 @@ namespace simpsons.Core
             for (int i = 1; i <= HealthMax; i++)
             {
                 float x = 45 + 32 * i;
-                if (i <= Health)
-                    spriteBatch.Draw(TextureHandler.Sprites["Player/heart"], new Vector2(x, 5), Color.White);
-                else
-                    spriteBatch.Draw(TextureHandler.Sprites["Player/heartdead"], new Vector2(x, 5), Color.White);
-            }
-            spriteBatch.Draw(Texture, vector, Color.White);
-
-            foreach(Bullet bullet in Bullets)
-                bullet.Draw(spriteBatch);
-        }
-    }
-
-    public class Companion : PlayerEntity
-    {
-        //Link up the companion to the player
-        [JsonProperty]
-        public Player Player {get;set;}
-
-        public List<Bullet> Bullets;
-
-        public Companion(string TextureName, float X, float Y, float SpeedX, float SpeedY, string BulletName, int Health, Player Player)
-        : base(TextureName, X, Y, SpeedX, SpeedY, BulletName, Health)
-        {
-            this.Player = Player;
-            Bullets = new List<Bullet>();
-        }
-        public void Update(GameTime gameTime)
-        {
-            foreach(Bullet bullet in Bullets.ToList())
-            {
-                bullet.Update(gameTime);
-                if(!bullet.IsAlive)
-                    Bullets.Remove(bullet);
-            }
-        }
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            Texture2D borderTexture = TextureHandler.Sprites["Icons/Border01"];
-            var width = ResolutionUtils.Width;
-            var height = ResolutionUtils.Height;
-
-            var posX = width - 5 - borderTexture.Width;
-
-            
-            spriteBatch.Draw(borderTexture, new Vector2(posX,5), Color.White);
-            for (int i = 1; i <= HealthMax; i++)
-            {
-                float x = (posX - 5) - 32 * i;
                 if (i <= Health)
                     spriteBatch.Draw(TextureHandler.Sprites["Player/heart"], new Vector2(x, 5), Color.White);
                 else

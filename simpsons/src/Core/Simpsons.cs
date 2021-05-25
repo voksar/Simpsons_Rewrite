@@ -131,7 +131,7 @@ namespace simpsons.Core
             player.Update(window, gameTime);
 
             if(companion != null)
-                companion.Update(gameTime);
+                companion.Update(gameTime, Enemies);
 
             spawnManager.Update(Enemies, gameTime, gameHandler);
 
@@ -195,7 +195,7 @@ namespace simpsons.Core
                 playerInformationHandler.VerifyUnlockedPlayer();
                 player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
                 if(playerInformationHandler.UnlockedCompanion)
-                    companion = new Companion("Player/companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
+                    companion = new Companion("Player/companion", player.X + 30, player.Y + 30, 200, 200, playerInformationHandler.SelectedBullet, 5, player);
             }
             else
             {
