@@ -169,9 +169,9 @@ namespace simpsons.Core
                 e.Draw(spriteBatch);
 
             float x_cash = 5;
-            float y_cash = 10 + TextureHandler.Sprites["Icons\\Border01"].Height;
+            float y_cash = 10 + TextureHandler.Sprites["Icons/Border01"].Height;
 
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"], playerInformationHandler.Cash + "$", new Vector2(x_cash, y_cash), Color.White);
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno14"], playerInformationHandler.Cash + "$", new Vector2(x_cash, y_cash), Color.White);
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
         {
@@ -190,7 +190,7 @@ namespace simpsons.Core
                 playerInformationHandler.VerifyUnlockedPlayer();
                 player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
                 if(playerInformationHandler.UnlockedCompanion)
-                    companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
+                    companion = new Companion("Player/companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
             }
             else
             {

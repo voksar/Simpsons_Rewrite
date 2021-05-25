@@ -37,9 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:Enemies/bart.png
 
-#begin Fonts/Reno.otf
-/copy:Fonts/Reno.otf
-
 #begin Fonts/Reno14.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -204,18 +201,6 @@
 /processorParam:TextureFormat=Color
 /build:MenuIcons/Store.png
 
-#begin MenuIcons/Store.psd
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:MenuIcons/Store.psd
-
 #begin Player/bob.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -359,6 +344,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:StoreIcons/homer.png
+
+#begin StoreIcons/krusty.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:StoreIcons/krusty.png
 
 #begin StoreIcons/LeftArrow.png
 /importer:TextureImporter

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace simpsons.Core.Utils
 {
@@ -29,55 +31,55 @@ namespace simpsons.Core.Utils
         //Högst icke optimerat, skall försöka bygga en shader för att få outlines på texten.
         public static void DrawOutlineText(SpriteBatch spriteBatch, string text)
         {
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(9,10), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(9,9), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(10,9), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(11,10), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(11,11), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(10,11), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(10,10), Color.White);
         }
         public static void DrawOutlineText(SpriteBatch spriteBatch, string text, Vector2 position, Color color)
         {
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X - 1, position.Y), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X - 1, position.Y - 1), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X, position.Y - 1), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X + 1, position.Y), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X + 1, position.Y + 1), Color.Black);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X, position.Y + 1), Color.Black);
 
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, position, color);
         }
         public static void DrawOutlineText(SpriteBatch spriteBatch, string text, Vector2 position, Color color, float opacity)
         {
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X - 1, position.Y), Color.Black * opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X - 1, position.Y - 1), Color.Black * opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X, position.Y - 1), Color.Black * opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X + 1, position.Y), Color.Black * opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X + 1, position.Y + 1), Color.Black * opacity);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, new Vector2(position.X, position.Y + 1), Color.Black * opacity);
 
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"],
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"],
             text, position, color * opacity);
         }
         public static void DrawOutlineText(string font,SpriteBatch spriteBatch, string text, Vector2 position, Color color, float opacity)
@@ -101,24 +103,21 @@ namespace simpsons.Core.Utils
     
         public static void AutoLoader<T>(AutoLoaderSettings autoLoaderSettings, Dictionary<string, T> collection)
         {
-            string _relativePath;
-            var toBeLoadedFiles = autoLoaderSettings.Files.Where(s => autoLoaderSettings.AcceptableExtensions.Any(x => s.Contains(x)));
-
-            foreach(string file in toBeLoadedFiles)
+            foreach(FileInfo file in autoLoaderSettings.Files)
             {
-                _relativePath = file;
+                string key = Path.GetFileNameWithoutExtension(file.Name);
+                string key_path = $"{autoLoaderSettings.Path}/{key}";
+
+                collection.Add(key_path, autoLoaderSettings.Content.Load<T>(key_path));
                 
-                autoLoaderSettings.AcceptableExtensions.ForEach(x => _relativePath = _relativePath.Replace(x, "").Replace(autoLoaderSettings.ReplacePath, ""));
-                collection.Add(_relativePath, autoLoaderSettings.Content.Load<T>(_relativePath));
             }
         }
     }
     
     public class AutoLoaderSettings 
     {
-        public string ReplacePath;
         public ContentManager Content;
-        public List<string> AcceptableExtensions;
-        public string[] Files;
+        public string Path;
+        public FileInfo[] Files;
     }
 }

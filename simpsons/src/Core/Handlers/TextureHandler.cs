@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using simpsons.Core.Utils;
-
+using System;
 
 namespace simpsons.Core.Handlers
 {
@@ -25,21 +25,16 @@ namespace simpsons.Core.Handlers
             "StoreIcons"
         };
 
-        private static List <string> _acceptableExtensions = new List<string>()
+        /*private static List <string> _acceptableExtensions = new List<string>()
         {
             ".jpg",
-            ".png"
-        };
-
-        private static string _currentPath;
-
-        private static string _nextPath;
-
+            ".png",
+            ".xnb"
+        };*/
 
         public static void Initialize()
         {
             Sprites = new Dictionary<string, Texture2D>();
-            _currentPath = Directory.GetCurrentDirectory() + "\\Content\\";
         }
         public static void LoadPreContent(ContentManager content)
         {
@@ -53,18 +48,17 @@ namespace simpsons.Core.Handlers
             {
 
                 //add path to next path
-                _nextPath = _currentPath + path;
-                
-                
+                //_nextPath = _currentPath + path;
+                DirectoryInfo directory = new DirectoryInfo(content.RootDirectory + $"/{path}");
 
+                FileInfo[] files = directory.GetFiles("*.xnb");
                 //get all files in the accepted path
-                var files = Directory.GetFiles(_nextPath);
+                //var files = Directory.GetFiles(_nextPath);
                 
                 //Setup settings for autoloading
                 AutoLoaderSettings autoLoaderSettings = new AutoLoaderSettings()
                 {
-                    ReplacePath = _currentPath,
-                    AcceptableExtensions = _acceptableExtensions,
+                    Path = path,
                     Content = content,
                     Files = files,
                 };
