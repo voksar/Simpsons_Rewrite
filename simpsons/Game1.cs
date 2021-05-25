@@ -50,7 +50,6 @@ namespace simpsons
             //Start up new thread to not block Draw thread
             ThreadPool.QueueUserWorkItem(state => 
             {
-                Thread.Sleep(5000);
                 Simpsons.LoadContent(Content, Window);
                 isLoaded = true;
             });

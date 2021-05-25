@@ -52,7 +52,25 @@ namespace simpsons.Core
         static List<GameHandler> gameHandlers;
 
         //If gamedata has been modified
-        static bool NeedUpdate = false;
+        private static bool _needUpdate = false;
+        public static bool NeedUpdate
+        {
+            get { return _needUpdate; }
+            set
+            {
+                _needUpdate = value;
+                if(_needUpdate)
+                {
+                    Console.WriteLine("Game serialization ran");
+                    ThreadPool.QueueUserWorkItem(state => 
+                    {
+                        GameHandler.SerializeGame(gameHandlers);
+                        playerInformationHandler.SerializePlayerData();
+                        _needUpdate = false;
+                    });
+                }
+            }
+        }
 
         //Initialization and content loading
         public static void Initialize()
@@ -155,14 +173,29 @@ namespace simpsons.Core
                             companion.Bullets.Remove(bullet);
                         }
                     }
+                    if(e.CheckCollision(companion))
+                    {
+                        companion.Health -= e.Health;
+                        e.Health = 0;
+                    }
+                }
+                if(e.CheckCollision(player))
+                {
+                    player.Health -= e.Health;
+                    e.Health = 0;
                 }
                 
                 
-                if(!e.IsAlive)
-                    Enemies.Remove(e);
                     
                 e.Update(gameTime, window, player);
+
+                if(!e.IsAlive)
+                    Enemies.Remove(e);
             }
+
+            if(!player.IsAlive)
+                return GameOver();
+                
             return States.Run;
         }
         public static void RunDraw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -176,7 +209,7 @@ namespace simpsons.Core
             float x_cash = 5;
             float y_cash = 10 + TextureHandler.Sprites["Icons/Border01"].Height;
 
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno14"], playerInformationHandler.Cash + "$", new Vector2(x_cash, y_cash), Color.White);
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno14"], gameHandler.Score + "$", new Vector2(x_cash, y_cash), Color.White);
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
         {
@@ -193,7 +226,7 @@ namespace simpsons.Core
                 gameHandler = GameHandler.GenerateHandler();
                 Enemies = gameHandler.Enemies;
                 playerInformationHandler.VerifyUnlockedPlayer();
-                player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
+                Reload();
                 if(playerInformationHandler.UnlockedCompanion)
                     companion = new Companion("Player/companion", player.X + 30, player.Y + 30, 200, 200, playerInformationHandler.SelectedBullet, 5, player);
             }
@@ -212,12 +245,16 @@ namespace simpsons.Core
         {
             if(gameHandler != null)
             {
-                gameHandler.SetProperties(player, Enemies, 5, companion);
+                gameHandler.SetProperties(player, Enemies, companion);
                 gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
                 NeedUpdate = true;
             }
             
             gameHandler = null;
+        }
+        public static States GameOver()
+        {
+            return States.Menu;
         }
         public static States DisplayGamesUpdate(GameTime gameTime)
         {
@@ -234,10 +271,6 @@ namespace simpsons.Core
             InputHandler.Update(gameTime);
             MouseHandler.Update();
             UpdateTick();
-            if(Tick == 0)
-            {
-                UpdateGameSaves();
-            }
 
             if(DebuggerIsActive)
             {
@@ -301,17 +334,6 @@ namespace simpsons.Core
             Tick++;
             Tick %= 25000;
         }
-        public static void UpdateGameSaves()
-        {
-            if(NeedUpdate)
-            {
-                ThreadPool.QueueUserWorkItem(state => 
-                {
-                    GameHandler.SerializeGame(gameHandlers);
-                    NeedUpdate = false;
-                });
-            }
-        }
 
         public static void ExitGame()
         {
@@ -339,13 +361,14 @@ namespace simpsons.Core
 
         public static void Reload()
         {
-            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
+            player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 420,420, playerInformationHandler.SelectedBullet, 3);
         }
 
         private static void CheckProgress()
         {
             if(playerInformationHandler.TotalKills >= 25000 & !playerInformationHandler.UnlockedCompanion)
                 playerInformationHandler.UnlockedCompanion = true;
+                NeedUpdate = true;
         }
         private static void EnemiesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

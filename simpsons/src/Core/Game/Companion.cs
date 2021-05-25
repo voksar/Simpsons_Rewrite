@@ -47,14 +47,14 @@ namespace simpsons.Core
                     _target = null;
 
             //Locate closest enemy
-            foreach(Enemy e in enemies.ToList())
+            /*foreach(Enemy e in enemies.ToList())
             {
                 if(Vector2.Distance(new Vector2(e.X, e.Y), vector) < distance)
                 {
                     distance = Vector2.Distance(new Vector2(e.X, e.Y), vector);
                     _target = e;
                 }
-            }
+            }*/
 
             //Calculate angle based on speed and spawn a bullet
             if(_target != null)

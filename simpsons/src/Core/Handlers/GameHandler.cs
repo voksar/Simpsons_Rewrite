@@ -37,11 +37,10 @@ namespace simpsons.Core.Handlers
         }
 
         #nullable enable
-        public void SetProperties(Player player, ObservableCollection<Enemy> enemies, int score, Companion? companion)
+        public void SetProperties(Player player, ObservableCollection<Enemy> enemies, Companion? companion)
         {
             Player = player;
             Enemies = enemies;
-            Score = score;
             LastPlayed = DateTime.Now;
             if(companion != null)
                 Companion = companion;

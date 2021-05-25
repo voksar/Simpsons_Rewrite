@@ -40,6 +40,9 @@ namespace simpsons.Core
                     BulletName, X, Y, 0, -8f
                 ));
 
+            if(Health <= 0)
+                IsAlive = false;
+
             foreach(Bullet bullet in Bullets.ToList())
             {
                 bullet.Update(gameTime);

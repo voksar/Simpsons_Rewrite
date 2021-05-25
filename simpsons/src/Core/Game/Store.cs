@@ -227,6 +227,9 @@ namespace simpsons.Core
             if(selected[selectedy] < MainStore[selectedy].Count - 1)
                 spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/RightArrow"], new Vector2(840, 200), _colorArrows * Opacity);
 
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"], _playerInformationHandler.Cash + "$",
+            new Vector2(RectangleX + 5, 5), Color.White * Opacity);
+
             spriteBatch.End();
 
             RasterizerState rasterizerState = new RasterizerState();
