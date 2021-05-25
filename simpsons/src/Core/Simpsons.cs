@@ -370,8 +370,11 @@ namespace simpsons.Core
         private static void CheckProgress()
         {
             if(playerInformationHandler.TotalKills >= 25000 & !playerInformationHandler.UnlockedCompanion)
+            {
                 playerInformationHandler.UnlockedCompanion = true;
                 NeedUpdate = true;
+            }
+                
         }
         private static void EnemiesChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
