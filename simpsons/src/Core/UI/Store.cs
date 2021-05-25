@@ -11,7 +11,7 @@ using simpsons.Core.Handlers;
 using simpsons.Core.Utils;
 using simpsons.Core.Interfaces;
 
-namespace simpsons.Core
+namespace simpsons.Core.UI
 {
     public class Store : IState
     {

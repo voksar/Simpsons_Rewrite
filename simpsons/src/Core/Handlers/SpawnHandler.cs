@@ -6,6 +6,7 @@ using simpsons.Core.Handlers;
 using Microsoft.Xna.Framework;
 using System.Collections.ObjectModel;
 using simpsons.Core.Utils;
+using simpsons.Core.Entities;
 
 namespace simpsons.Core.Handlers
 {

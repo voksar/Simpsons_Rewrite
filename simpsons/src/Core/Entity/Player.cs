@@ -9,7 +9,7 @@ using simpsons.Core.Utils;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
-namespace simpsons.Core
+namespace simpsons.Core.Entities
 {
     public class Player : PlayerEntity
     {

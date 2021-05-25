@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
+using simpsons.Core.Entities;
+using simpsons.Core.UI;
 
 namespace simpsons.Core.Handlers
 {

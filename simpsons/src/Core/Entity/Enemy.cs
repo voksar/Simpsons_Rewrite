@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using Newtonsoft.Json;
 
-namespace simpsons.Core
+namespace simpsons.Core.Entities
 {
     public abstract class Enemy : Entity
     {

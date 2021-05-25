@@ -6,7 +6,7 @@ using simpsons.Core.Handlers;
 using Newtonsoft.Json;
 
 
-namespace simpsons.Core
+namespace simpsons.Core.Entities
 {
     public abstract class PlayerEntity : Entity
     {   

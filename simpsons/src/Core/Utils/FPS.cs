@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace simpsons.Core
+namespace simpsons.Core.Utils
 {
     public class FrameCounter
     {

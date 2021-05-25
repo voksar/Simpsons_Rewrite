@@ -7,7 +7,7 @@ using simpsons.Core.Utils;
 using simpsons.Core.Interfaces;
 using System;
 using System.Linq;
-namespace simpsons.Core
+namespace simpsons.Core.UI
 {
     public class DisplayGames : IState
     {

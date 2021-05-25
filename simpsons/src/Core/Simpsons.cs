@@ -11,6 +11,9 @@ using simpsons.Core.Utils;
 using System.Threading;
 using System.IO;
 
+using simpsons.Core.Entities;
+using simpsons.Core.UI;
+
 namespace simpsons.Core
 {
     static class Simpsons

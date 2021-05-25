@@ -5,7 +5,7 @@ using System;
 using Newtonsoft.Json;
 using simpsons.Core.Handlers;
 
-namespace simpsons.Core
+namespace simpsons.Core.Entities
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Entity
