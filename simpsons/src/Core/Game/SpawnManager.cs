@@ -35,7 +35,7 @@ namespace simpsons.Core
                 if(enemies.Count < SpawnCap)
                 {
                     if(spawnValue <= 0.5)
-                        enemies.Add(new Bart("Enemies\\bart",10, 10, 0.1f,0.1f,1));
+                        enemies.Add(new Bart("Enemies/bart",10, 10, 0.1f,0.1f,1));
                     if(spawnValue > 0.5 && spawnValue <= 0.8)
                         return;
                     if(spawnValue > 0.8)

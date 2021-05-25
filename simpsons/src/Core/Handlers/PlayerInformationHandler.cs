@@ -21,7 +21,7 @@ namespace simpsons.Core.Handlers
         public int Deaths {get;set;}
         public int Damage {get;set;}
 
-        private string _defaultPlayer = "Player\\homer";
+        private string _defaultPlayer = "Player/homer";
 
         public void SerializePlayerData()
         {
@@ -59,12 +59,13 @@ namespace simpsons.Core.Handlers
         public static PlayerInformationHandler SetDefaultData()
         {
             PlayerInformationHandler playerInformationHandler = new PlayerInformationHandler();
-            playerInformationHandler.SelectedPlayer = "Player\\homer";
-            playerInformationHandler.SelectedBullet = "Player\\defaultbullet";
-            playerInformationHandler.UnlockedBullets = new List<string>(){"Player\\defaultbullet"};
-            playerInformationHandler.UnlockedPlayers = new List<string>(){"Player\\homer"};
-            playerInformationHandler.SerializePlayerData();
+            playerInformationHandler.SelectedPlayer = "Player/homer";
+            playerInformationHandler.SelectedBullet = "Player/defaultbullet";
+            playerInformationHandler.UnlockedBullets = new List<string>(){"Player/defaultbullet"};
+            playerInformationHandler.UnlockedPlayers = new List<string>(){"Player/homer"};
             playerInformationHandler.Damage = 1;
+            
+            playerInformationHandler.SerializePlayerData();
             
             return playerInformationHandler;
         }

@@ -19,10 +19,11 @@ namespace simpsons.Core.Handlers
             "Fonts"
         };
 
-        private static List <string> _acceptableExtensions = new List<string>()
+        /*private static List <string> _acceptableExtensions = new List<string>()
         {
-            ".spritefont"
-        };
+            ".spritefont",
+            ".xnb"
+        };*/
 
         private static string _currentPath;
 
@@ -47,13 +48,15 @@ namespace simpsons.Core.Handlers
                 
 
                 //get all files in the accepted path
-                var files = Directory.GetFiles(_nextPath);
+                //var files = Directory.GetFiles(_nextPath);
+                DirectoryInfo directory = new DirectoryInfo(content.RootDirectory + $"/{path}");
 
+
+                FileInfo[] files = directory.GetFiles("*.xnb");
                 //Setup settings for autoloading
                 AutoLoaderSettings autoLoaderSettings = new AutoLoaderSettings()
                 {
-                    ReplacePath = _currentPath,
-                    AcceptableExtensions = _acceptableExtensions,
+                    Path = path,
                     Content = content,
                     Files = files,
                 };

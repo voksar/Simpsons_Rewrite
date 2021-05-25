@@ -42,7 +42,12 @@ namespace simpsons.Core
         static Companion companion;
         static Store store;
 
-        
+        //Loading
+        private static string loading = "Loading";
+        private const int maxDots = 5;
+        private static int dots = 0;
+        private static float duration = 0.3f;
+        private static bool loaded = false;
 
         static List<GameHandler> gameHandlers;
 
@@ -169,9 +174,9 @@ namespace simpsons.Core
                 e.Draw(spriteBatch);
 
             float x_cash = 5;
-            float y_cash = 10 + TextureHandler.Sprites["Icons\\Border01"].Height;
+            float y_cash = 10 + TextureHandler.Sprites["Icons/Border01"].Height;
 
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno14"], playerInformationHandler.Cash + "$", new Vector2(x_cash, y_cash), Color.White);
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno14"], playerInformationHandler.Cash + "$", new Vector2(x_cash, y_cash), Color.White);
         }
         public static States MenuUpdate(GameTime gameTime, GameWindow window)
         {
@@ -190,7 +195,7 @@ namespace simpsons.Core
                 playerInformationHandler.VerifyUnlockedPlayer();
                 player = new Player(playerInformationHandler.SelectedPlayer, 300,300, 500,500, playerInformationHandler.SelectedBullet, 3);
                 if(playerInformationHandler.UnlockedCompanion)
-                    companion = new Companion("Player\\companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
+                    companion = new Companion("Player/companion", player.X + 30, player.Y + 30, 500, 500, playerInformationHandler.SelectedBullet, 5, player);
             }
             else
             {
@@ -202,6 +207,17 @@ namespace simpsons.Core
 
             Enemies.CollectionChanged += EnemiesChanged;
             return States.Run;
+        }
+        public static void StopGame()
+        {
+            if(gameHandler != null)
+            {
+                gameHandler.SetProperties(player, Enemies, 5, companion);
+                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
+                NeedUpdate = true;
+            }
+            
+            gameHandler = null;
         }
         public static States DisplayGamesUpdate(GameTime gameTime)
         {
@@ -245,6 +261,40 @@ namespace simpsons.Core
             store.Draw(spriteBatch);
         }
 
+        public static States LoadingUpdate(GameTime gameTime, bool isLoaded)
+        {
+            loaded = isLoaded;
+            if(!loaded)
+            {
+                float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                duration -= delta;
+                if(duration <= 0)
+                {
+                    duration = 0.3f;
+                    dots++;
+                }
+                dots %= maxDots;
+            }
+            
+
+            return States.Loading;
+        }
+        public static void LoadingDraw(SpriteBatch spriteBatch)
+        {
+            if(!loaded)
+            {
+                string finalLoadingString = loading;
+                for(int i = 0; i <= dots; i++)
+                    finalLoadingString = finalLoadingString + " " +  ".";
+            
+                spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"], finalLoadingString, new Vector2(100,100), Color.Red);
+            }
+            else if(loaded)
+            {
+                spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"], "Done, press any key to continue", new Vector2(100,100), Color.Red);
+            }
+            
+        }
         //Misc functions for tasks and other nescessary stuff
         public static void UpdateTick()
         {
@@ -262,17 +312,7 @@ namespace simpsons.Core
                 });
             }
         }
-        public static void StopGame()
-        {
-            if(gameHandler != null)
-            {
-                gameHandler.SetProperties(player, Enemies, 5, companion);
-                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
-                NeedUpdate = true;
-            }
-            
-            gameHandler = null;
-        }
+
         public static void ExitGame()
         {
             GameHandler.SerializeGame(gameHandlers);

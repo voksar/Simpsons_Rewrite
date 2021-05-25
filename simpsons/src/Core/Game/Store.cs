@@ -217,15 +217,15 @@ namespace simpsons.Core
             spriteBatch.Draw(StoreRectangle, 
             new Rectangle((int)RectangleX, 0, (int)RectangleWidth, ResolutionUtils.Height), Color.White);
             
-            var storeX = ResolutionUtils.Width / 2 - TextureHandler.Sprites["StoreIcons\\StoreText"].Width / 2;
+            var storeX = ResolutionUtils.Width / 2 - TextureHandler.Sprites["StoreIcons/StoreText"].Width / 2;
 
-            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\StoreText"], new Vector2(storeX, 50), Color.White * Opacity);
+            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/StoreText"], new Vector2(storeX, 50), Color.White * Opacity);
             
-            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\BorderSquare"], new Vector2(748, 198), Opacity * _color * 0.5f);
+            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/BorderSquare"], new Vector2(748, 198), Opacity * _color * 0.5f);
             if(selected[selectedy] > 0)
-                spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\LeftArrow"], new Vector2(660, 200), _colorArrows * Opacity);
+                spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/LeftArrow"], new Vector2(660, 200), _colorArrows * Opacity);
             if(selected[selectedy] < MainStore[selectedy].Count - 1)
-                spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\RightArrow"], new Vector2(840, 200), _colorArrows * Opacity);
+                spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/RightArrow"], new Vector2(840, 200), _colorArrows * Opacity);
 
             spriteBatch.End();
 
@@ -241,7 +241,7 @@ namespace simpsons.Core
                 {
                     if(!item.Unlocked)
                     {
-                        SpriteFont costFont = FontHandler.Fonts["Fonts\\Reno14"];
+                        SpriteFont costFont = FontHandler.Fonts["Fonts/Reno14"];
                         var costLength = costFont.MeasureString(item.Cost + "$");
                         float costX = (item.X + item.Texture.Width / 2) - (costLength.X / 2);
                         float costY = item.Y + item.Texture.Height - costLength.Y;
@@ -251,7 +251,7 @@ namespace simpsons.Core
                         spriteBatch.DrawString(costFont, $"{item.Cost}$", new Vector2(costX, costY), item.CostColor * Opacity);
                         
                         if(_playerInformationHandler.Cash < item.Cost)
-                            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons\\Lock"], new Vector2(item.X, item.Y), item.Color * Opacity);
+                            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/Lock"], new Vector2(item.X, item.Y), item.Color * Opacity);
                     }
                     else
                     {
@@ -315,7 +315,7 @@ namespace simpsons.Core
 
             if(!TextureHandler.Sprites.ContainsKey(textureName))
             {
-                textureName = "StoreIcons\\homer";
+                textureName = "StoreIcons/homer";
             }
             _currentWidth[index] += TextureHandler.Sprites[textureName].Width;
 

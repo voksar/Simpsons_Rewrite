@@ -197,9 +197,9 @@ namespace simpsons.Core
                 }
             }
 
-            var widthOfText = FontHandler.Fonts["Fonts\\Reno20"].MeasureString(Simpsons.playerInformationHandler.Cash + "$");
+            var widthOfText = FontHandler.Fonts["Fonts/Reno20"].MeasureString(Simpsons.playerInformationHandler.Cash + "$");
             Vector2 positionCashText = new Vector2(400 - widthOfText.X, 0);
-            spriteBatch.DrawString(FontHandler.Fonts["Fonts\\Reno20"], Simpsons.playerInformationHandler.Cash + "$"
+            spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"], Simpsons.playerInformationHandler.Cash + "$"
             , positionCashText, Color.White * Opacity);
         }
         public int StartStateChange(int increaseX, int increaseWidth, int targetX, int targetWidth, GameTime gameTime)

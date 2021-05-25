@@ -44,14 +44,14 @@ namespace simpsons.Core
         {
             Texture = Utilities.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height,
             graphicsDevice, Color.Black, 0.8f);
-            baseIcon = TextureHandler.Sprites["MenuIcons\\Saves"];
+            baseIcon = TextureHandler.Sprites["MenuIcons/Saves"];
             rectangleDisplayInfo = Utilities.RectangleCreator(400, 300, graphicsDevice, Color.Black, 0.9f
             );
         }
         public void AddGameItem(GameHandler gameHandler)
         {
             
-            var measure = FontHandler.Fonts["Fonts\\Reno20"].MeasureString(gameHandler.GameID).X;
+            var measure = FontHandler.Fonts["Fonts/Reno20"].MeasureString(gameHandler.GameID).X;
             //-10 from right border
             float x = 1040 - measure;
             
@@ -153,21 +153,21 @@ namespace simpsons.Core
         {
             spriteBatch.Draw(Texture, new Rectangle((int)RectangleX, 0, (int)RectangleWidth, window.ClientBounds.Height)
             , Color.White);
-            var measure = FontHandler.Fonts["Fonts\\Reno20"].MeasureString("Saves").Length();
+            var measure = FontHandler.Fonts["Fonts/Reno20"].MeasureString("Saves").Length();
             float x = (window.ClientBounds.Width / 2) - (measure / 2);
-            Utilities.DrawOutlineText("Fonts\\Reno20",spriteBatch, "Saves", new Vector2(x, 10), Color.White, Opacity);
+            Utilities.DrawOutlineText("Fonts/Reno20",spriteBatch, "Saves", new Vector2(x, 10), Color.White, Opacity);
 
             if(_deleteMessage != null)
             {
-                var measureDelete = FontHandler.Fonts["Fonts\\Reno14"].MeasureString(_deleteMessage).Length();
+                var measureDelete = FontHandler.Fonts["Fonts/Reno14"].MeasureString(_deleteMessage).Length();
                 float xDelete = (window.ClientBounds.Width / 2) - (measureDelete / 2);
-                Utilities.DrawOutlineText("Fonts\\Reno14",spriteBatch, _deleteMessage, new Vector2(xDelete, 45), Color.Red, _durationOpacity * Opacity);
+                Utilities.DrawOutlineText("Fonts/Reno14",spriteBatch, _deleteMessage, new Vector2(xDelete, 45), Color.Red, _durationOpacity * Opacity);
             }
             if(!displayGamesItems.Any() && _deleteMessage == null)
             {
-                var measureEmpty = FontHandler.Fonts["Fonts\\Reno14"].MeasureString("You have no saves!").Length();
+                var measureEmpty = FontHandler.Fonts["Fonts/Reno14"].MeasureString("You have no saves!").Length();
                 float emptyX = (window.ClientBounds.Width / 2) - (measureEmpty / 2);
-                Utilities.DrawOutlineText("Fonts\\Reno14",spriteBatch, "You have no saves!", new Vector2(emptyX, 45), Color.White, Opacity);
+                Utilities.DrawOutlineText("Fonts/Reno14",spriteBatch, "You have no saves!", new Vector2(emptyX, 45), Color.White, Opacity);
             
             }
             for(int i = 0; i < displayGamesItems.Count; i++)
