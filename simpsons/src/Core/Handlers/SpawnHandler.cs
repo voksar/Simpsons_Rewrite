@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 using System.Collections.ObjectModel;
 using simpsons.Core.Utils;
 
-namespace simpsons.Core
+namespace simpsons.Core.Handlers
 {
-    public class SpawnManager
+    public class SpawnHandler
     {
 
 
@@ -22,7 +22,7 @@ namespace simpsons.Core
         private int spawnRate = 100;
         private int finalSpawnValue;
 
-        public SpawnManager()
+        public SpawnHandler()
         {
             RandomGenerator = new Random();
             SpawnNumber = new Random();
