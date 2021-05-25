@@ -42,7 +42,12 @@ namespace simpsons.Core
         static Companion companion;
         static Store store;
 
-        
+        //Loading
+        private static string loading = "Loading";
+        private const int maxDots = 5;
+        private static int dots = 0;
+        private static float duration = 0.3f;
+        private static bool loaded = false;
 
         static List<GameHandler> gameHandlers;
 
@@ -203,6 +208,17 @@ namespace simpsons.Core
             Enemies.CollectionChanged += EnemiesChanged;
             return States.Run;
         }
+        public static void StopGame()
+        {
+            if(gameHandler != null)
+            {
+                gameHandler.SetProperties(player, Enemies, 5, companion);
+                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
+                NeedUpdate = true;
+            }
+            
+            gameHandler = null;
+        }
         public static States DisplayGamesUpdate(GameTime gameTime)
         {
             return (States)displayGames.Update(gameTime);
@@ -245,6 +261,40 @@ namespace simpsons.Core
             store.Draw(spriteBatch);
         }
 
+        public static States LoadingUpdate(GameTime gameTime, bool isLoaded)
+        {
+            loaded = isLoaded;
+            if(!loaded)
+            {
+                float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                duration -= delta;
+                if(duration <= 0)
+                {
+                    duration = 0.3f;
+                    dots++;
+                }
+                dots %= maxDots;
+            }
+            
+
+            return States.Loading;
+        }
+        public static void LoadingDraw(SpriteBatch spriteBatch)
+        {
+            if(!loaded)
+            {
+                string finalLoadingString = loading;
+                for(int i = 0; i <= dots; i++)
+                    finalLoadingString = finalLoadingString + " " +  ".";
+            
+                spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"], finalLoadingString, new Vector2(100,100), Color.Red);
+            }
+            else if(loaded)
+            {
+                spriteBatch.DrawString(FontHandler.Fonts["Fonts/Reno20"], "Done, press any key to continue", new Vector2(100,100), Color.Red);
+            }
+            
+        }
         //Misc functions for tasks and other nescessary stuff
         public static void UpdateTick()
         {
@@ -262,17 +312,7 @@ namespace simpsons.Core
                 });
             }
         }
-        public static void StopGame()
-        {
-            if(gameHandler != null)
-            {
-                gameHandler.SetProperties(player, Enemies, 5, companion);
-                gameHandlers = GameHandler.AddDataToTable(gameHandler, gameHandlers, displayGames);
-                NeedUpdate = true;
-            }
-            
-            gameHandler = null;
-        }
+
         public static void ExitGame()
         {
             GameHandler.SerializeGame(gameHandlers);

@@ -50,6 +50,7 @@ namespace simpsons
             //Start up new thread to not block Draw thread
             ThreadPool.QueueUserWorkItem(state => 
             {
+                Thread.Sleep(5000);
                 Simpsons.LoadContent(Content, Window);
                 isLoaded = true;
             });
@@ -61,9 +62,10 @@ namespace simpsons
             switch(Simpsons.State)
             {
                 case Simpsons.States.Loading:
-                    if(isLoaded)
-                        if(InputHandler.AnyPressed())
+                        if(InputHandler.AnyPressed() && isLoaded)
                             Simpsons.State = Simpsons.States.Menu;
+                        else
+                            Simpsons.State = Simpsons.LoadingUpdate(gameTime, isLoaded);
                     break;
                 case Simpsons.States.Run:
                     Simpsons.State = Simpsons.RunUpdate(Window, gameTime);
@@ -99,6 +101,7 @@ namespace simpsons
             switch(Simpsons.State)
             {
                 case Simpsons.States.Loading:
+                    Simpsons.LoadingDraw(_spriteBatch);
                     break;
                 case Simpsons.States.Saves:
                     Simpsons.DisplayGamesDraw(_spriteBatch, Window);
