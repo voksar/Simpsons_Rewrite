@@ -26,7 +26,6 @@ namespace simpsons.Core
 
 
 
-        SoundEffect soundEffect;
         List<MenuItem> menu;
         float frame = 0;
         int selected = 0;
@@ -51,7 +50,6 @@ namespace simpsons.Core
         public void LoadContent(GraphicsDevice gd, GameWindow window, ContentManager content)
         {
             Texture = Utilities.RectangleCreator((int)RectangleWidth, window.ClientBounds.Height, gd, Color.Black, 0.8f);
-            soundEffect = content.Load<SoundEffect>("Menu/changeSelectSound");
             this.gd = gd;
             
         }
@@ -113,8 +111,7 @@ namespace simpsons.Core
                 if (InputHandler.Press(Keys.Enter) || 
                 MouseHandler.MouseState.LeftButton == ButtonState.Pressed
                 && menu[selected].Rec.Contains(MouseHandler.MouseState.X, MouseHandler.MouseState.Y))
-                {
-                    soundEffect.Play(0.01f, 0, 0);  
+                { 
                     IsChangingState = true;
                     state = menu[selected].State;
 
@@ -170,8 +167,6 @@ namespace simpsons.Core
                     }
                 }
             }
-            if (prevselected != selected)
-                soundEffect.Play(0.01f, 0, 0);
             return defaultMenuState;
         }
         public void Draw(SpriteBatch spriteBatch, GameWindow window)
