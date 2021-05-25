@@ -219,7 +219,9 @@ namespace simpsons.Core
             
             var storeX = ResolutionUtils.Width / 2 - TextureHandler.Sprites["StoreIcons/StoreText"].Width / 2;
 
-            spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/StoreText"], new Vector2(storeX, 50), Color.White * Opacity);
+            var measure = FontHandler.Fonts["Fonts/Reno20"].MeasureString("Store").Length();
+            float x = (ResolutionUtils.Width / 2) - (measure / 2);
+            Utilities.DrawOutlineText("Fonts/Reno20", spriteBatch, "Store", new Vector2(x, 10), Color.White, Opacity);
             
             spriteBatch.Draw(TextureHandler.Sprites["StoreIcons/BorderSquare"], new Vector2(748, 198), Opacity * _color * 0.5f);
             if(selected[selectedy] > 0)

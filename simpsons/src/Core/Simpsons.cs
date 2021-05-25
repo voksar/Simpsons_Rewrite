@@ -148,7 +148,7 @@ namespace simpsons.Core
 
             player.Update(window, gameTime);
 
-            if(companion != null)
+            if(companion != null && companion.IsAlive)
                 companion.Update(gameTime, Enemies);
 
             spawnManager.Update(Enemies, gameTime, gameHandler);
@@ -201,7 +201,7 @@ namespace simpsons.Core
         public static void RunDraw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             player.Draw(spriteBatch);
-            if(companion != null)
+            if(companion != null && companion.IsAlive)
                 companion.Draw(spriteBatch);
             foreach(Enemy e in Enemies)
                 e.Draw(spriteBatch);
