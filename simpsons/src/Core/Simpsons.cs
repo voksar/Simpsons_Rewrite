@@ -92,7 +92,6 @@ namespace simpsons.Core
             playerInformationHandler = PlayerInformationHandler.Initialize();
             Tick = 0;
             MouseHandler.Initialize();
-            spawnHandler = new SpawnHandler();
             store = new Store(playerInformationHandler, (int)States.Store);
         }
         public static void LoadPreContent(ContentManager content, GameWindow window, GraphicsDevice graphics)
@@ -155,7 +154,7 @@ namespace simpsons.Core
             if(companion != null && companion.IsAlive)
                 companion.Update(gameTime, Enemies);
 
-            spawnHandler.Update(Enemies, gameTime, gameHandler);
+            spawnHandler.Update(Enemies, gameTime);
 
             foreach(Enemy e in Enemies.ToList())
             {
@@ -241,6 +240,7 @@ namespace simpsons.Core
                 player = gameHandler.Player;
                 companion = gameHandler.Companion;
             }
+            spawnHandler = new SpawnHandler(gameHandler);
 
             Enemies.CollectionChanged += EnemiesChanged;
             return States.Run;

@@ -15,34 +15,40 @@ namespace simpsons.Core.Handlers
 
 
         public int SpawnCap {get;} = 50;
-        public Random RandomGenerator {get;set;}
+        public bool SpawnAllowed {get;set;} = true;
+
+        private Random _randomGenerator {get;set;}
+        private Random _spawnNumber {get;set;}
+        private int _defaultValue = 250000;
+        private int _spawnRate = 100;
+        private int _finalSpawnValue;
+
         
-        public Random SpawnNumber {get;set;}
+        private GameHandler _gameHandler;
 
-        private int defaultValue = 250000;
-        private int spawnRate = 100;
-        private int finalSpawnValue;
+        
 
-        public SpawnHandler()
+        public SpawnHandler(GameHandler gameHandler)
         {
-            RandomGenerator = new Random();
-            SpawnNumber = new Random();
+            _randomGenerator = new Random();
+            _spawnNumber = new Random();
+            _gameHandler = gameHandler;
         }
 
-        public void Update(ObservableCollection<Enemy> enemies, GameTime gameTime, GameHandler gameHandler)
+        public void Update(ObservableCollection<Enemy> enemies, GameTime gameTime)
         {
-            finalSpawnValue = defaultValue / (spawnRate + (int)(gameHandler.TimeInGame / spawnRate * 5)); 
-            double spawnValue = RandomGenerator.NextDouble();
-            
-            if(SpawnNumber.Next(0, finalSpawnValue) == 0)
+            _finalSpawnValue = _defaultValue / (_spawnRate + (int)(_gameHandler.TimeInGame / _spawnRate * 5)); 
+            double spawnValue = _randomGenerator.NextDouble();
+
+            if(_spawnNumber.Next(0, _finalSpawnValue) == 0)
             {
-                if(enemies.Count < SpawnCap)
+                if(enemies.Count <= SpawnCap && SpawnAllowed)
                 {   
                     int spawnX, spawnXMax, spawnPoint;
 
                     spawnX = 100;
                     spawnXMax = ResolutionUtils.Width - 100;
-                    spawnPoint = RandomGenerator.Next(spawnX, spawnXMax);
+                    spawnPoint = _randomGenerator.Next(spawnX, spawnXMax);
 
                     if(spawnValue <= 0.5)
                     {
@@ -54,6 +60,10 @@ namespace simpsons.Core.Handlers
                         return;
                     if(spawnValue > 0.8)
                         return;
+                }
+                else if(!SpawnAllowed)
+                {
+                    throw new NotImplementedException();
                 }
             }
             

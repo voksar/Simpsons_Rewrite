@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using simpsons.Core.Utils;
+using System.Collections;
 
 namespace simpsons
 {
@@ -39,6 +40,7 @@ namespace simpsons
             ResolutionUtils.SetResolution(1600, 900);
             Simpsons.State = Simpsons.States.Loading;
             Simpsons.Initialize();
+
 
             base.Initialize();
         }
