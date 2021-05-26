@@ -64,9 +64,10 @@ namespace simpsons.Core
                 _needUpdate = value;
                 if(_needUpdate)
                 {
-                    Console.WriteLine("Game serialization ran");
+                    
                     ThreadPool.QueueUserWorkItem(state => 
                     {
+                        Console.WriteLine("Game serialization ran");
                         GameHandler.SerializeGame(gameHandlers);
                         playerInformationHandler.SerializePlayerData();
                         _needUpdate = false;
