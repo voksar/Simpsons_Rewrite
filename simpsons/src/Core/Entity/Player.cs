@@ -22,18 +22,19 @@ namespace simpsons.Core.Entities
         public void Update(GameWindow window, GameTime gameTime)
         {
             //PLayermovement, use deltatime for movement
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if(X > 0)
                 if(InputHandler.IsPressing(Keys.Left) || InputHandler.IsPressing(Keys.A))
-                    X -= SpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    X -= SpeedX * delta;
             if(X < window.ClientBounds.Width - Texture.Width)
                 if(InputHandler.IsPressing(Keys.Right) || InputHandler.IsPressing(Keys.D))
-                    X += SpeedX * (float)gameTime.ElapsedGameTime.TotalSeconds;;
+                    X += SpeedX * delta;
             if(Y > 0)
                 if(InputHandler.IsPressing(Keys.Up) || InputHandler.IsPressing(Keys.W))
-                    Y -= SpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;;
+                    Y -= SpeedY * delta;
             if(Y < window.ClientBounds.Height - Texture.Height)
                 if(InputHandler.IsPressing(Keys.Down) || InputHandler.IsPressing(Keys.S))
-                    Y += SpeedY * (float)gameTime.ElapsedGameTime.TotalSeconds;;
+                    Y += SpeedY * delta;
 
             if(InputHandler.Press(Keys.Space))
                 Bullets.Add(new Bullet(
