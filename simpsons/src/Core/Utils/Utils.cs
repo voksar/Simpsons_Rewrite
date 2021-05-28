@@ -101,27 +101,11 @@ namespace simpsons.Core.Utils
             text, position, color * opacity);
         }
     
-        public static void AutoLoader<T>(AutoLoaderSettings autoLoaderSettings, Dictionary<string, T> collection)
-        {
-            foreach(FileInfo file in autoLoaderSettings.Files)
-            {
-                string key = Path.GetFileNameWithoutExtension(file.Name);
-                string key_path = $"{autoLoaderSettings.Path}/{key}";
-
-                collection.Add(key_path, autoLoaderSettings.Content.Load<T>(key_path));
-                
-            }
-        }
+        
         public static bool BetweenRanges(int a, int b, int number)
         {
             return (a <= number && number <= b);
         }
     }
-    
-    public class AutoLoaderSettings 
-    {
-        public ContentManager Content;
-        public string Path;
-        public FileInfo[] Files;
-    }
+
 }

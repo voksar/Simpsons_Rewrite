@@ -16,7 +16,7 @@ namespace simpsons.Core.UI
     public class Store : IState
     {
         //Constants
-        const int TargetX = 750;
+        private int TargetX = 750;
 
         //private variable declarations
         private List<int> _currentWidth = new List<int>();
@@ -99,9 +99,6 @@ namespace simpsons.Core.UI
                         
                         item.X += 5 * delta * 60;
                     }
-                    /*
-                    if(MainStore[selectedy][selectedVal[selectedy]].X == targetX)
-                    */
                     if(MainStore[selectedy][selected[selectedy]].X >= TargetX)
                     {
                         stateTracker = StateTracker.None;

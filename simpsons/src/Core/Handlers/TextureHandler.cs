@@ -63,7 +63,7 @@ namespace simpsons.Core.Handlers
                     Files = files,
                 };
 
-                Utilities.AutoLoader(autoLoaderSettings, Sprites);
+                AutoLoaderUtils.AutoLoader(autoLoaderSettings, Sprites);
                 
                 
             }

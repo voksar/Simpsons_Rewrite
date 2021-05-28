@@ -10,12 +10,15 @@ namespace simpsons.Core.Entities
 {
     public abstract class PlayerEntity : Entity
     {   
+        //Json properties to be serialized
         [JsonProperty]
         public int Health{get;set;}
         [JsonProperty]
         public int HealthMax{get;set;}
         [JsonProperty]
         public string BulletName {get;set;}
+
+
         public Texture2D BulletTexture {get;set;}
 
 
