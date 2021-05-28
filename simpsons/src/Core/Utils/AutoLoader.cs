@@ -12,11 +12,8 @@ namespace simpsons.Core.Utils
 {
     static class AutoLoaderUtils
     {
-        const string basePath = "1123";
         public static void AutoLoader<T>(AutoLoaderSettings autoLoaderSettings, Dictionary<string, T> collection)
         {
-            var subDirectories = new List<string>();
-
             FileInfo[] files = autoLoaderSettings.DirectoryInf.GetFiles("*.xnb", autoLoaderSettings.SearchOpt);
             foreach(FileInfo file in files)
             {
@@ -25,17 +22,6 @@ namespace simpsons.Core.Utils
 
                 collection.Add(fileLoad, autoLoaderSettings.Content.Load<T>(fileLoad));
             }
-
-            /*foreach(FileInfo file in autoLoaderSettings.Files)
-            {
-                
-                string key = Path.GetFileNameWithoutExtension(file.Name);
-                string key_path = $"{autoLoaderSettings.Path}/{key}";
-                Console.WriteLine(key_path);
-                collection.Add(key_path, autoLoaderSettings.Content.Load<T>(key_path));
-                
-
-            }*/
         }
     }
     
