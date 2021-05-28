@@ -119,13 +119,13 @@ namespace simpsons.Core
             menu = new Menu((int)States.Menu);
             menu.LoadContent(graphicsDevice, window, content);
             menu.AddItem(content.Load<Texture2D>("Menu/Play"), (int)States.GameStart, window,
-                content.Load<Texture2D>("MenuIcons/PlayNew"));
+                content.Load<Texture2D>("Menu/MenuIcons/PlayNew"));
             menu.AddItem(content.Load<Texture2D>("Menu/Store"), (int)States.Saves, window,
-                content.Load<Texture2D>("MenuIcons/Saves"));
+                content.Load<Texture2D>("Menu/MenuIcons/Saves"));
             menu.AddItem(content.Load<Texture2D>("Menu/Store"), (int)States.Store, window,
-                content.Load<Texture2D>("MenuIcons/Collection"));
+                content.Load<Texture2D>("Menu/MenuIcons/Collection"));
             menu.AddItem(content.Load<Texture2D>("Menu/Exit"), (int)States.Quit, window,
-                content.Load<Texture2D>("MenuIcons/Exit"));
+                content.Load<Texture2D>("Menu/MenuIcons/Exit"));
 
 
             //check progress on eg. dog unlock etc

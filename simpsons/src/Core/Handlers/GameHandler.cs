@@ -8,6 +8,7 @@ using System.Linq;
 using simpsons.Core.Entities;
 using simpsons.Core.UI;
 
+
 namespace simpsons.Core.Handlers
 {
     [JsonObject(ItemRequired = Required.AllowNull)]

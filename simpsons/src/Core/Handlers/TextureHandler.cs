@@ -11,18 +11,19 @@ namespace simpsons.Core.Handlers
 {
     public static class TextureHandler
     {
+
         //Misc textures
         private static Texture2D backgroundTexture;
 
         public static Dictionary<string, Texture2D> Sprites{get; private set;}
 
-        private static List<string> _acceptablePaths = new List<string>()
+        private static Dictionary<string, SearchOption> _acceptablePaths = new Dictionary<string, SearchOption>()
         {
-            "MenuIcons",
-            "Player",
-            "Enemies",
-            "Icons",
-            "StoreIcons"
+            { "Player", SearchOption.TopDirectoryOnly },
+            { "Enemies", SearchOption.TopDirectoryOnly },
+            { "Icons", SearchOption.TopDirectoryOnly },
+            { "StoreIcons", SearchOption.TopDirectoryOnly },
+            { "Menu", SearchOption.AllDirectories }
         };
 
         /*private static List <string> _acceptableExtensions = new List<string>()
@@ -44,23 +45,24 @@ namespace simpsons.Core.Handlers
         public static void LoadContent(ContentManager content)
         {
             //Auto-loader for any textures located in _acceptablePaths folder
-            foreach(string path in _acceptablePaths)
+            foreach(KeyValuePair<string, SearchOption> entry in _acceptablePaths)
             {
 
                 //add path to next path
                 //_nextPath = _currentPath + path;
-                DirectoryInfo directory = new DirectoryInfo(content.RootDirectory + $"/{path}");
+                DirectoryInfo directory = new DirectoryInfo(content.RootDirectory + $"/{entry.Key}");
 
-                FileInfo[] files = directory.GetFiles("*.xnb");
+                //FileInfo[] files = directory.GetFiles("*.xnb", entry.Value);
                 //get all files in the accepted path
                 //var files = Directory.GetFiles(_nextPath);
-                
                 //Setup settings for autoloading
                 AutoLoaderSettings autoLoaderSettings = new AutoLoaderSettings()
                 {
-                    Path = path,
+                    Path = entry.Key,
                     Content = content,
-                    Files = files,
+                    DirectoryInf = directory,
+                    SearchOpt = entry.Value,
+                    RootPath = content.RootDirectory
                 };
 
                 AutoLoaderUtils.AutoLoader(autoLoaderSettings, Sprites);
