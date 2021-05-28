@@ -1,0 +1,7 @@
+sc=secret
+p=player
+mi=MenuIcons
+i=MenuIcons
+f=fonts
+e=enemies
+b=backgrounds

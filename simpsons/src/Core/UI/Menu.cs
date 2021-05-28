@@ -243,9 +243,16 @@ namespace simpsons.Core.UI
         {
             IsOpacityDone = false;
             IsChangingState = false;
+
+            
             RectangleX = 0;
             RectangleWidth = 400;
             Opacity = 0.0f;
+        }
+        
+        private void CalculatePositions()
+        {
+
         }
     }
     class MenuItem
