@@ -321,8 +321,8 @@ namespace simpsons.Core.UI
             }
             _currentWidth[index] += TextureHandler.Sprites[textureName].Width;
 
-            if(_playerInformationHandler.UnlockedPlayers.Contains(name))
-                unlocked = true;
+            unlocked = _playerInformationHandler.UnlockedPlayers.Contains(name) ? true : false;
+
 
             MainStore[index].Add(new StoreItem(
                 TextureHandler.Sprites[textureName], position, name, CharacterList.Characters[name], unlocked 

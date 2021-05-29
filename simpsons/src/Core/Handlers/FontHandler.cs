@@ -19,21 +19,9 @@ namespace simpsons.Core.Handlers
             { "Fonts", SearchOption.TopDirectoryOnly }
         };
 
-        /*private static List <string> _acceptableExtensions = new List<string>()
-        {
-            ".spritefont",
-            ".xnb"
-        };*/
-
-        private static string _currentPath;
-
-        private static string _nextPath;
-
-
         public static void Initialize()
         {
             Fonts = new Dictionary<string, SpriteFont>();
-            _currentPath = Directory.GetCurrentDirectory() + "\\Content\\";
         }
 
         public static void LoadContent(ContentManager content)
@@ -41,12 +29,6 @@ namespace simpsons.Core.Handlers
                         //Auto-loader for any textures located in _acceptablePaths folder
             foreach(KeyValuePair<string, SearchOption> entry in _acceptablePaths)
             {
-
-                //add path to next path
-                //_nextPath = _currentPath + path;
-                
-                
-
                 //get all files in the accepted path
                 //var files = Directory.GetFiles(_nextPath);
                 DirectoryInfo directory = new DirectoryInfo(content.RootDirectory + $"/{entry.Key}");

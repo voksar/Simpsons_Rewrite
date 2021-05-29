@@ -26,13 +26,6 @@ namespace simpsons.Core.Handlers
             { "Menu", SearchOption.AllDirectories }
         };
 
-        /*private static List <string> _acceptableExtensions = new List<string>()
-        {
-            ".jpg",
-            ".png",
-            ".xnb"
-        };*/
-
         public static void Initialize()
         {
             Sprites = new Dictionary<string, Texture2D>();
