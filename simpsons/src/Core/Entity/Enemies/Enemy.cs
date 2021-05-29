@@ -26,7 +26,7 @@ namespace simpsons.Core.Entities
         protected abstract void GeneratePath();
     }
 
-    class Bart : Enemy
+    public class Bart : Enemy
     {
         public new enum Paths 
         {
@@ -96,7 +96,7 @@ namespace simpsons.Core.Entities
             }
         }
     }
-    class Burns : Enemy
+    public class Burns : Enemy
     {
         public Burns(string TextureName, float X, float Y, int Health)
          : base(TextureName, X, Y, Health)
